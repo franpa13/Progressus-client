@@ -146,11 +146,11 @@ export const HomePage = () => {
     // Detectamos si estamos en un dispositivo móvil
     useEffect(() => {
       const checkMobile = () => {
-        setIsMobile(window.innerWidth <= 768); // Cambiar el tamaño según el dispositivo
+        setIsMobile(window.innerWidth <= 768);
       };
   
       checkMobile();
-      window.addEventListener("resize", checkMobile); // Para actualizar cuando el tamaño cambia
+      window.addEventListener("resize", checkMobile);
   
       return () => {
         window.removeEventListener("resize", checkMobile);
@@ -173,7 +173,14 @@ export const HomePage = () => {
               autoPlay
               loop
               muted
-              className={`w-full h-full object-cover ${isMobile ? "md:h-auto md:w-auto" : "md:w-full"}`}
+              playsInline
+              disablePictureInPicture
+              controlsList="nodownload noplaybackrate"
+              className={`w-full h-full object-cover ${
+                isMobile 
+                  ? "max-h-[300px] md:h-auto md:w-auto" 
+                  : "md:w-full"
+              }`}
               alt="Progressus"
             />
           </div>
