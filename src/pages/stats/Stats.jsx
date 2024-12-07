@@ -4,9 +4,14 @@ import { ChartBar, Location, SelectNavegable, Title } from "../../components";
 import { useGetAsistForMonth } from "../../service/stats/useGetAsistForMonth";
 import { TbClockHour4 } from "react-icons/tb";
 import { BsCalendar2Month } from "react-icons/bs";
+import { useGetIngresosMensuales } from "../../service/stats/useGetIngresosMensuales";
 import { useGetAsistForDay } from "../../service/stats/useGetAsistForDay";
+import { MdPayment } from "react-icons/md";
+import { useGetMemberConfirm } from "../../service/stats/useGetMemberConfirm";
 import { IoTodayOutline } from "react-icons/io5";
+import { FaRegCalendarCheck } from "react-icons/fa";
 import { SelectDef } from "../../components";
+import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { ChartBarHorizontal } from "../../components/stats/ChartBarHorizontal";
 import { useSpinnerStore } from "../../store";
 import { useGetAsistForHour } from "../../service/stats/useGetAsistForHour";
@@ -22,6 +27,11 @@ export const Stats = () => {
   // ASISTENCIAS POR HORA
   const [hourSelect, setHourSelect] = useState("10:00:00");
   const [asistForHour, setAsistForHour] = useState([]);
+  // MEMBRESIAS CONFIRMADAS POR MES
+  const [membershipConfirm, setMembershipConfirm] = useState([]);
+
+  //INGRESOS MENSUALES
+  const [ingresos, setIngresos] = useState([]);
   useEffect(() => {
     showSpinner();
     const fetchData = async () => {
@@ -32,6 +42,13 @@ export const Stats = () => {
         // ASISTENCIAS POR DIA
         const traerAsistForDay = await useGetAsistForDay();
         setNroAsistForDay(traerAsistForDay?.data || []);
+
+        // TRAER MEMBRESIAS CONFIRMADAS POR MES
+        const traerConfirm = await useGetMemberConfirm();
+        setMembershipConfirm(traerConfirm?.data || []);
+        // INGRESOS
+        const traerIngresos = await useGetIngresosMensuales();
+        setIngresos(traerIngresos?.data || []);
       } catch (e) {
         console.log(e, "error a traer stats");
       } finally {
@@ -113,46 +130,50 @@ export const Stats = () => {
   ///////////////////////////////////////////////////////////////
 
   // TRAER POR HORA
-  const horarios = [
-    "07:00:00",
-    "08:00:00",
-    "09:00:00",
-    "10:00:00",
-    "11:00:00",
-    "12:00:00",
-    "13:00:00",
-    "14:00:00",
-    "15:00:00",
-    "16:00:00",
-    "17:00:00",
-    "18:00:00",
-    "19:00:00",
-    "20:00:00",
-    "21:00:00",
-    "22:00:00",
-    "23:00:00",
-  ];
-  const selectHour = (e) => {
-    setHourSelect(e.target.value);
-  };
 
-  const asistForHourDataset = asistForHour.map((asistencia) => {
-    const hora = new Date(asistencia.fechaAsistencia).toLocaleTimeString(
-      "es-ES",
-      {
-        hour: "2-digit",
-        minute: "2-digit",
-      }
-    );
+  const asistForHourDataset = asistForHour.map((asistencia) => ({
+    hora: `${asistencia.franjaHoraria}:00`,
+    numeroDeAsistencias: asistencia.numeroDeAsistencias,
+  }));
+
+  ///////////////////////////////////////////////////////////////
+  // MEMBRESIAS
+  // Solicitudes de pago confirmadas por mes
+
+  const mesesDelAno = [
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+  ];
+
+  // Crear un dataset que asegure que todos los meses estén presentes
+  const membershipDataset = mesesDelAno.map((mes, index) => {
+    const mesData = membershipConfirm.find((item) => item.mes === index + 1);
     return {
-      hora: hora,
-      numeroDeAsistencias: 1,
+      mes, // Nombre del mes
+      numeroDeMembresias: mesData ? mesData.solicitudes.length : 0, // Valor real o 0 si no hay datos
     };
   });
 
   ///////////////////////////////////////////////////////////////
-  console.log(asistForHourDataset, "asist for hour");
+  //  BALANCE INGRESOS
+  const ingresosDataset = ingresos.map((ingreso) => ({
+    mes: new Date(2024, ingreso.mes - 1).toLocaleString("es-ES", {
+      month: "long",
+    }),
+    montoTotal: ingreso.montoTotal,
+  }));
 
+  ///////////////////////////////////////////////////////////////
   return (
     <MainLayout>
       <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
@@ -182,137 +203,229 @@ export const Stats = () => {
               Membresias
             </span>
           </div>
-          {/* ASISTENCIAS/TURNOS */}
-          {/* ASISTENCIA POR CADA MES */}
-          <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
-            <div className="flex items-center gap-3">
-              <Title
-                className={"text-customTextGreen "}
-                title={"Asistencias por mes"}
-              ></Title>
-              <BsCalendar2Month className="text-xl md:text-3xl font-bold"></BsCalendar2Month>
-            </div>
+          {selectNav === "Asistencia/Turnos" ? (
+            <>
+              {" "}
+              {/* ASISTENCIAS/TURNOS */}
+              {/* ASISTENCIA POR CADA MES */}
+              <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
+                <div className="flex items-center gap-3">
+                  <Title
+                    className={"text-customTextGreen "}
+                    title={"Asistencias por mes"}
+                  ></Title>
+                  <BsCalendar2Month className="text-xl md:text-3xl font-bold"></BsCalendar2Month>
+                </div>
 
-            <div className="flex justify-end w-full items-center">
-              <SelectDef
-                value={selectedYear}
-                label="Seleccionar Año:"
-                options={availableYears}
-                onChange={selectYear}
-                variant={"filled"}
-              />
-            </div>
-            {/* ASISTENCIA POR CADA MES */}
-            <div className="w-full flex items-center justify-center">
-              <ChartBar
-                dataset={dataset}
-                xAxis={[
-                  {
-                    scaleType: "band",
-                    dataKey: "mes",
-                    label: "Mes",
-                  },
-                ]}
-                yAxis={[
-                  {
-                    label: "Número de asistencias",
-                  },
-                ]}
-                series={[
-                  {
-                    dataKey: "numeroDeAsistencias",
-                    label: "Asistencias",
-                  },
-                ]}
-                barColor="#1890FF"
-              />
-            </div>
-          </div>
-          {/* /////////////////////////////////// */}
-          <div className="w-full shadow-md h-4"></div>
-          {/* ASISTENCIAS POR DIA DE SEMANA */}
-          <div className="mt-12 mb-3 w-full flex flex-col justify-center md:justify-between items-center md:items-start  gap-5 md:gap-12">
-            <div className="flex items-center gap-3">
-              <Title
-                className={"text-customTextGreen"}
-                title={"Asistencias por día de la semana"}
-              ></Title>
-              <IoTodayOutline className="text-xl md:text-3xl"></IoTodayOutline>
-            </div>
+                <div className="flex justify-end w-full items-center">
+                  <SelectDef
+                    value={selectedYear}
+                    label="Seleccionar Año:"
+                    options={availableYears}
+                    onChange={selectYear}
+                    variant={"filled"}
+                  />
+                </div>
+                {/* ASISTENCIA POR CADA MES */}
+                <div className="w-full flex items-center justify-center">
+                  <ChartBar
+                    dataset={dataset}
+                    xAxis={[
+                      {
+                        scaleType: "band",
+                        dataKey: "mes",
+                        label: "Mes",
+                      },
+                    ]}
+                    yAxis={[
+                      {
+                        label: "Número de asistencias",
+                      },
+                    ]}
+                    series={[
+                      {
+                        dataKey: "numeroDeAsistencias",
+                        label: "Asistencias",
+                      },
+                    ]}
+                    barColor="#1890FF"
+                  />
+                </div>
+              </div>
+              {/* /////////////////////////////////// */}
+              <div className="w-full shadow-md h-4"></div>
+              {/* ASISTENCIAS POR DIA DE SEMANA */}
+              <div className="mt-12 mb-3 w-full flex flex-col justify-center md:justify-between items-center md:items-start  gap-5 md:gap-12">
+                <div className="flex items-center gap-3">
+                  <Title
+                    className={"text-customTextGreen"}
+                    title={"Asistencias por día de la semana"}
+                  ></Title>
+                  <IoTodayOutline className="text-xl md:text-3xl"></IoTodayOutline>
+                </div>
 
-            <div className="w-full flex items-center justify-center">
-              <ChartBar
-                dataset={dayOfWeekDataset} // Usamos el dataset de días de la semana
-                xAxis={[
-                  {
-                    scaleType: "band",
-                    dataKey: "dia", // Clave para los días
-                    label: "Día de la Semana",
-                  },
-                ]}
-                yAxis={[
-                  {
-                    label: "Número de asistencias",
-                  },
-                ]}
-                series={[
-                  {
-                    dataKey: "numeroDeAsistencias",
-                    label: "Asistencias",
-                  },
-                ]}
-                barColor="#FF5733" // Color personalizado para las barras
-              />
-            </div>
-          </div>
+                <div className="w-full flex items-center justify-center">
+                  <ChartBar
+                    dataset={dayOfWeekDataset} // Usamos el dataset de días de la semana
+                    xAxis={[
+                      {
+                        scaleType: "band",
+                        dataKey: "dia", // Clave para los días
+                        label: "Día de la Semana",
+                      },
+                    ]}
+                    yAxis={[
+                      {
+                        label: "Número de asistencias",
+                      },
+                    ]}
+                    series={[
+                      {
+                        dataKey: "numeroDeAsistencias",
+                        label: "Asistencias",
+                      },
+                    ]}
+                    barColor="#FF5733" // Color personalizado para las barras
+                  />
+                </div>
+              </div>
+              {/* ////////////////////////////////////////// */}
+              <div className="w-full shadow-md h-4"></div>
+              {/* ASISTENCIAS POR DIA DE SEMANA */}
+              <div className="mt-12 mb-3 w-full flex flex-col justify-center md:justify-between items-center md:items-start gap-5 md:gap-12">
+                <div className="flex items-center gap-3">
+                  <Title
+                    className={"text-customTextGreen"}
+                    title={"Asistencias por hora"}
+                  ></Title>
+                  <TbClockHour4 className="text-2xl md:text-3xl"></TbClockHour4>
+                </div>
 
-          {/* ////////////////////////////////////////// */}
-          <div className="w-full shadow-md h-4"></div>
-          {/* ASISTENCIAS POR DIA DE SEMANA */}
-          <div className="mt-12 mb-3 w-full flex flex-col justify-center md:justify-between items-center md:items-start gap-5 md:gap-12">
-            <div className="flex items-center gap-3">
-              <Title
-                className={"text-customTextGreen"}
-                title={"Asistencias por hora"}
-              ></Title>
-              <TbClockHour4 className="text-2xl md:text-3xl"></TbClockHour4>
-            </div>
-            <div className="flex justify-end w-full items-center">
-              <SelectDef
-                value={hourSelect}
-                label="Horario"
-                options={horarios}
-                onChange={selectHour}
-                variant={"filled"}
-              />
-            </div>
-            <div className="w-full flex items-center justify-center">
-              <ChartBar
-                dataset={asistForHourDataset} // Usamos los datos transformados
-                xAxis={[
-                  {
-                    scaleType: "band",
-                    dataKey: "hora", // Usamos 'hora' como la clave para el eje X
-                    label: "Hora",
-                  },
-                ]}
-                yAxis={[
-                  {
-                    label: "Número de asistencias",
-                  },
-                ]}
-                series={[
-                  {
-                    dataKey: "numeroDeAsistencias",
-                    label: "Asistencias",
-                  },
-                ]}
-                barColor="#FF5733" // Color de las barras
-              />
-            </div>
-          </div>
+                <div className="w-full flex items-center justify-center">
+                  <ChartBar
+                    ticksByOne={true}
+                    dataset={asistForHourDataset} // Datos transformados
+                    xAxis={[
+                      {
+                        scaleType: "band",
+                        dataKey: "hora",
+                        label: "Hora",
+                      },
+                    ]}
+                    yAxis={[
+                      {
+                        label: "Número de asistencias",
+                      },
+                    ]}
+                    series={[
+                      {
+                        dataKey: "numeroDeAsistencias", // Clave para el valor de las barras
+                        label: "Asistencias",
+                      },
+                    ]}
+                    barColor="#28A745" // Color de las barras
+                  />
+                </div>
+              </div>
+              {/* ////////////////////////////////////////// */}
+            </>
+          ) : (
+            <>
+              {/* MEMBRESIAS CONFIRMADAS POR MES */}
+              <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
+                <div className="flex items-center gap-3">
+                  <Title
+                    className={"text-customTextGreen "}
+                    title={"Solicitudes de pago confirmados por mes"}
+                  ></Title>
+                  <FaRegCalendarCheck className="text-xl md:text-2xl font-bold"></FaRegCalendarCheck>
+                </div>
 
-          {/* ////////////////////////////////////////// */}
+                {/* <div className="flex justify-end w-full items-center">
+                  <SelectDef
+                    value={selectedYear}
+                    label="Seleccionar Año:"
+                    options={availableYears}
+                    onChange={selectYear}
+                    variant={"filled"}
+                  />
+                </div> */}
+                {/* MEMBRESIAS POR MES */}
+                <div className="w-full flex items-center justify-center">
+                  <ChartBar
+                    dataset={membershipDataset} // Datos transformados
+                    xAxis={[
+                      {
+                        scaleType: "band", // Escala categórica
+                        dataKey: "mes", // Clave de los datos para el eje X
+                        label: "Mes",
+                      },
+                    ]}
+                    yAxis={[
+                      {
+                        label: "Número de Membresías Confirmadas",
+                      },
+                    ]}
+                    series={[
+                      {
+                        dataKey: "numeroDeMembresias", // Clave de los datos para las barras
+                        label: "Membresías Confirmadas",
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+              {/* /////////////////////////////////// */}
+              <div className="w-full shadow-md h-4"></div>
+              {/* BALANCES INGRESOS MENSUALES */}
+              <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
+                <div className="flex items-center gap-3">
+                  <Title
+                    className={"text-customTextGreen "}
+                    title={"Balance de ingreso mensuales por mes"}
+                  ></Title>
+                  <RiMoneyDollarBoxLine className="text-xl md:text-3xl font-bold"></RiMoneyDollarBoxLine>
+                </div>
+
+                {/* <div className="flex justify-end w-full items-center">
+                  <SelectDef
+                    value={selectedYear}
+                    label="Seleccionar Año:"
+                    options={availableYears}
+                    onChange={selectYear}
+                    variant={"filled"}
+                  />
+                </div> */}
+                {/* MEMBRESIAS POR MES */}
+                <div className="w-full flex items-center justify-center">
+                  <ChartBar
+                    dataset={ingresosDataset}
+                    xAxis={[
+                      {
+                        scaleType: "band",
+                        dataKey: "mes", // Meses
+                        label: "Mes",
+                      },
+                    ]}
+                    yAxis={[
+                      {
+                        label: "Ingresos Totales",
+                      },
+                    ]}
+                    series={[
+                      {
+                        dataKey: "montoTotal",
+                        label: "Ingresos",
+                      },
+                    ]}
+                    barColor="#28A745" // Color de las barras
+                  />
+                </div>
+              </div>
+              {/* /////////////////////////////////// */}
+              <div className="w-full shadow-md h-4"></div>
+            </>
+          )}
         </section>
       </section>
     </MainLayout>

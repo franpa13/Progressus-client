@@ -18,23 +18,36 @@ export const ChartBar = ({
   const [tickPlacement, setTickPlacement] = React.useState("middle");
   const [tickLabelPlacement, setTickLabelPlacement] = React.useState("middle");
 
+  // Filtrar los valores del eje Y para eliminar los que tienen decimales no deseados
+  const filterTicks = (ticks) => {
+    return ticks.filter((tick) => {
+      // Solo acepta valores enteros y no aquellos que terminan en .5
+      return tick % 1 === 0; // Esto asegura que solo los enteros pasen
+    });
+  };
+
   // Modificar las series para incluir el color de las barras
   const updatedSeries = series.map((serie) => ({
     ...serie,
     color: barColor, // Aplica el color de las barras
   }));
 
+  // Filtrar los ticks del eje Y
+  const updatedYAxis = yAxis.map((axis) => ({
+    ...axis,
+    ticks: filterTicks(axis.ticks || []), // Filtrar los ticks si están definidos
+  }));
+
   return (
-    <div className="w-full md:w-2/3 text-xs">
+    <div className="w-full md:w-5/6 text-xs">
       <BarChart
-   
         dataset={dataset}
         xAxis={xAxis.map((axis) => ({
           ...axis,
           tickPlacement,
           tickLabelPlacement,
         }))}
-        yAxis={yAxis}
+        yAxis={updatedYAxis}
         series={updatedSeries} // Usar las series actualizadas con el color
         height={height}
         sx={{

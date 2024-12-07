@@ -12,6 +12,7 @@ import { BsMenuButtonWide } from "react-icons/bs";
 import { CgGym } from "react-icons/cg";
 import { MdOutlineInventory } from "react-icons/md";
 import { IoStatsChartOutline } from "react-icons/io5";
+import { FiShoppingCart } from "react-icons/fi";
 import { GrPlan } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useMembershipStore } from "../../../store/useStoreMembership";
@@ -70,7 +71,7 @@ export const NavBar = () => {
     },
     {
       title: "Contabilidad",
-      icon: <BsPiggyBank  />,
+      icon: <BsPiggyBank />,
       link: "/contability",
     },
     {
@@ -88,7 +89,7 @@ export const NavBar = () => {
       icon: <HiOutlineUsers />,
       link: "/users",
     },
-    
+
     {
       title: "Estadísticas",
       icon: <IoStatsChartOutline />,
@@ -161,6 +162,11 @@ export const NavBar = () => {
       link: "/turns",
     },
     {
+      title: "Shop",
+      icon: <FiShoppingCart />,
+      link: "/shopsocio",
+    },
+    {
       title: "Notificaciones",
       icon: <IoMdNotificationsOutline />,
       link: "/notifications",
@@ -168,7 +174,7 @@ export const NavBar = () => {
   ];
 
   const handleLinkClick = (link) => {
-    if (link === "/turns" || link === "/plans" && roleUser !== "ENTRENADOR") {
+    if (link === "/turns" || (link === "/plans" && roleUser !== "ENTRENADOR")) {
       if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
         setOpenErrorTurns(true);
         return;

@@ -56,3 +56,7 @@ export * from "./contability/DatePicker"
 
 // STATS
 export * from "./stats/ChartBar"
+
+//SHOP
+export * from "./ui/products/productsGrid"
+export * from "./ui/products/productItem"

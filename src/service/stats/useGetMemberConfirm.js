@@ -1,10 +1,10 @@
 import { api } from "../api";
 
 // TRAER NRO DE ASISTENCIA POR MES
-export const useGetAsistForHour = async () => {
+export const useGetMemberConfirm = async () => {
   try {
     const response = await api.get(
-      `/api/ReservasTurnos/AsistenciasPorFranjaHoraria`
+      `/api/SolicitudDePago/solicitudes-confirmadas-por-mes`
     );
     return response;
   } catch (e) {

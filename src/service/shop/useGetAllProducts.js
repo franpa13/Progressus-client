@@ -1,10 +1,10 @@
 import { api } from "../api";
 
-// TRAER NRO DE ASISTENCIA POR MES
-export const useGetAsistForHour = async () => {
+// TRAER TODOS LOS PROD DEL SHOP
+export const useGetAllProducts = async () => {
   try {
     const response = await api.get(
-      `/api/ReservasTurnos/AsistenciasPorFranjaHoraria`
+      `/api/Merch/ObtenerTodos`
     );
     return response;
   } catch (e) {

@@ -17,6 +17,7 @@ import { useMembershipStore } from "../../../store/useStoreMembership";
 import { SnackbarDefault } from "../snackbar/Snackbar";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { TbUserCheck } from "react-icons/tb";
+import { FiShoppingCart } from "react-icons/fi";
 // NAVIGATION
 const routeAdminNavigation = [
   {
@@ -117,6 +118,11 @@ const routeNavigation = [
     link: "/turns",
   },
   {
+    title: "Shop",
+    icon: <FiShoppingCart />,
+    link: "/shopsocio",
+  },
+  {
     title: "Notificaciones",
     icon: <IoMdNotificationsOutline />,
     link: "/notifications",
@@ -146,7 +152,7 @@ export const Footer = () => {
     { icon: <BiLogoPinterestAlt /> },
   ];
   const handleLinkClick = (link) => {
-    if (link === "/turns" || link === "/plans" && roleUser !== "ENTRENADOR") {
+    if (link === "/turns" || (link === "/plans" && roleUser !== "ENTRENADOR")) {
       if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
         setOpenErrorTurns(true);
         return;
