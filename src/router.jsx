@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { ProtectedRoute } from "./components";
+import { BenefitCard, ProtectedRoute } from "./components";
 import App from "./App";
 import { TbRulerMeasure } from "react-icons/tb";
 import {
@@ -205,6 +205,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
         <Metrics />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/benefits",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <BenefitCard/>
       </ProtectedRoute>
     ),
   },
