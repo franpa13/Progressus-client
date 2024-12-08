@@ -5,6 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
+import { FaGift } from "react-icons/fa";
 import { TbUserCheck } from "react-icons/tb";
 import { FaRegAddressCard } from "react-icons/fa";
 import { BsPiggyBank } from "react-icons/bs";
@@ -176,6 +177,11 @@ export const NavBar = () => {
       title: "Mediciones",
       icon: <TbRulerMeasure />,
       link: "/metrics",
+    },
+    {
+      title: "Beneficios",
+      icon: <FaGift />,
+      link: "/benefits",
     },
 
     {
