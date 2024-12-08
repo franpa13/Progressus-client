@@ -15,6 +15,7 @@ import {
   Exercices,
   Contability,
   ShopSocio,
+  ShopAdmin,
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -176,7 +177,15 @@ export const router = createBrowserRouter([
     path: "/shopsocio/cart",
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
-        < CartPage/>
+        <CartPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shopAdmin",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <ShopAdmin />
       </ProtectedRoute>
     ),
   },
@@ -188,6 +197,7 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
+
   {
     path: "/notifications",
     element: (

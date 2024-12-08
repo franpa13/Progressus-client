@@ -30,7 +30,7 @@ export const ModalCreatePlans = ({ open, setOpen, setErrorServer }) => {
   const [form, setForm] = useState({
     nombre: "",
     descripcion: "",
-    objetivoDelPlanId: 1,
+    objetivoDelPlanId: 3,
     diasPorSemana: 1,
     dueñoId: dataUser.identityUserId,
   });
@@ -48,7 +48,7 @@ export const ModalCreatePlans = ({ open, setOpen, setErrorServer }) => {
     };
     traerObjetivos();
   }, []);
-
+  console.log(form, "form");
   const onSubmitSendPlan = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -56,7 +56,7 @@ export const ModalCreatePlans = ({ open, setOpen, setErrorServer }) => {
       // CREAR PLAN PRIMERAMENTE
 
       const responseSendPlan = await useCreatePlan(form);
-      console.log(responseSendPlan, "response send plan anashei");
+     
 
       if (responseSendPlan && responseSendPlan.status == 200) {
         setPlanParaVer(responseSendPlan.data);

@@ -1,6 +1,6 @@
 import { ProductItem } from "./productItem";
 import { LoadingSkeleton } from "../skeleton/LoadingSkeleton";
-export const ProductGrid = ({ products, loadSkeleton , setAlertToCart}) => {
+export const ProductGrid = ({ products, loadSkeleton }) => {
   return (
     <div className=" grid grid-cols-1 sm:grid-cols-4 gap-12 mb-10">
       {loadSkeleton ? (
@@ -20,7 +20,7 @@ export const ProductGrid = ({ products, loadSkeleton , setAlertToCart}) => {
         </>
       ) : (
         products.map((product) => (
-          <ProductItem  setAlertToCart={ setAlertToCart} key={product.id} product={product}></ProductItem>
+          <ProductItem   key={product.id} product={product}></ProductItem>
         ))
       )}
     </div>

@@ -14,7 +14,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import useStoreCart from "../../store/useStoreCart";
 import alertToCartStore from "../../store/alertToCart";
 export const ProductPage = () => {
-  const { alertToCart, setAlertToCart } = alertToCartStore();
+  const [alertCart, setAlertCart] = useState(false);
   const [prod, setProd] = useState(null);
   const { id } = useParams();
   const openSpinner = useSpinnerStore((state) => state.showSpinner);
@@ -43,8 +43,10 @@ export const ProductPage = () => {
   console.log(prod, "prod");
   const addToCart = () => {
     addCart(prod);
-    setAlertToCart(true)
+    setAlertCart(true);
   };
+  console.log(prod, "prod");
+
   return (
     <MainLayout>
       <div className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20 py-5">
@@ -65,7 +67,10 @@ export const ProductPage = () => {
               >
                 <MdOutlineKeyboardReturn className="text-lg md:text-2xl " />
               </Link>
-              <Link to={"/shopsocio/cart"} className=" relative cursor-pointer  rounded transition-all p-1">
+              <Link
+                to={"/shopsocio/cart"}
+                className=" relative cursor-pointer  rounded transition-all p-1"
+              >
                 <span className="absolute text-xs rounded-full px-1 font-bold -top-1 bg-red-700 text-white -right-1">
                   {cart?.length}
                 </span>
@@ -206,8 +211,8 @@ export const ProductPage = () => {
         )}
       </div>
       <SnackbarDefault
-        open={alertToCart}
-        setOpen={setAlertToCart}
+        open={alertCart}
+        setOpen={setAlertCart}
         message={"Se añadio el producto al carrito de compras"}
         severity={"success"}
       ></SnackbarDefault>

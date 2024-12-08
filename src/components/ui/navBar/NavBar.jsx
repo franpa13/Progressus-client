@@ -80,6 +80,11 @@ export const NavBar = () => {
       link: "/inventary",
     },
     {
+      title: "Shop",
+      icon: <FiShoppingCart />,
+      link: "/shopAdmin",
+    },
+    {
       title: "Ingreso",
       icon: <TbUserCheck />,
       link: "/attendance",
@@ -195,17 +200,17 @@ export const NavBar = () => {
   return (
     <div className="">
       {menu && (
-        <div className="fixed top-0 left-0 w-screen h-screen z-10 bg-gray-600 opacity-5" />
+        <div className="fixed top-0 left-0 w-screen min-h-screen z-10 bg-gray-600 opacity-5" />
       )}
       {menu && (
         <div
           onClick={close}
-          className="fade-in fixed top-0 cursor-pointer left-0 w-screen h-screen z-40 backdrop-filter backdrop-blur-sm"
+          className="fade-in fixed top-0 cursor-pointer left-0 w-screen min-h-screen z-40 backdrop-filter backdrop-blur-sm"
         ></div>
       )}
       <nav
         className={clsx(
-          "fixed p-5 left-0 top-0 w-[230px] md:w-[350px] min-h-screen bg-white z-40 shadow-xl transform transition-all duration-300",
+          "fixed px-5 py-2 left-0 top-0 w-[230px] md:w-[350px] min-h-screen bg-white z-40 shadow-xl transform transition-all duration-300",
           { "-translate-x-full": !menu }
         )}
       >
@@ -214,7 +219,7 @@ export const NavBar = () => {
           className="absolute top-1 right-1 cursor-pointer"
           onClick={close}
         />
-        <div className="flex flex-row-reverse justify-end gap-5 mt-5 mb-5 items-center ">
+        <div className="flex flex-row-reverse justify-end gap-5 mt-0 mb-2 items-center ">
           <div className="cursor-pointer hover:bg-customBlue rounded p-1">
             <IoSearchOutline size={26} />
           </div>

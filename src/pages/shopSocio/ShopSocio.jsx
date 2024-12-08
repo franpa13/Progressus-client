@@ -9,8 +9,7 @@ import { SnackbarDefault } from "../../components";
 import alertToCartStore from "../../store/alertToCart";
 import { Link } from "react-router-dom";
 export const ShopSocio = () => {
-  const alertToCart = alertToCartStore(state=>state.alertToCart)
-  const setAlertToCart = alertToCartStore(state=>state.setAlertToCart)
+ 
   const [products, setProducts] = useState([]);
   const [loadSkeleton, setLoadSkeleton] = useState(true);
   const cart = useStoreCart((state) => state.cart);
@@ -55,7 +54,7 @@ export const ShopSocio = () => {
         <div className="w-full h-2 md:h-4 bg-customGray"></div>
         <section className="p-3">
           <ProductGrid
-            setAlertToCart={setAlertToCart}
+    
             loadSkeleton={loadSkeleton}
             products={products}
           ></ProductGrid>

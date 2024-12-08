@@ -93,7 +93,7 @@ export const Inventary = () => {
               <Button
                 onClick={() => setModalAddElement(true)}
                 Icon={IoMdAdd}
-                className="md:p-2.5 cursor-pointer  flex flex-row-reverse items-center gap-1 text-sm "
+                className="md:py-[11px]  md:px-5 cursor-pointer  flex flex-row-reverse items-center gap-1 text-sm "
                 label={"Agregar item"}
                 classNameIcon={"text-xl md:text-lg"}
               ></Button>

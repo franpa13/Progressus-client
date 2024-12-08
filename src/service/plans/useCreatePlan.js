@@ -1,6 +1,8 @@
 import { api } from "../api";
 // CREAR PLAN
 export const useCreatePlan = async (form) => {
+  console.log(form , "form del plan");
+  
   try {
     const response = await api.post(
       `/api/PlanDeEntrenamiento/CrearPlanDeEntrenamiento`,
