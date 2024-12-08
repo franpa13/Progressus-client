@@ -11,7 +11,7 @@ export const useCreateMetrics = async (form, idUser) => {
         idUser: idUser,
         altura: form.altura,
         peso: form.peso,
-        porcentajeDeGrasa: form.porcentaje,
+        porcentajeDeGrasa: form.porcentajeDeGrasa,
         fecha: form.fecha,
       },
       {
