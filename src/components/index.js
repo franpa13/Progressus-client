@@ -63,3 +63,6 @@ export * from "./ui/products/productItem"
 export * from "./shop/QuantitySelector"
 export * from "./shop/TableStock"
 export * from "./shop/ModalAddProd"
+
+// BENEFICIOS
+export { default as BenefitCard } from "./benefits/BenefitCard"

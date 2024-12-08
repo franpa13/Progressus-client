@@ -32,17 +32,17 @@ export const TopMenu = () => {
 
       <div className="flex justify-center items-center gap-3 md:gap-8 md:w-1/4 md:justify-end">
         {/* Buscar en desktop */}
-        <div className="hidden  md:flex justify-center items-center ">
-          <Link
-            to={"/search"}
-            className="hover:bg-customTextGreen rounded transition-all p-1"
-          >
-            <IoSearchSharp
-              className="w-9 h-9 md:w-7 md:h-7"
-              size={22}
-            ></IoSearchSharp>
-          </Link>
-        </div>
+        {/* <div className="hidden  md:flex justify-center items-center "> */}
+        {/*   <Link */}
+        {/*     to={"/search"} */}
+        {/*     className="hover:bg-customTextGreen rounded transition-all p-1" */}
+        {/*   > */}
+        {/*     <IoSearchSharp */}
+        {/*       className="w-9 h-9 md:w-7 md:h-7" */}
+        {/*       size={22} */}
+        {/*     ></IoSearchSharp> */}
+        {/*   </Link> */}
+        {/* </div> */}
 
         <Link
           to={"/notifications"}
