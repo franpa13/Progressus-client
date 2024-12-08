@@ -60,3 +60,4 @@ export * from "./stats/ChartBar"
 //SHOP
 export * from "./ui/products/productsGrid"
 export * from "./ui/products/productItem"
+export * from "./shop/QuantitySelector"

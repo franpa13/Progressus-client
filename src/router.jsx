@@ -16,11 +16,13 @@ import {
   Contability,
   ShopSocio,
 } from "./pages";
+import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
 import { HomePlans } from "./pages/plans/HomePlans";
 import { Users } from "./pages/usuarios/Users";
 import { AddExercises } from "./pages/plans/createPlans/addExercises/AddExercises";
 import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
+import { CartPage } from "./pages/shopSocio/cartPage";
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
   {
@@ -159,6 +161,22 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
         <ShopSocio />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shopsocio/product/:id",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <ProductPage />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shopsocio/cart",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        < CartPage/>
       </ProtectedRoute>
     ),
   },
