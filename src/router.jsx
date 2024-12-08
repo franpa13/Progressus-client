@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { ProtectedRoute } from "./components";
 import App from "./App";
+import { TbRulerMeasure } from "react-icons/tb";
 import {
   Profile,
   HomePage,
@@ -16,7 +17,8 @@ import {
   Contability,
   ShopSocio,
   ShopAdmin,
-  CartPage
+  Metrics,
+  CartPage,
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -198,7 +200,14 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-
+  {
+    path: "/metrics",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <Metrics />
+      </ProtectedRoute>
+    ),
+  },
   {
     path: "/notifications",
     element: (

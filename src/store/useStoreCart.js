@@ -7,9 +7,7 @@ const useStoreCart = create(
       cart: [],
       addToCart: (product) => {
         const currentCart = get().cart;
-        const existingProduct = currentCart.find(
-          (item) => item.id === product.id
-        );
+        const existingProduct = currentCart.find((item) => item.id === product.id);
 
         if (existingProduct) {
           // Incrementar cantidad si ya está en el carrito

@@ -18,17 +18,11 @@ import { MdOutlineKeyboardReturn } from "react-icons/md";
 import { LuCalendarDays } from "react-icons/lu";
 import { Link } from "react-router-dom";
 export const ViewPlan = () => {
-  const columnsDayEdit = [
-
-    "Ejercicio",
-    "Series",
-    "Repeticiones",
-    "Acciones",
-  ];
+  const columnsDayEdit = ["Ejercicio", "Series", "Repeticiones", "Acciones"];
   // VER SI ES EDITABLE O NO
   const isEditable = usePlanParaVer((state) => state.isEditable);
   ////////////////////////
-  const columnsDay = ["Ejercicio", "Series", "Repeticiones", "Ver"];
+  const columnsDay = ["Ejercicio", "Series", "Repeticiones", "Ver/Checkear"];
   const planParaVer = usePlanParaVer((state) => state.planParaVer);
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
@@ -109,7 +103,11 @@ export const ViewPlan = () => {
                     isEditable ? " " : "border-gray-300 mt-14   border-b-2"
                   }`}
                 >
-                  <div className={`p-0 flex ${dia.numeroDeDia !== 1  && "mt-12"}  underline justify-center items-center gap-2 mb-0`}>
+                  <div
+                    className={`p-0 flex ${
+                      dia.numeroDeDia !== 1 && "mt-12"
+                    }  underline justify-center items-center gap-2 mb-0`}
+                  >
                     <Title
                       title={`Día ${dia.numeroDeDia}`}
                       className={""}

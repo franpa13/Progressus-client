@@ -43,7 +43,7 @@ export const TableExercices = ({
   const [videoUrl, setVideoUrl] = useState("");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  console.log(arreglo, "arreglo");
+
 
   const [itemEditable, setEditableItem] = useState();
 

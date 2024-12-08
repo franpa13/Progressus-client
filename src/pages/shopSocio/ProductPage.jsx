@@ -29,7 +29,12 @@ export const ProductPage = () => {
     const traerProd = async () => {
       try {
         const respProd = await useGetProductById(id);
-        setProd(respProd?.data?.value || null);
+        const productWithQuantity = {
+          ...respProd?.data?.value, // Mantener las propiedades originales
+          quantity: 1, // Nueva propiedad
+        };
+
+        setProd(productWithQuantity || null);
       } catch (e) {
         console.log(e, "errores");
       } finally {
@@ -46,7 +51,7 @@ export const ProductPage = () => {
     addCart(prod);
     setAlertCart(true);
   };
-
+  console.log(prod, "prod");
 
   return (
     <MainLayout>
@@ -184,7 +189,7 @@ export const ProductPage = () => {
                       <h2 className="mb-2">Cantidad</h2>
                       <QuantitySelector
                         id={prod.id}
-                        quantity={1}
+                        quantity={prod.quantity}
                         maxQuantity={prod.stock}
                         updateQuantity={updateQuantity}
                       />

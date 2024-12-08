@@ -10,14 +10,16 @@ import { RiAddCircleLine } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
 import TablePagination from "@mui/material/TablePagination";
 import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
+import { Checkbox } from "../ui/input/Checkbox";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { Dialog } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
 import { CgGym } from "react-icons/cg";
 import { useGetExerciseById } from "../../service/plans/useGetExerciseById";
-import { useSpinnerStore } from "../../store";
+import { useSpinnerStore, useStoreUserData } from "../../store";
 import { ModalExercise } from "./ModalExercise";
 import { ModalDeleteExercise } from "./ModalDeleteExercise";
+import { useStoreCheckEx } from "../../store/useStoreCheckEx";
 export const TableDay = ({
   day,
   arreglo,
@@ -29,7 +31,11 @@ export const TableDay = ({
   setAlertAddExercise,
   setOpenAlertDelete,
 }) => {
-  console.log(arreglo, "arreglo");
+  const userData = useStoreUserData((state) => state.userData);
+
+  // ROL DE USER
+  const roleUser = userData.roles[0];
+  const { checkedExercises, toggleCheck } = useStoreCheckEx();
   const [modalExercise, setModalExercise] = useState(false);
   const [modalDeleteExercise, setModalDeleteExercise] = useState(false);
   const [exerciseDelete, setExerciseDelete] = useState();
@@ -87,7 +93,7 @@ export const TableDay = ({
   const sortedPaginatedData = paginatedData.sort(
     (a, b) => a.ordenDeEjercicio - b.ordenDeEjercicio
   );
-
+  console.log(sortedPaginatedData, "arreglo deeee");
   return (
     <div>
       {isEditable && (
@@ -95,16 +101,16 @@ export const TableDay = ({
           {/* <span className="text-xl font-semibold">
             Agregar ejercicio al dia {day}
             </span> */}
-            <div className="flex w-full justify-end">
-              <Tooltip title={`Añadir ejercicio al día ${day}`}>
-                <span className="bg-customButtonGreen hover:bg-green-800 rounded p-1">
-                  <RiAddCircleLine
-                    onClick={() => openModalAddExercise()}
-                    className="cursor-pointer text-3xl text-white"
-                  />
-                </span>
-              </Tooltip>
-            </div>
+          <div className="flex w-full justify-end">
+            <Tooltip title={`Añadir ejercicio al día ${day}`}>
+              <span className="bg-customButtonGreen hover:bg-green-800 rounded p-1">
+                <RiAddCircleLine
+                  onClick={() => openModalAddExercise()}
+                  className="cursor-pointer text-3xl text-white"
+                />
+              </span>
+            </Tooltip>
+          </div>
 
           <ModalExercise
             setAlertAddExercise={setAlertAddExercise}
@@ -143,7 +149,7 @@ export const TableDay = ({
                     align={
                       [
                         "Repeticiones",
-                        "Ver",
+                        "Ver/Checkear",
                         "Imagen",
                         "Acciones",
                         "Repeticiones",
@@ -171,66 +177,82 @@ export const TableDay = ({
                   </TableCell>
                 </TableRow>
               ) : (
-                sortedPaginatedData.map((exercise, index) => (
-                  <TableRow
-                    key={index}
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                      "&:hover": {
-                        backgroundColor: "#E6F7FF",
-                      },
-                    }}
-                  >
-                    {/* <TableCell
+                sortedPaginatedData.map((exercise, index) => {
+                  const exerciseKey = `${exercise.ejercicio.id}-${day}`;
+                  console.log(checkedExercises, "exercise key");
+
+                  return (
+                    <TableRow
+                      key={index}
+                      sx={{
+                        "&:last-child td, &:last-child th": { border: 0 },
+                        "&:hover": {
+                          backgroundColor: "#E6F7FF",
+                        },
+                      }}
+                    >
+                      {/* <TableCell
                       sx={{ fontSize: "16px" }}
                       component="th"
                       scope="row"
                     >
                       {exercise?.ordenDeEjercicio}
                     </TableCell> */}
-                    <TableCell sx={{ fontSize: "16px" }} align="left">
-                      {exercise?.ejercicio?.nombre}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: "16px" }} align="center">
-                      {exercise?.series}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: "16px" }} align="center">
-                      {exercise?.repeticiones}
-                    </TableCell>
-                    <TableCell
-                      sx={{
-                        fontSize: "16px",
+                      <TableCell sx={{ fontSize: "16px" }} align="left">
+                        {exercise?.ejercicio?.nombre}
+                      </TableCell>
+                      <TableCell sx={{ fontSize: "16px" }} align="center">
+                        {exercise?.series}
+                      </TableCell>
+                      <TableCell sx={{ fontSize: "16px" }} align="center">
+                        {exercise?.repeticiones}
+                      </TableCell>
+                      <TableCell
+                        sx={{
+                          fontSize: "16px",
 
-                        alignItems: "stretch",
+                          alignItems: "stretch",
 
-                        height: "100%",
-                      }}
-                      align="right"
-                    >
-                      <div className="flex h-full items-center justify-center flex-col gap-8 md:gap-2">
-                        <div
-                          onClick={() => {
-                            handleOpen(
-                              "https://www.youtube.com/watch?v=rT7DgCr-3pg",
-                              exercise
-                            );
-                          }}
-                          className={`p-[2px] w-full md:w-1/6 h-full flex justify-center items-center bg-gray-700  hover:bg-gray-800 rounded  cursor-pointer `}
-                        >
-                          <IoInformationCircleOutline className="text-2xl text-white font-semibold"></IoInformationCircleOutline>
-                        </div>
-                        {isEditable && (
+                          height: "100%",
+                        }}
+                        align="right"
+                      >
+                        <div className="flex h-full items-center justify-center flex-col gap-8 md:gap-2">
                           <div
-                            onClick={() => deleteExercise(exercise)}
-                            className="p-[2px] w-full md:w-1/6 h-full flex justify-center items-center bg-red-600  hover:bg-red-800 rounded  cursor-pointer"
+                            onClick={() => {
+                              handleOpen(
+                                "https://www.youtube.com/watch?v=rT7DgCr-3pg",
+                                exercise
+                              );
+                            }}
+                            className={`p-[2px] w-1/2 md:w-1/6 h-full flex justify-center items-center bg-gray-700  hover:bg-gray-800 rounded  cursor-pointer `}
                           >
-                            <MdDeleteOutline className="text-white text-2xl"></MdDeleteOutline>
+                            <IoInformationCircleOutline className="text-2xl text-white font-semibold"></IoInformationCircleOutline>
                           </div>
-                        )}
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))
+                          {isEditable && (
+                            <div
+                              onClick={() => deleteExercise(exercise)}
+                              className="p-[2px] w-full md:w-1/6 h-full flex justify-center items-center bg-red-600  hover:bg-red-800 rounded  cursor-pointer"
+                            >
+                              <MdDeleteOutline className="text-white text-2xl"></MdDeleteOutline>
+                            </div>
+                          )}
+                          {!isEditable && roleUser == "SOCIO" && (
+                            <div>
+                              <Checkbox
+                                className={"w-5 h-5 md:w-8 md:h-8"}
+                                checked={checkedExercises[exerciseKey]} // Usamos la clave compuesta
+                                onChange={() =>
+                                  toggleCheck(exercise.ejercicio.id, day)
+                                } // Pasamos ejercicioId y día
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
               )}
             </TableBody>
           </Table>

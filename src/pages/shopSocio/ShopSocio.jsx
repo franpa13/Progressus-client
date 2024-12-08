@@ -7,15 +7,18 @@ import { useGetAllProducts } from "../../service/shop/useGetAllProducts";
 import useStoreCart from "../../store/useStoreCart";
 
 import { Link } from "react-router-dom";
+
 export const ShopSocio = () => {
- 
   const [products, setProducts] = useState([]);
   const [loadSkeleton, setLoadSkeleton] = useState(true);
   const cart = useStoreCart((state) => state.cart);
+
   useEffect(() => {
     const traerProducts = async () => {
       try {
         const traerProd = await useGetAllProducts();
+
+
 
         setProducts(traerProd?.data.value || []);
       } catch (e) {
@@ -24,24 +27,26 @@ export const ShopSocio = () => {
         setLoadSkeleton(false);
       }
     };
+
     traerProducts();
   }, []);
 
+  console.log(products, "products");
+
   return (
     <MainLayout>
-      <section className="animate-fade-in-down md:mx-auto bg-white  rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
+      <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
         <div className="flex justify-between items-center p-3">
           <div>
             <Location
               route={`Tienda`}
               subroute={"Todos los productos"}
             ></Location>
-
             <Title title={"Tienda"}></Title>
           </div>
           <Link
             to={"/shopsocio/cart"}
-            className=" relative cursor-pointer  rounded transition-all p-1"
+            className=" relative cursor-pointer rounded transition-all p-1"
           >
             <span className="absolute text-xs rounded-full px-1 font-bold -top-1 bg-red-700 text-white -right-1">
               {cart?.length}
@@ -53,13 +58,11 @@ export const ShopSocio = () => {
         <div className="w-full h-2 md:h-4 bg-customGray"></div>
         <section className="p-3">
           <ProductGrid
-    
             loadSkeleton={loadSkeleton}
             products={products}
           ></ProductGrid>
         </section>
       </section>
- 
     </MainLayout>
   );
 };

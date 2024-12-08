@@ -37,6 +37,7 @@ export const CustomInput = ({
       {Icon && <span className="p-1">{<Icon className={iconColor} />}</span>}
 
       <input
+     
         required={required}
         name={name}
         type={inputType()}

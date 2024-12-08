@@ -16,6 +16,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { GrPlan } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useMembershipStore } from "../../../store/useStoreMembership";
+import { TbRulerMeasure } from "react-icons/tb";
 import clsx from "clsx";
 import {
   useSpinnerStore,
@@ -171,6 +172,12 @@ export const NavBar = () => {
       icon: <FiShoppingCart />,
       link: "/shopsocio",
     },
+    {
+      title: "Mediciones",
+      icon: <TbRulerMeasure />,
+      link: "/metrics",
+    },
+
     {
       title: "Notificaciones",
       icon: <IoMdNotificationsOutline />,

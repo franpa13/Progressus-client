@@ -46,6 +46,8 @@ export const Stats = () => {
         // TRAER MEMBRESIAS CONFIRMADAS POR MES
         const traerConfirm = await useGetMemberConfirm();
         setMembershipConfirm(traerConfirm?.data || []);
+        console.log(traerConfirm , "traer confrim");
+        
         // INGRESOS
         const traerIngresos = await useGetIngresosMensuales();
         setIngresos(traerIngresos?.data || []);
