@@ -7,7 +7,9 @@ const useStoreCart = create(
       cart: [],
       addToCart: (product) => {
         const currentCart = get().cart;
-        const existingProduct = currentCart.find((item) => item.id === product.id);
+        const existingProduct = currentCart.find(
+          (item) => item.id === product.id
+        );
 
         if (existingProduct) {
           // Incrementar cantidad si ya está en el carrito
@@ -28,6 +30,13 @@ const useStoreCart = create(
       removeFromCart: (id) => {
         set({
           cart: get().cart.filter((item) => item.id !== id),
+        });
+      },
+      updateQuantity: (id, quantity) => {
+        set({
+          cart: get().cart.map((item) =>
+            item.id === id ? { ...item, quantity } : item
+          ),
         });
       },
       clearCart: () => {

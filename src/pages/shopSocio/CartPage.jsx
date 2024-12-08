@@ -14,6 +14,8 @@ export const CartPage = () => {
   const deleteItem = (id) => {
     removeFromCart(id);
   };
+  console.log(cart , "cart");
+  
   return (
     <MainLayout>
       <div className="min-h-screen animate-fade-in-down md:mx-auto bg-white  rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20 p-3">

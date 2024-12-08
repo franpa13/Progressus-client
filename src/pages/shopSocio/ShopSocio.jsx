@@ -5,8 +5,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { ProductGrid } from "../../components";
 import { useGetAllProducts } from "../../service/shop/useGetAllProducts";
 import useStoreCart from "../../store/useStoreCart";
-import { SnackbarDefault } from "../../components";
-import alertToCartStore from "../../store/alertToCart";
+
 import { Link } from "react-router-dom";
 export const ShopSocio = () => {
  

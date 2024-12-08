@@ -1,17 +1,39 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 
-export const QuantitySelector = ({ quantity, maxQuantity }) => {
+export const QuantitySelector = ({
+  id,
+  quantity,
+  maxQuantity,
+  updateQuantity,
+}) => {
   const [count, setCount] = useState(quantity);
+  console.log(id, quantity, maxQuantity, updateQuantity);
+
+  const handleIncrement = () => {
+    if (count < maxQuantity) {
+      const newCount = count + 1;
+      setCount(newCount);
+      updateQuantity(id, newCount);
+    }
+  };
+
+  const handleDecrement = () => {
+    if (count > 1) {
+      const newCount = count - 1;
+      setCount(newCount);
+      updateQuantity(id, newCount);
+    }
+  };
+
   return (
-    <div className="flex items-center  ">
+    <div className="flex items-center">
       <button>
         <IoRemoveCircleOutline
           className="cursor-pointer"
-          onClick={() => count > 1 && setCount(count - 1)}
+          onClick={handleDecrement}
           size={27}
-        ></IoRemoveCircleOutline>
+        />
       </button>
       <span className="w-12 mx-3 px-1 bg-gray-200 text-center rounded">
         {count}
@@ -19,9 +41,9 @@ export const QuantitySelector = ({ quantity, maxQuantity }) => {
       <button>
         <IoAddCircleOutline
           className="cursor-pointer"
-          onClick={() => count < maxQuantity && setCount(count + 1)}
+          onClick={handleIncrement}
           size={27}
-        ></IoAddCircleOutline>
+        />
       </button>
     </div>
   );

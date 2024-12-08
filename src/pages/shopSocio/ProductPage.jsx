@@ -17,6 +17,7 @@ export const ProductPage = () => {
   const [alertCart, setAlertCart] = useState(false);
   const [prod, setProd] = useState(null);
   const { id } = useParams();
+  const updateQuantity = useStoreCart((state) => state.updateQuantity);
   const openSpinner = useSpinnerStore((state) => state.showSpinner);
   const closeSpinner = useSpinnerStore((state) => state.hideSpinner);
   const [loading, setLoading] = useState(true);
@@ -40,12 +41,12 @@ export const ProductPage = () => {
   }, [id]);
 
   const selectSize = prod?.talle;
-  console.log(prod, "prod");
+
   const addToCart = () => {
     addCart(prod);
     setAlertCart(true);
   };
-  console.log(prod, "prod");
+
 
   return (
     <MainLayout>
@@ -182,9 +183,11 @@ export const ProductPage = () => {
                     <div className="flex flex-col justify-center items-start mt-2">
                       <h2 className="mb-2">Cantidad</h2>
                       <QuantitySelector
-                        maxQuantity={prod.stock}
+                        id={prod.id}
                         quantity={1}
-                      ></QuantitySelector>
+                        maxQuantity={prod.stock}
+                        updateQuantity={updateQuantity}
+                      />
                     </div>
                   </div>
                 )}

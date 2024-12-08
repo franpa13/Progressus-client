@@ -16,6 +16,7 @@ import {
   Contability,
   ShopSocio,
   ShopAdmin,
+  CartPage
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -23,7 +24,7 @@ import { HomePlans } from "./pages/plans/HomePlans";
 import { Users } from "./pages/usuarios/Users";
 import { AddExercises } from "./pages/plans/createPlans/addExercises/AddExercises";
 import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
-import { CartPage } from "./pages/shopSocio/cartPage";
+
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
   {
