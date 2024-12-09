@@ -8,6 +8,7 @@ import { useGetAllPlansByUser } from "../../service/plans/useGetAllPlansByUser";
 import { ErrorAuth } from "../ui/errorAuth/ErrorAuth";
 import { GiClick } from "react-icons/gi";
 import { useAsignarPlan } from "../../service/plans/useAsignarPlan";
+import { useStoreCheckEx } from "../../store/useStoreCheckEx";
 export const ModalElegirPlan = ({
   open,
   setOpen,
@@ -17,7 +18,7 @@ export const ModalElegirPlan = ({
   const dataUser = useStoreUserData((state) => state.userData);
   // ERROR AL ASIGNAR
   const [errorToAsign, setErrorToAsign] = useState(false);
-
+  const clearStorage = useStoreCheckEx((state) => state.clearStorage);
   // LOADING DEL BUTTON
   const [loading, setLoading] = useState(false);
   const elegirPlan = async () => {
@@ -30,6 +31,7 @@ export const ModalElegirPlan = ({
       if (responseAsignPlan && responseAsignPlan.status == 200) {
         setAlertAsignedPlan(true);
         setOpen(false);
+        clearStorage();
       } else {
         setErrorToAsign(true);
       }

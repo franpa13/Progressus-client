@@ -1,6 +1,6 @@
 // Usar persistencia en Zustand (opcional)
-import {create} from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export const useStoreCheckEx = create(
   persist(
@@ -35,12 +35,13 @@ export const useStoreCheckEx = create(
       isDisabledForDay: (day) => {
         return !!get().disabledCheckboxes[day];
       },
+      clearStorage: () => {
+        set({ checkedExercises: {}, disabledCheckboxes: {} });
+        localStorage.removeItem("exercise-check-storage"); // Borra la persistencia
+      },
     }),
     {
       name: "exercise-check-storage", // Clave en localStorage
     }
   )
 );
-
-
-
