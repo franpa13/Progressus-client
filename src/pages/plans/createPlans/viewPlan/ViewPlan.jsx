@@ -9,7 +9,7 @@ import {
 } from "../../../../components";
 import { MainLayout } from "../../../../layout/MainLayout";
 import usePlanParaVer from "../../../../store/planParaVer";
-
+import { GiFinishLine } from "react-icons/gi";
 import { GiReturnArrow } from "react-icons/gi";
 import { useSpinnerStore } from "../../../../store";
 import { useGetPlanById } from "../../../../service/plans/useGetPlanById";
@@ -30,6 +30,8 @@ export const ViewPlan = () => {
   const [alertDelete, setOpenAlertDelete] = useState(false);
   const [diasDelPlan, setDiasDelPlan] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [daySelected, setDaySelected] = useState("");
+  const [alertDayFinish, setAlertDayFinish] = useState(false);
   useEffect(() => {
     const fetchDataPlan = async () => {
       showSpinner();
@@ -115,6 +117,8 @@ export const ViewPlan = () => {
                     <LuCalendarDays className="text-customTextBlue text-lg md:text-3xl"></LuCalendarDays>
                   </div>
                   <TableDay
+                  setAlertDayFinish = {setAlertDayFinish}
+                  setDaySelected = {setDaySelected}
                     setOpenAlertDelete={setOpenAlertDelete}
                     setAlertAddExercise={setAlertAddExercise}
                     setDiasDelPlan={setDiasDelPlan}
@@ -149,6 +153,13 @@ export const ViewPlan = () => {
         position={{ vertical: "bottom", horizontal: "left" }}
         open={alertDelete}
         setOpen={setOpenAlertDelete}
+      ></SnackbarDefault>
+      <SnackbarDefault
+        message={`Rutina del dia ${daySelected} finalizada`}
+        severity={"success"}
+        position={{ vertical: "bottom", horizontal: "left" }}
+        open={alertDayFinish}
+        setOpen={setAlertDayFinish}
       ></SnackbarDefault>
     </MainLayout>
   );

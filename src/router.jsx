@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { BenefitCard, ProtectedRoute } from "./components";
+import { ProtectedRoute } from "./components";
 import App from "./App";
 import { TbRulerMeasure } from "react-icons/tb";
 import {
@@ -19,6 +19,7 @@ import {
   ShopAdmin,
   Metrics,
   CartPage,
+  Benefits,
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -212,7 +213,7 @@ export const router = createBrowserRouter([
     path: "/benefits",
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
-        <BenefitCard/>
+        <Benefits />
       </ProtectedRoute>
     ),
   },
@@ -224,4 +225,4 @@ export const router = createBrowserRouter([
       </ProtectedRoute>
     ),
   },
-]);
+])

@@ -2,15 +2,45 @@
 import {create} from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export const useStoreCheckEx = create(persist(
-  (set) => ({
-    checkedExercises: {},
-    toggleCheck: (ejercicioId, dia) => set((state) => {
-      const key = `${ejercicioId}-${dia}`;
-      const newCheckedExercises = { ...state.checkedExercises };
-      newCheckedExercises[key] = !newCheckedExercises[key];
-      return { checkedExercises: newCheckedExercises };
+export const useStoreCheckEx = create(
+  persist(
+    (set, get) => ({
+      checkedExercises: {}, // { "exerciseId-day": true/false }
+      disabledCheckboxes: {}, // { "day": true/false }
+
+      toggleCheck: (exerciseId, day) => {
+        const key = `${exerciseId}-${day}`;
+        set((state) => ({
+          checkedExercises: {
+            ...state.checkedExercises,
+            [key]: !state.checkedExercises[key], // Alternar estado
+          },
+        }));
+      },
+
+      isChecked: (exerciseId, day) => {
+        const key = `${exerciseId}-${day}`;
+        return !!get().checkedExercises[key];
+      },
+
+      setDisabledForDay: (day, disabled) => {
+        set((state) => ({
+          disabledCheckboxes: {
+            ...state.disabledCheckboxes,
+            [day]: disabled,
+          },
+        }));
+      },
+
+      isDisabledForDay: (day) => {
+        return !!get().disabledCheckboxes[day];
+      },
     }),
-  }),
-  { name: 'checked-exercises' } // Persistir en localStorage con esta clave
-));
+    {
+      name: "exercise-check-storage", // Clave en localStorage
+    }
+  )
+);
+
+
+

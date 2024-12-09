@@ -10,6 +10,7 @@ import { RiAddCircleLine } from "react-icons/ri";
 import { MdDeleteOutline } from "react-icons/md";
 import TablePagination from "@mui/material/TablePagination";
 import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
+import { useSendRutin } from "../../service/plans/useSendRutin";
 import { Checkbox } from "../ui/input/Checkbox";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { Dialog } from "@mui/material";
@@ -20,6 +21,8 @@ import { useSpinnerStore, useStoreUserData } from "../../store";
 import { ModalExercise } from "./ModalExercise";
 import { ModalDeleteExercise } from "./ModalDeleteExercise";
 import { useStoreCheckEx } from "../../store/useStoreCheckEx";
+import { ButtonSpinner } from "../ui/buttons/ButtonSpinner";
+import { GiFinishLine } from "react-icons/gi";
 export const TableDay = ({
   day,
   arreglo,
@@ -30,9 +33,11 @@ export const TableDay = ({
   setDiasDelPlan,
   setAlertAddExercise,
   setOpenAlertDelete,
+  setAlertDayFinish,
+  setDaySelected,
 }) => {
   const userData = useStoreUserData((state) => state.userData);
-
+  const [loadSendRutina, setLoadSendRutina] = useState(false);
   // ROL DE USER
   const roleUser = userData.roles[0];
   const { checkedExercises, toggleCheck } = useStoreCheckEx();
@@ -44,6 +49,8 @@ export const TableDay = ({
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
   // DIALOG DE INFO
+  const { setDisabledForDay, isDisabledForDay } = useStoreCheckEx();
+
   const [openVideo, setOpenVideo] = useState(false);
   const [exercise, setExercise] = useState();
   const [videoUrl, setVideoUrl] = useState("");
@@ -93,7 +100,39 @@ export const TableDay = ({
   const sortedPaginatedData = paginatedData.sort(
     (a, b) => a.ordenDeEjercicio - b.ordenDeEjercicio
   );
-  console.log(sortedPaginatedData, "arreglo deeee");
+  const areAllChecked = () => {
+    // Filtramos las claves de los ejercicios correspondientes al día actual
+    const dayKeys = arreglo.map(
+      (exercise) => `${exercise.ejercicio.id}-${day}`
+    );
+
+    // Comprobamos si todas las claves están marcadas como `true`
+    const allChecked = dayKeys.every((key) => checkedExercises[key] === true);
+
+    return allChecked;
+  };
+  const sendRutina = async () => {
+    setLoadSendRutina(true);
+    try {
+      const sendRutin = await useSendRutin(
+        userData.identityUserId,
+        areAllChecked()
+      );
+      if (sendRutin.status === 200) {
+        setDisabledForDay(day, true);
+        setAlertDayFinish(true) 
+        setDaySelected(day)
+      }
+
+      console.log(sendRutin, "resp");
+    } catch (e) {
+      console.log(e, "error");
+    } finally {
+      setLoadSendRutina(false);
+    }
+  };
+  const disabled = isDisabledForDay(day);
+
   return (
     <div>
       {isEditable && (
@@ -179,7 +218,6 @@ export const TableDay = ({
               ) : (
                 sortedPaginatedData.map((exercise, index) => {
                   const exerciseKey = `${exercise.ejercicio.id}-${day}`;
-                  console.log(checkedExercises, "exercise key");
 
                   return (
                     <TableRow
@@ -240,11 +278,12 @@ export const TableDay = ({
                           {!isEditable && roleUser == "SOCIO" && (
                             <div>
                               <Checkbox
+                                disabled={disabled}
                                 className={"w-5 h-5 md:w-8 md:h-8"}
-                                checked={checkedExercises[exerciseKey]} // Usamos la clave compuesta
+                                check={checkedExercises[exerciseKey] || false}
                                 onChange={() =>
                                   toggleCheck(exercise.ejercicio.id, day)
-                                } // Pasamos ejercicioId y día
+                                }
                               />
                             </div>
                           )}
@@ -268,6 +307,15 @@ export const TableDay = ({
           labelRowsPerPage="Filas por página"
           labelDisplayedRows={() => ""}
         />
+        <div className="flex justify-end p-3 ">
+          <ButtonSpinner
+            loading={loadSendRutina}
+            onClick={sendRutina}
+            classNameIcon={"text-2xl"}
+            Icon={GiFinishLine}
+            label={`Finalizar rutina del dia ${day}`}
+          ></ButtonSpinner>
+        </div>
       </Paper>
 
       {/* Modal para mostrar el video */}
