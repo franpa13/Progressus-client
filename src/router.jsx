@@ -19,6 +19,7 @@ import {
   ShopAdmin,
   Metrics,
   CartPage,
+  Benefits,
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -205,6 +206,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
         <Metrics />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/benefits",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <Benefits />
       </ProtectedRoute>
     ),
   },
