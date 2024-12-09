@@ -72,7 +72,7 @@ export const NavBar = () => {
       link: "/membership",
     },
     {
-      title: "Contabilidad",
+      title: "Recibos",
       icon: <BsPiggyBank />,
       link: "/contability",
     },

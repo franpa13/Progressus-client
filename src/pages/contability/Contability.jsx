@@ -140,7 +140,7 @@ export const Contability = () => {
       <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
         <div className="b p-3">
           <Location route={`Contabilidad`} subroute={"Reportes"}></Location>
-          <Title title={"Contabilidad"}></Title>
+          <Title title={"Recibos"}></Title>
         </div>
         <div className="w-full h-2 md:h-4 bg-customGray"></div>
         <section className="p-3 mb-4">
