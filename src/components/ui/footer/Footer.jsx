@@ -19,6 +19,7 @@ import { HiOutlineUsers } from "react-icons/hi2";
 import { TbUserCheck } from "react-icons/tb";
 import { FiShoppingCart } from "react-icons/fi";
 // NAVIGATION
+// NAVIGATION
 const routeAdminNavigation = [
   {
     title: "Inicio",
@@ -35,22 +36,32 @@ const routeAdminNavigation = [
     icon: <FaRegAddressCard />,
     link: "/membership",
   },
-
+  {
+    title: "Recibos",
+    icon: <BsPiggyBank />,
+    link: "/contability",
+  },
   {
     title: "Inventario",
     icon: <MdOutlineInventory />,
     link: "/inventary",
   },
   {
-    title: "Usuarios",
-    icon: <HiOutlineUsers />,
-    link: "/users",
+    title: "Shop",
+    icon: <FiShoppingCart />,
+    link: "/shopAdmin",
   },
   {
     title: "Ingreso",
     icon: <TbUserCheck />,
     link: "/attendance",
   },
+  {
+    title: "Usuarios",
+    icon: <HiOutlineUsers />,
+    link: "/users",
+  },
+
   {
     title: "Estadísticas",
     icon: <IoStatsChartOutline />,
@@ -79,6 +90,11 @@ const routeTrainerNavigation = [
     title: "Planes",
     icon: <GrPlan />,
     link: "/plans",
+  },
+  {
+    title: "Ejercicios",
+    icon: <CgGym />,
+    link: "/exercices",
   },
   {
     title: "Estadísticas",
@@ -123,12 +139,22 @@ const routeNavigation = [
     link: "/shopsocio",
   },
   {
+    title: "Mediciones",
+    icon: <TbRulerMeasure />,
+    link: "/metrics",
+  },
+  {
+    title: "Beneficios",
+    icon: <SlPresent />,
+    link: "/benefits",
+  },
+
+  {
     title: "Notificaciones",
     icon: <IoMdNotificationsOutline />,
     link: "/notifications",
   },
 ];
-
 const roleNavigationMap = {
   ADMIN: routeAdminNavigation,
   ENTRENADOR: routeTrainerNavigation,
