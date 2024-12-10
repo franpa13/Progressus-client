@@ -5,7 +5,7 @@ import { BiLogoPinterestAlt } from "react-icons/bi";
 import logo from "/progressus.png";
 import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
-import { CgProfile } from "react-icons/cg";
+import { CgGym, CgProfile } from "react-icons/cg";
 import { GrPlan } from "react-icons/gr";
 import { BsMenuButtonWide, BsPiggyBank } from "react-icons/bs";
 import { MdOutlineInventory } from "react-icons/md";
@@ -16,8 +16,9 @@ import { useStoreUserData } from "../../../store";
 import { useMembershipStore } from "../../../store/useStoreMembership";
 import { SnackbarDefault } from "../snackbar/Snackbar";
 import { HiOutlineUsers } from "react-icons/hi2";
-import { TbUserCheck } from "react-icons/tb";
+import { TbRulerMeasure, TbUserCheck } from "react-icons/tb";
 import { FiShoppingCart } from "react-icons/fi";
+import { SlPresent } from "react-icons/sl";
 // NAVIGATION
 // NAVIGATION
 const routeAdminNavigation = [
