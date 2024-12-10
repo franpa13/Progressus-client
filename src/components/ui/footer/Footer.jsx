@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { GoHome } from "react-icons/go";
 import { CgProfile } from "react-icons/cg";
 import { GrPlan } from "react-icons/gr";
-import { BsMenuButtonWide } from "react-icons/bs";
+import { BsMenuButtonWide, BsPiggyBank } from "react-icons/bs";
 import { MdOutlineInventory } from "react-icons/md";
 import { IoStatsChartOutline } from "react-icons/io5";
 import { IoMdNotificationsOutline } from "react-icons/io";
