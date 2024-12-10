@@ -17,6 +17,7 @@ import { FiShoppingCart } from "react-icons/fi";
 import { GrPlan } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useMembershipStore } from "../../../store/useStoreMembership";
+import { SlPresent } from "react-icons/sl";
 import { TbRulerMeasure } from "react-icons/tb";
 import clsx from "clsx";
 import {
@@ -180,7 +181,7 @@ export const NavBar = () => {
     },
     {
       title: "Beneficios",
-      icon: <FaGift />,
+      icon: <SlPresent />,
       link: "/benefits",
     },
 
@@ -223,7 +224,7 @@ export const NavBar = () => {
       )}
       <nav
         className={clsx(
-          "fixed px-5 py-2 left-0 top-0 w-[230px] md:w-[350px] min-h-screen bg-white z-40 shadow-xl transform transition-all duration-300",
+          "fixed px-5 py-[4px] left-0 top-0 w-[230px] md:w-[350px] min-h-screen bg-white z-40 shadow-xl transform transition-all duration-300",
           { "-translate-x-full": !menu }
         )}
       >
@@ -234,13 +235,13 @@ export const NavBar = () => {
         />
         <div className="flex flex-row-reverse justify-end gap-5 mt-0 mb-2 items-center ">
           <div className="cursor-pointer hover:bg-customBlue rounded p-1">
-            <IoSearchOutline size={26} />
+            <IoSearchOutline size={25} />
           </div>
           <div
             onClick={handleLogout}
             className="cursor-pointer hover:bg-customBlue rounded p-1"
           >
-            <BiLogOut size={26} />
+            <BiLogOut size={25} />
           </div>
         </div>
         {(roleNavigationMap[roleUser] || roleNavigationMap.DEFAULT).map(

@@ -184,7 +184,7 @@ export const HomePage = () => {
         ) : turnoMasCercano &&
           roleUser !== "ENTRENADOR" &&
           roleUser !== "ADMIN" ? (
-          <div className="bg-white mx-3 md:m-0 md:mx-8 p-2 rounded shadow-sm gap-1 flex flex-col md:flex-col justify-center items-center md:w-full">
+          <div className="bg-white mx-3 md:m-0 md:mx-8 p-2 rounded shadow-sm gap-1 flex md:flex-col justify-center items-center">
             <div className="flex flex-col items-center md:flex-row gap-1">
               <Title title={"Tu próximo turno es el día: "} />
               <Title

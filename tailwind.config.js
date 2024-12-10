@@ -13,6 +13,15 @@ export default {
         customTextBlue: "#1890FF",
         customGray: "#F0F2F5",
       },
+      animation: {
+        "spin-slow": "spin 3s linear infinite",
+      },
+      keyframes: {
+        blink: {
+          "0%, 100%": { opacity: 1 },
+          "50%": { opacity: 0.3 },
+        },
+      },
     },
   },
   plugins: [animations],
