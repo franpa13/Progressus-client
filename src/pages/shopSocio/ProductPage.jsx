@@ -68,10 +68,10 @@ export const ProductPage = () => {
           ) : (
             <div className="w-full flex justify-between items-center">
               <Link
-                className="w-1/12 md:w-1/12 flex justify-center items-center py-1 rounded text-black hover:text-white bg-customGreenLigth hover:bg-customTextGreen"
+                className="w-1/12  md:w-[50px] flex justify-center items-center py-1 rounded text-white  bg-customNavBar hover:bg-customTextGreen"
                 to={"/shopsocio"}
               >
-                <MdOutlineKeyboardReturn className="text-lg md:text-2xl " />
+                <MdOutlineKeyboardReturn className="text-lg font-semibold md:text-2xl " />
               </Link>
               <Link
                 to={"/shopsocio/cart"}

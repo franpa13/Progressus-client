@@ -5,15 +5,15 @@ import {
   CustomInput,
   ErrorAuth,
   Checkbox,
-  Spinner,
+
   ModalOlvidarContraseña,
-  SnackbarDefault,
+
 } from "../../components";
 import { useNavigate } from "react-router-dom";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { MdErrorOutline } from "react-icons/md";
 
-import { useAlertStore } from "../../store/useAlertChangePassword";
+
 import { loginUser } from "../../service/auth/use-login";
 import {
   useStoreUser,
@@ -163,7 +163,7 @@ export const Login = () => {
       <Button type="submit" label="Ingresar" />
       <span
         onClick={dontRememberPassword}
-        class="text-blue-500 hover:text-blue-700 cursor-pointer font-semibold underline transition duration-200 text-sm"
+        className="text-blue-500 hover:text-blue-700 cursor-pointer font-semibold underline transition duration-200 text-sm"
       >
         Olvidé mi contraseña
       </span>

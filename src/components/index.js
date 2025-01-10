@@ -66,3 +66,7 @@ export * from "./shop/ModalAddProd"
 
 // BENEFICIOS
 export { default as BenefitCard } from "./benefits/BenefitCard"
+
+//CHECKOUT
+export * from "./checkout/AlertCheck"
+export * from "./checkout/PaymentCheckout"

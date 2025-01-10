@@ -27,6 +27,7 @@ import { HomePlans } from "./pages/plans/HomePlans";
 import { Users } from "./pages/usuarios/Users";
 import { AddExercises } from "./pages/plans/createPlans/addExercises/AddExercises";
 import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
+import { Checkout } from "./pages/checkout/Checkout";
 
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
@@ -214,6 +215,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
         <Benefits />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/shopsocio/cart/checkout",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <Checkout />
       </ProtectedRoute>
     ),
   },
