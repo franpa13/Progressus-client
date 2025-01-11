@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { IoAddCircleOutline, IoRemoveCircleOutline } from "react-icons/io5";
 
-export const QuantitySelector = ({ id, quantity, maxQuantity, updateQuantity }) => {
+export const QuantitySelector = ({ id, quantity, maxQuantity,updateQuantityTwo, updateQuantity ,noExist}) => {
   const [count, setCount] = useState(quantity);
-  console.log(id, quantity, maxQuantity, updateQuantity);
+
   
   const handleIncrement = () => {
     if (count < maxQuantity) {
       const newCount = count + 1;
       setCount(newCount);
+      if(noExist){
+        updateQuantityTwo(newCount)
+      }
       updateQuantity(id, newCount);
     }
   };
@@ -17,6 +20,9 @@ export const QuantitySelector = ({ id, quantity, maxQuantity, updateQuantity }) 
     if (count > 1) {
       const newCount = count - 1;
       setCount(newCount);
+      if(noExist){
+        updateQuantityTwo(newCount)
+      }
       updateQuantity(id, newCount);
     }
   };

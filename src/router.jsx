@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
     path: "/home",
 
     element: (
-      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO"]}>
+      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO" ,"NUTRI"]}>
         <HomePage />
       </ProtectedRoute>
     ),
@@ -48,7 +48,7 @@ export const router = createBrowserRouter([
     path: "/account",
 
     element: (
-      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO"]}>
+      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO" , "NUTRI"]}>
         <Profile />
       </ProtectedRoute>
     ),
@@ -230,6 +230,15 @@ export const router = createBrowserRouter([
     path: "/notifications",
     element: (
       <ProtectedRoute allowedRoles={["ADMIN", "SOCIO", "ENTRENADOR"]}>
+        <Notifications />
+      </ProtectedRoute>
+    ),
+  },
+  // NUTRICIONISTA
+  {
+    path: "/nutritionalplans",
+    element: (
+      <ProtectedRoute allowedRoles={["NUTRI"]}>
         <Notifications />
       </ProtectedRoute>
     ),

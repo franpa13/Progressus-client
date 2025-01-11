@@ -39,28 +39,25 @@ function App() {
   return (
     <LayoutLoginRegister>
       <div
-        className={`animate-fade-in-down w-full min-h-screen  items-center  justify-center p-4 bg-customGray md:flex  md:flex-col md:items-start ${
-          selectedAuth === "login" ? "md:justify-center" : "md:justify-start"
-        }  `}
+        className={`animate-fade-in-down w-full min-h-screen  items-center  justify-center p-4 bg-customGray md:flex  md:flex-col md:items-start ${selectedAuth === "login" ? "md:justify-center" : "md:justify-start"
+          }  `}
       >
         <div className="flex flex-col gap-4 mt-24 items-center justify-center  md:mt-0 md:w-full ">
           <img className="w-2/5 md:w-[195px]" src={logoProgressus} alt="" />
           <div className="flex justify-center gap-12 w-full md:gap-24">
             <span
               onClick={() => setSelectedLogin()}
-              className={`transition-all font-bold cursor-pointer p-1  ${
-                selectedAuth === "login" &&
+              className={`transition-all font-bold cursor-pointer p-1  ${selectedAuth === "login" &&
                 "border-b-2 border-customTextGreen text-customTextGreen md:text-lg"
-              }`}
+                }`}
             >
               Ingresar
             </span>
             <span
               onClick={() => setSelectedRegister()}
-              className={`transition-all font-bold cursor-pointer p-1 ${
-                selectedAuth === "register" &&
+              className={`transition-all font-bold cursor-pointer p-1 ${selectedAuth === "register" &&
                 "border-b-2 border-customTextGreen text-customTextGreen md:text-lg"
-              }`}
+                }`}
             >
               Registrarse
             </span>

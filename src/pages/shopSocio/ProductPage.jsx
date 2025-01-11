@@ -16,6 +16,7 @@ import alertToCartStore from "../../store/alertToCart";
 export const ProductPage = () => {
   const [alertCart, setAlertCart] = useState(false);
   const [prod, setProd] = useState(null);
+  const [localQuantity, setLocalQuantity] = useState(1);
   const { id } = useParams();
   const updateQuantity = useStoreCart((state) => state.updateQuantity);
   const openSpinner = useSpinnerStore((state) => state.showSpinner);
@@ -45,13 +46,13 @@ export const ProductPage = () => {
     traerProd();
   }, [id]);
 
-  const selectSize = prod?.talle;
+  const selectSize = prod?.talle  ? prod.talle:"" ;
 
   const addToCart = () => {
-    addCart(prod);
+    addCart({ ...prod, quantity: localQuantity });
     setAlertCart(true);
   };
-  console.log(prod, "prod");
+
 
   return (
     <MainLayout>
@@ -179,7 +180,7 @@ export const ProductPage = () => {
                 {prod?.talle && (
                   <div className="mb-1">
                     <div className="flex items-center mt-2">
-                      <SizeSelector selectedSize={selectSize}></SizeSelector>
+                      <SizeSelector selectedSize={selectSize }></SizeSelector>
                     </div>
                   </div>
                 )}
@@ -187,12 +188,27 @@ export const ProductPage = () => {
                   <div className="mb-1">
                     <div className="flex flex-col justify-center items-start mt-2">
                       <h2 className="mb-2">Cantidad</h2>
-                      <QuantitySelector
-                        id={prod.id}
-                        quantity={prod.quantity}
-                        maxQuantity={prod.stock}
-                        updateQuantity={updateQuantity}
-                      />
+                      {cart.some((item) => item.id === prod.id) ? (
+                        // Renderizar un QuantitySelector diferente si el producto ya está en el carrito
+                        <QuantitySelector
+                          id={prod.id}
+                          quantity={cart.find((item) => item.id === prod.id)?.quantity || 1}
+                          maxQuantity={prod.stock}
+                          updateQuantity={updateQuantity}
+                        />
+                      ) : (
+                        // Renderizar un QuantitySelector básico si no está en el carrito
+                        <>
+
+                          <QuantitySelector
+                            id={prod.id}
+                            quantity={localQuantity}
+                            maxQuantity={prod.stock}
+                            noExist={true}
+                            updateQuantityTwo={setLocalQuantity} // Actualiza el estado local
+                          />
+                        </>
+                      )}
                     </div>
                   </div>
                 )}

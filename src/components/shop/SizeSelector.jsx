@@ -1,12 +1,14 @@
 import React from "react";
 
 export const SizeSelector = ({ selectedSize, availableSizes }) => {
+  console.log(selectedSize , "selectedSisze");
+  
   return (
     <div className="my-1 ">
       <h3 className="">Talles Disponibles</h3>
       <div className="flex">
         <button className={"hover:underline text-lg font-smibold  underline"}>
-          {selectedSize}
+          {selectedSize !== "string" ? selectedSize : ""}
         </button>
         {/* {availableSizes.map((size)=>{
            return (
