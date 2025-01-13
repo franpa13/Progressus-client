@@ -20,6 +20,7 @@ import {
   Metrics,
   CartPage,
   Benefits,
+  NutritionPlans
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
     path: "/home",
 
     element: (
-      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO" ,"NUTRI"]}>
+      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO", "NUTRICIONISTA"]}>
         <HomePage />
       </ProtectedRoute>
     ),
@@ -48,7 +49,7 @@ export const router = createBrowserRouter([
     path: "/account",
 
     element: (
-      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO" , "NUTRI"]}>
+      <ProtectedRoute allowedRoles={["ADMIN", "ENTRENADOR", "SOCIO", "NUTRICIONISTA"]}>
         <Profile />
       </ProtectedRoute>
     ),
@@ -229,7 +230,7 @@ export const router = createBrowserRouter([
   {
     path: "/notifications",
     element: (
-      <ProtectedRoute allowedRoles={["ADMIN", "SOCIO", "ENTRENADOR"]}>
+      <ProtectedRoute allowedRoles={["ADMIN", "SOCIO", "ENTRENADOR", "NUTRICIONISTA"]}>
         <Notifications />
       </ProtectedRoute>
     ),
@@ -238,8 +239,8 @@ export const router = createBrowserRouter([
   {
     path: "/nutritionalplans",
     element: (
-      <ProtectedRoute allowedRoles={["NUTRI"]}>
-        <Notifications />
+      <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
+        <NutritionPlans />
       </ProtectedRoute>
     ),
   },

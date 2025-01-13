@@ -79,9 +79,8 @@ export const Profile = () => {
   }
 
   const fechaFinal = fechaFinalizacionMembresia
-    ? `${fechaFinalizacionMembresia.getDate()}/${
-        fechaFinalizacionMembresia.getMonth() + 1
-      }/${fechaFinalizacionMembresia.getFullYear()}`
+    ? `${fechaFinalizacionMembresia.getDate()}/${fechaFinalizacionMembresia.getMonth() + 1
+    }/${fechaFinalizacionMembresia.getFullYear()}`
     : "Fecha no disponible";
 
   const selectAvatar = () => {
@@ -158,11 +157,16 @@ export const Profile = () => {
                   ENTRENADOR
                 </span>
               )}
+              {roleUser === "NUTRICIONISTA" && (
+                <span className="rounded-sm bg-orange-300 px-2 py-1 md:px-3 md:py-2 text-xs md:text-base font-semibold text-gray-800">
+                  NUTRICIONISTA
+                </span>
+              )}
             </div>
           </div>
           {/* HARDCODE */}
           {roleUser !== "ADMIN" &&
-            roleUser !== "ENTRENADOR" &&
+            roleUser !== "ENTRENADOR" &&  roleUser !== "NUTRICIONISTA" && 
             (loadingSkeleton ? (
               <LoadingSkeleton
                 count={1}
@@ -176,13 +180,12 @@ export const Profile = () => {
                   Membresías activas
                 </h4>
                 {allMembership &&
-                Array.isArray(allMembership) &&
-                allMembership.length > 0 &&
-                lastMembership.estadoSolicitud.nombre === "Confirmado" ? (
+                  Array.isArray(allMembership) &&
+                  allMembership.length > 0 &&
+                  lastMembership.estadoSolicitud.nombre === "Confirmado" ? (
                   <Stack
-                    duracion={`${mesesDuracionMembresia} ${
-                      mesesDuracionMembresia === 1 ? "mes" : "meses"
-                    }`}
+                    duracion={`${mesesDuracionMembresia} ${mesesDuracionMembresia === 1 ? "mes" : "meses"
+                      }`}
                     titulo={dataMembership.membresia.nombre}
                     fechaFinalizacion={`Finaliza el ${fechaFinal}`}
                   />

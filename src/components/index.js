@@ -73,3 +73,7 @@ export * from "./checkout/PaymentCheckout"
 
 //NOTIS
 export * from "./notis/AcordeonNotis"
+
+
+//NUTRITION
+export * from "./nutrition/TableNutrition"

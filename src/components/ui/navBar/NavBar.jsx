@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IoCloseOutline, IoSearchOutline } from "react-icons/io5";
 import { BiLogOut } from "react-icons/bi";
 import { useNavigate, useLocation } from "react-router-dom";
+import { IoNutritionOutline } from "react-icons/io5";
 import { GoHome } from "react-icons/go";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
@@ -191,7 +192,29 @@ export const NavBar = () => {
       link: "/notifications",
     },
   ];
-
+  // RUTAS DEL NUTRICIONISTA
+  const routerNutri = [
+    {
+      title: "Inicio",
+      icon: <GoHome />,
+      link: "/home",
+    },
+    {
+      title: "Mi cuenta",
+      icon: <CgProfile />,
+      link: "/account",
+    },
+    {
+      title: "Pacientes",
+      icon: <HiOutlineUsers />,
+      link: "/nutritionalplans",
+    },
+    {
+      title: "Notificaciones",
+      icon: <IoMdNotificationsOutline />,
+      link: "/notifications",
+    },
+  ]
   const handleLinkClick = (link) => {
     if (link === "/turns" || (link === "/plans" && roleUser !== "ENTRENADOR")) {
       if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
@@ -208,6 +231,7 @@ export const NavBar = () => {
   const roleNavigationMap = {
     ADMIN: routeAdminNavigation,
     ENTRENADOR: routeTrainerNavigation,
+    NUTRICIONISTA: routerNutri,
     DEFAULT: routeNavigation,
   };
 

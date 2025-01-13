@@ -43,7 +43,7 @@ export const ModalEditUsers = ({
     setLoading(true);
 
     try {
-      const responseEditUser= await useEditRoleUser(
+      const responseEditUser = await useEditRoleUser(
         elementEditable.identityUserId,
         form.rol
       );
@@ -53,7 +53,7 @@ export const ModalEditUsers = ({
           rol: elementEditable?.roles?.[0] || "SOCIO",
         });
         // llamamos de nuevo al endpoint para poder setearlo de nuevo
-        const actualizarUsers= await useGetAllUsers();
+        const actualizarUsers = await useGetAllUsers();
         setInventary(actualizarUsers.data);
         // cerramos modal
         setOpenEditElement(false);
@@ -98,6 +98,8 @@ export const ModalEditUsers = ({
           <option value="SOCIO">SOCIO</option>
 
           <option value="ENTRENADOR">ENTRENADOR</option>
+          <option value="NUTRICIONISTA">NUTRICIONISTA</option>
+
         </select>
 
         <ButtonSpinner
