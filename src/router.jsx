@@ -20,7 +20,8 @@ import {
   Metrics,
   CartPage,
   Benefits,
-  NutritionPlans
+  NutritionPlans,
+ Food
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -29,6 +30,7 @@ import { Users } from "./pages/usuarios/Users";
 import { AddExercises } from "./pages/plans/createPlans/addExercises/AddExercises";
 import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
 import { Checkout } from "./pages/checkout/Checkout";
+
 
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
@@ -241,6 +243,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
         <NutritionPlans />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/food",
+    element: (
+      <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
+        <Food />
       </ProtectedRoute>
     ),
   },

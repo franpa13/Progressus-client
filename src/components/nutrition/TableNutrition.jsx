@@ -13,19 +13,22 @@ import TablePagination from "@mui/material/TablePagination";
 
 import { useEffect } from "react";
 import { ModalEditUserNutri } from "./ModalEditUserNutri";
-
+import { ModalEditFood } from "./ModalEditFood";
 
 export const TableNutrition = ({
     arreglo = [],
     arregloColumns = [],
-
+    alimentos = false
 }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-
+    // PARTE DE PACIENTES
     const [edit, setEdit] = useState(false)
     const [userToEdit, setUserToEdit] = useState()
+
+    // PARTE DE COMIDAS
+    const [editFood, setEditFood] = useState(false)
     // MUSCULO POR EJERCICIO
 
     const handleChangePage = (event, newPage) => {
@@ -46,7 +49,12 @@ export const TableNutrition = ({
     );
 
     const editUser = (user) => {
-        setEdit(true)
+        if (alimentos) {
+            setEditFood(true)
+        } else {
+
+            setEdit(true)
+        }
         setUserToEdit(user)
     }
     return (
@@ -63,7 +71,7 @@ export const TableNutrition = ({
                                             align={
                                                 column == "Opciones" ||
                                                     column == "Plan" ||
-                                                    column === "Peso"
+                                                    column === "Peso(kg)"
 
                                                     ? "right" : "left"
 
@@ -77,8 +85,51 @@ export const TableNutrition = ({
                             </TableRow>
                         </TableHead>
                         <div></div>
-                        <TableBody>
-                            {/* {loading ? (
+                        {alimentos ? (
+                            <TableBody>
+                                {ejerciciosPaginados.map((item, index) => (
+                                    <TableRow
+                                        key={index}
+                                        sx={{
+                                            "&:last-child td, &:last-child th": { border: 0 },
+                                            "&:hover": {
+                                                backgroundColor: "#E6F7FF",
+                                            },
+                                        }}
+                                    >
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {item.alimento}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {item.porcion}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {item.calorias}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {item.carbohidratos}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {item.proteinas}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {item.grasas}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="right">
+                                            <span
+                                                onClick={() => editUser(item)}
+                                                className="text-customTextBlue cursor-pointer"
+                                            >
+                                                Modificar
+                                            </span>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        ) : (
+
+                            <TableBody>
+                                {/* {loading ? (
                                 <TableRow>
                                     <TableCell colSpan={6} align="center">
                                         <LoadingSkeleton
@@ -127,43 +178,45 @@ export const TableNutrition = ({
                                     </TableRow>
                                 ))
                             )} */}
-                            {ejerciciosPaginados.map((user, index) => (
-                                <TableRow
-                                    key={index}
-                                    sx={{
-                                        "&:last-child td, &:last-child th": { border: 0 },
-                                        "&:hover": {
-                                            backgroundColor: "#E6F7FF",
-                                        },
-                                    }}
-                                >
+                                {ejerciciosPaginados.map((user, index) => (
 
-                                    <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.nombre}
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.edad}
-                                    </TableCell>
+                                    <TableRow
+                                        key={index}
+                                        sx={{
+                                            "&:last-child td, &:last-child th": { border: 0 },
+                                            "&:hover": {
+                                                backgroundColor: "#E6F7FF",
+                                            },
+                                        }}
+                                    >
 
-                                    <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.objetivo}
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        {user.peso}
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        {user.plan}
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
-                                            <span onClick={() => editUser(user)} className="text-customTextBlue  cursor-pointer">Editar</span>
-                                            <span className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</span>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {user.nombre}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {user.edad}
+                                        </TableCell>
 
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            {user.objetivo}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="right">
+                                            {user.peso}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="right">
+                                            {user.plan}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="right">
+                                            <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
+                                                <span onClick={() => editUser(user)} className="text-customTextBlue  cursor-pointer">Editar</span>
+                                                <span className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</span>
+
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        )}
                     </Table>
                 </TableContainer>
                 <TablePagination
@@ -180,7 +233,10 @@ export const TableNutrition = ({
 
 
             </Paper>
+            {/* MODAL PARA  EDITAR PACIENTES */}
             <ModalEditUserNutri open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri>
+            {/* MODAL PARA EDITAR ALIMENTO */}
+            <ModalEditFood open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood>
         </>
     );
 };

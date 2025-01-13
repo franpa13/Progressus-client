@@ -7,6 +7,7 @@ import { GoHome } from "react-icons/go";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
+
 import { TbUserCheck } from "react-icons/tb";
 import { FaRegAddressCard } from "react-icons/fa";
 import { BsPiggyBank } from "react-icons/bs";
@@ -210,6 +211,11 @@ export const NavBar = () => {
       link: "/nutritionalplans",
     },
     {
+      title: "Alimentos",
+      icon: <IoNutritionOutline />,
+      link: "/food",
+    },
+    {
       title: "Notificaciones",
       icon: <IoMdNotificationsOutline />,
       link: "/notifications",
@@ -254,10 +260,10 @@ export const NavBar = () => {
       >
         <IoCloseOutline
           size={30}
-          className="absolute top-1 right-1 cursor-pointer"
+          className="absolute top-3 right-1 cursor-pointer"
           onClick={close}
         />
-        <div className="flex flex-row-reverse justify-end gap-5 mt-0 mb-2 items-center ">
+        <div className="flex flex-row-reverse justify-end gap-5 mt-3 mb-2 items-center ">
           <div className="cursor-pointer hover:bg-customBlue rounded p-1">
             <IoSearchOutline size={25} />
           </div>
