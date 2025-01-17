@@ -30,7 +30,7 @@ import { Users } from "./pages/usuarios/Users";
 import { AddExercises } from "./pages/plans/createPlans/addExercises/AddExercises";
 import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
 import { Checkout } from "./pages/checkout/Checkout";
-
+import { CreateNutritionPlans } from "./pages";
 
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
@@ -251,6 +251,13 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
         <Food />
+      </ProtectedRoute>
+    ),
+  },{
+    path: "/nutritionalplans/createplannutrition",
+    element: (
+      <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
+        <CreateNutritionPlans />
       </ProtectedRoute>
     ),
   },

@@ -77,3 +77,8 @@ export * from "./notis/AcordeonNotis"
 
 //NUTRITION
 export * from "./nutrition/TableNutrition"
+export * from "./nutrition/ModalAddFood"
+export * from "./nutrition/DaysSection"
+export * from "./nutrition/TableDays"
+export * from "./nutrition/Macros"
+export * from "./nutrition/InfoNutri"

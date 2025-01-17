@@ -4,6 +4,7 @@ import { Button, CustomInput, Location, Title } from '../../components'
 import { TableNutrition } from '../../components'
 import { CiSearch } from 'react-icons/ci'
 import { IoMdAdd } from 'react-icons/io'
+import { ModalAddFood } from '../../components'
 const alimentos = [
   {
     alimento: "Manzana",
@@ -48,16 +49,17 @@ const alimentos = [
 ];
 const columnasAlimentos = [
   "Alimento",
-  "Porción",
-  "Calorías",
-  "Carbohidratos",
-  "Proteínas",
-  "Grasas",
+  "Porción(gr)",
+  "Calorías(kcal)",
+  "Carbohidratos(gr)",
+  "Proteínas(gr)",
+  "Grasas(gr)",
   "Opciones",
 ];
 
 export const Food = () => {
   const [findElement, setFindElement] = useState("");
+  const [addElement, setAddElement] = useState(false)
   const handleChange = (e) => {
     setFindElement(e.target.value);
   };
@@ -90,7 +92,7 @@ export const Food = () => {
             </div>
             <div className="flex mt-2 md:mt-0 justify-end">
               <Button
-
+                onClick={()=>setAddElement(true)}
                 className="flex  justify-start items-center gap-1 "
                 Icon={IoMdAdd}
                 label={`Añadir alimentos`}
@@ -99,6 +101,7 @@ export const Food = () => {
           </div>
         </section>
         <TableNutrition arreglo={alimentos} arregloColumns={columnasAlimentos} alimentos={true} ></TableNutrition>
+        <ModalAddFood open={addElement} setOpen={setAddElement}></ModalAddFood>
       </section>
     </MainLayout>
   )

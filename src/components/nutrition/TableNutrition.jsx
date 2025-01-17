@@ -14,6 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import { useEffect } from "react";
 import { ModalEditUserNutri } from "./ModalEditUserNutri";
 import { ModalEditFood } from "./ModalEditFood";
+import { Link } from "react-router-dom";
 
 export const TableNutrition = ({
     arreglo = [],
@@ -209,7 +210,7 @@ export const TableNutrition = ({
                                         <TableCell sx={{ fontSize: "16px" }} align="right">
                                             <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
                                                 <span onClick={() => editUser(user)} className="text-customTextBlue  cursor-pointer">Editar</span>
-                                                <span className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</span>
+                                                <Link to={"/nutritionalplans/createplannutrition"} className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</Link>
 
                                             </div>
                                         </TableCell>
