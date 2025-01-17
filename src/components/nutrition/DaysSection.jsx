@@ -13,8 +13,8 @@ export const DaysSection = ({ data }) => {
                 return (
                     <div className='my-5  border-b-2 pb-4' key={i}>
                         <Title className={"text-customTextBlue text-center w-full justify-center"} title={com.name}></Title>
-                        <div className='flex flex-col md:flex-wrap justify-between items-center w-full '>
-                            <div className='w-11/12 md:w-2/3'>
+                        <div className='w-full flex flex-col  md:flex-row  md:justify-between md:items-center  '>
+                            <div className='w-full md:w-2/3  flex justify-center'>
                                 <TableDays arregloColumns={columns} arreglo={alimentos}></TableDays>
 
                             </div>

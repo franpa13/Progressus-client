@@ -50,7 +50,7 @@ export const TableDays = ({
         <>
             <Paper>
                 <TableContainer>
-                    <Table  sx={{ minWidth: 650  }} aria-label="simple table">
+                    <Table  sx={{ minWidth: {xs:300 , xl:800}  }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 {arregloColumns.map((column, index) => {
