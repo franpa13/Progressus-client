@@ -82,3 +82,6 @@ export * from "./nutrition/DaysSection"
 export * from "./nutrition/TableDays"
 export * from "./nutrition/Macros"
 export * from "./nutrition/InfoNutri"
+
+// ORDERS
+export * from "./orders/TableOrders"

@@ -21,7 +21,8 @@ import {
   CartPage,
   Benefits,
   NutritionPlans,
- Food
+ Food ,
+ Orders
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -258,6 +259,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
         <CreateNutritionPlans />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/orders",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <Orders />
       </ProtectedRoute>
     ),
   },

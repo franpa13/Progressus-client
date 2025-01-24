@@ -7,7 +7,7 @@ import { GoHome } from "react-icons/go";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
-
+import MoreOutlinedIcon from '@mui/icons-material/MoreOutlined';
 import { TbUserCheck } from "react-icons/tb";
 import { FaRegAddressCard } from "react-icons/fa";
 import { BsPiggyBank } from "react-icons/bs";
@@ -88,6 +88,10 @@ export const NavBar = () => {
       title: "Shop",
       icon: <FiShoppingCart />,
       link: "/shopAdmin",
+    }, {
+      title: "Pedidos",
+      icon: <MoreOutlinedIcon  fontSize="small" />,
+      link: "/orders",
     },
     {
       title: "Ingreso",
@@ -109,7 +113,7 @@ export const NavBar = () => {
       title: "Notificaciones",
       icon: <IoMdNotificationsOutline />,
       link: "/notifications",
-    },
+    }
   ];
 
   const routeTrainerNavigation = [
