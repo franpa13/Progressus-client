@@ -22,6 +22,7 @@ import {
   Benefits,
   NutritionPlans,
  Food ,
+ PlansNutrition,
  Orders
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
@@ -240,10 +241,24 @@ export const router = createBrowserRouter([
   },
   // NUTRICIONISTA
   {
-    path: "/nutritionalplans",
+    path: "/patients",
     element: (
       <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
         <NutritionPlans />
+      </ProtectedRoute>
+    ),
+  },{
+    path: "/plansnutrition",
+    element: (
+      <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
+        <PlansNutrition />
+      </ProtectedRoute>
+    ),
+  },{
+    path: "/plansnutrition/createplannutrition",
+    element: (
+      <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
+        <CreateNutritionPlans />
       </ProtectedRoute>
     ),
   },
@@ -252,13 +267,6 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
         <Food />
-      </ProtectedRoute>
-    ),
-  },{
-    path: "/nutritionalplans/createplannutrition",
-    element: (
-      <ProtectedRoute allowedRoles={["NUTRICIONISTA"]}>
-        <CreateNutritionPlans />
       </ProtectedRoute>
     ),
   },

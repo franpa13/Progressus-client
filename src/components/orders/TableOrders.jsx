@@ -57,8 +57,8 @@ export const TableOrders = ({
                                             key={index}
                                             align={
                                                 column == "Opciones" ||
-                                                    column == "Plan" ||
-                                                    column === "Peso"
+                                                    column == "Precio" ||
+                                                    column === "Estado"
 
                                                     ? "right" : "left"
 
@@ -134,20 +134,20 @@ export const TableOrders = ({
                                 >
 
                                     <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.nombre}
+                                        #{user.id}
                                     </TableCell>
                                     <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.edad}
+                                        {user.fecha}
                                     </TableCell>
 
                                     <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.objetivo}
+                                        {user.nombreCliente}
                                     </TableCell>
                                     <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        {user.peso}
+                                        {user.precio}
                                     </TableCell>
                                     <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        {user.plan}
+                                        {user.estado}
                                     </TableCell>
                                     <TableCell sx={{ fontSize: "16px" }} align="right">
                                         <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
