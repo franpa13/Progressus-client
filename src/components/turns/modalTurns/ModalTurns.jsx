@@ -106,7 +106,7 @@ export const ModalTurns = ({
     .hour(parseInt(horaInicio.split(":")[0], 10))
     .minute(parseInt(horaInicio.split(":")[1], 10));
 
-  const turnoDisponible = horaActual.isBefore(horaInicioTurno);
+  const turnoDisponible = horaActual.isBefore(horaInicioTurno.add(30, 'minute'));
   console.log(turnoDisponible, "turno disponible");
 
   const fechaArgentina = dayjs()
@@ -149,7 +149,7 @@ console.log(turnosReservados , "turnos reservadoss");
       
       setAlertHoraError(true); // Mostrar alerta de error
     } else {
-      if (!encontrado && turnosReservados?.length === 0 ) {
+      if (!encontrado && turnosReservados?.length <= 1 ) {
         setButtonLoader(true);
         try {
           setOpenAlert(false);

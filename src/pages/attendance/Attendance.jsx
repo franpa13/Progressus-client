@@ -10,6 +10,7 @@ import {
 } from "../../components";
 import { useGetAllUsers } from "../../service/auth/use-getAllUsers";
 import { useSendAsist } from "../../service/users/useSendAsist";
+import { useIngresoConClave } from "../../service/users/useIngresoConClave";
 
 export const Attendance = () => {
   const [userAsistencia, setUserAsistencia] = useState("");
@@ -20,6 +21,9 @@ export const Attendance = () => {
   const [cancelAsist, setCacnelAsist] = useState(false);
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
+  // NUEVOS ESTADOS PARA EL MODAL Y LA CLAVE
+  const [openModal, setOpenModal] = useState(false);
+  const [userClave, setUserClave] = useState("");
   // BUSCAR ELEMENTO
   const [findElement, setFindElement] = useState("");
 
@@ -50,6 +54,7 @@ export const Attendance = () => {
       setCacnelAsist(false); // Ocultar el spinner
     }, 1000); // 2 segundos
   };
+  
   // ACEPTAR ASISTENCIA
   const sendAsistencia = async () => {
     setConfirmAsist(true);
@@ -58,14 +63,15 @@ export const Attendance = () => {
       const responseSendAsist = await useSendAsist(
         userAsistencia.identityUserId
       );
-      console.log(responseSendAsist, "response send");
-      if (responseSendAsist && responseSendAsist.status == 200) {
+      if (responseSendAsist && responseSendAsist.status === 200) {
         setAlertSuccess(true);
         setTimeout(() => {
           setUserAsistencia("");
         }, 500);
       } else {
+        // Si no tiene turno, mostrar el modal
         setAlertError(true);
+        setOpenModal(true);
       }
     } catch (e) {
       console.log(e, "errorrrrs");
@@ -73,28 +79,46 @@ export const Attendance = () => {
       setConfirmAsist(false);
     }
   };
+
+  // Manejar el submit del modal con la clave
+  const handleClaveSubmit = async () => {
+    try {
+      const response = await useIngresoConClave(userAsistencia.identityUserId, userClave);
+      if (response && response.status === 200) {
+        setAlertSuccess(true);
+        setTimeout(() => {
+          setUserAsistencia("");
+          setUserClave("");
+        }, 500);
+      } else {
+        setAlertError(true); // Si la clave es incorrecta
+      }
+    } catch (e) {
+      console.log(e,"Error al ingresar con clave");
+    } finally {
+      setOpenModal(false); // Cerrar el modal después del intento
+    }
+  };
+
   return (
     <MainLayout>
       {/* REGISTRAR ASISTENCIA */}
-      <section className="animate-fade-in-down md:mx-auto bg-white  rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
+      <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
         <div className="b p-3">
           <Location
             route={`Asistencia`}
             subroute={"Marcar asistencia"}
           ></Location>
-
           <Title title={"Registrar asistencia"}></Title>
         </div>
-        {/* DIVISION GRAY */}
         <div className="w-full h-2 md:h-4 bg-customGray"></div>
-        {/* ////////////////////////////////////////////// */}
-        <div className="flex flex-col mt-3 gap-5 w-full   justify-center items-center">
+        <div className="flex flex-col mt-3 gap-5 w-full justify-center items-center">
           <SelectNavegable
             label={"Elegir usuario"}
             options={users}
             onSelect={setUserAsistencia}
           ></SelectNavegable>
-          <div className=" mb-8 flex flex-col justify-center items-center py-4 gap-3 mx-16 rounded">
+          <div className="mb-8 flex flex-col justify-center items-center py-4 gap-3 mx-16 rounded">
             <div className="flex justify-center flex-col">
               <Title
                 className={"text-customTextBlue w-full text-center "}
@@ -143,13 +167,48 @@ export const Attendance = () => {
         severity={"warning"}
       ></SnackbarDefault>
 
-      {/* ALERT success  CONFIRMAR ASISTENCIA */}
+      {/* ALERT success CONFIRMAR ASISTENCIA */}
       <SnackbarDefault
         message={"Asistencia confirmada correctamente!"}
         open={alertSuccess}
         setOpen={setAlertSuccess}
         severity={"success"}
       ></SnackbarDefault>
+
+      {/* Modal para ingresar clave */}
+      {openModal && (
+  <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white rounded-lg shadow-xl w-11/12 sm:w-96 p-6 relative">
+      {/* Botón de cerrar en la esquina */}
+      <button
+        onClick={() => setOpenModal(false)}
+        className="absolute top-2 right-2 text-red-600 hover:text-red-800 font-bold text-2xl"
+      >
+        &times;
+      </button>
+
+      <h3 className="text-lg font-semibold text-center mb-4">
+        ¿Quieres realizar un ingreso con clave?
+      </h3>
+
+      <div className="mt-4">
+        <input
+          type="password"
+          placeholder="Ingresa tu clave"
+          value={userClave}
+          onChange={(e) => setUserClave(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded-md mb-4"
+        />
+        <button
+          onClick={handleClaveSubmit}
+          className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+        >
+          Confirmar
+        </button>
+      </div>
+    </div>
+  </div>
+)}
     </MainLayout>
   );
 };
