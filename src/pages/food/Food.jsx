@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
-import { Button, CustomInput, Location, Title } from '../../components'
-import { TableNutrition } from '../../components'
+import { Button, CustomInput, Location, Title, PatentTable } from '../../components'
+
 import { CiSearch } from 'react-icons/ci'
 import { IoMdAdd } from 'react-icons/io'
 import { ModalAddFood } from '../../components'
@@ -92,7 +92,7 @@ export const Food = () => {
             </div>
             <div className="flex mt-2 md:mt-0 justify-end">
               <Button
-                onClick={()=>setAddElement(true)}
+                onClick={() => setAddElement(true)}
                 className="flex  justify-start items-center gap-1 "
                 Icon={IoMdAdd}
                 label={`Añadir alimentos`}
@@ -100,7 +100,7 @@ export const Food = () => {
             </div>
           </div>
         </section>
-        <TableNutrition arreglo={alimentos} arregloColumns={columnasAlimentos} alimentos={true} ></TableNutrition>
+        <PatentTable arreglo={alimentos} arregloColumns={columnasAlimentos} alimentos={true} ></PatentTable>
         <ModalAddFood open={addElement} setOpen={setAddElement}></ModalAddFood>
       </section>
     </MainLayout>

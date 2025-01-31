@@ -9,22 +9,28 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-
+import { MdOutlineDeleteOutline } from "react-icons/md";
 
 import { useEffect } from "react";
+import { useCrearPlan, useEditPlan, useStorePlanForView } from "../../store/useStoreNutrition";
 
 
 export const TableDays = ({
+    editable,
+    tipoComida,
+    day,
     arreglo = [],
     arregloColumns = [],
 
 }) => {
-    console.log(arreglo, "arregloooo");
-
+    console.log(tipoComida, "tipocomida");
+    
+    const eliminarAlimento = useCrearPlan((state) => state.eliminarAlimento);
+    const isEditable = useStorePlanForView((state) => state.isEditable);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-
+    const eliminarEditable = useEditPlan((state) => state.eliminarAlimentoEnPlanEditado);
 
     // MUSCULO POR EJERCICIO
 
@@ -44,13 +50,23 @@ export const TableDays = ({
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
+    const deleteFood = (comida) => {
+        if (editable) {
+            console.log(comida , "comida");
+            
+            eliminarEditable(day, tipoComida, comida.alimentoId            );
+            console.log("entr aqui");
 
+        }
+        eliminarAlimento(day, tipoComida, comida.alimentoId);
+
+    }
 
     return (
         <>
             <Paper>
                 <TableContainer>
-                    <Table  sx={{ minWidth: {xs:300 , xl:800}  }} aria-label="simple table">
+                    <Table sx={{ minWidth: { xl: 1200 } }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 {arregloColumns.map((column, index) => {
@@ -136,7 +152,7 @@ export const TableDays = ({
                                 >
 
                                     <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.alimento}
+                                        {user.alimentoNombre}
                                     </TableCell>
                                     <TableCell sx={{ fontSize: "16px" }} align="center">
                                         {user.cantidad}
@@ -145,14 +161,16 @@ export const TableDays = ({
                                     <TableCell sx={{ fontSize: "16px" }} align="center">
                                         {user.medida}
                                     </TableCell>
+                                    {isEditable && (
 
-                                    <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
-                                            <span className="text-red-600  cursor-pointer">Eliminar</span>
+                                        <TableCell sx={{ fontSize: "16px" }} align="right">
+                                            <div className="flex font-semibold flex-col text-sm gap-2 items-end justify-end ">
+                                                <span onClick={() => deleteFood(user )} className="text-red-600 text-xl  md:text-2xl cursor-pointer"><MdOutlineDeleteOutline></MdOutlineDeleteOutline> </span>
 
 
-                                        </div>
-                                    </TableCell>
+                                            </div>
+                                        </TableCell>
+                                    )}
                                 </TableRow>
                             ))}
                         </TableBody>
@@ -172,6 +190,7 @@ export const TableDays = ({
 
 
             </Paper>
+
 
         </>
     );

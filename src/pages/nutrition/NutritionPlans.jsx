@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
-import { CustomInput, Location, TableNutrition, Title } from '../../components'
+import { CustomInput, Location, PatentTable, Title } from '../../components'
 import { CiSearch } from 'react-icons/ci'
 const arregloCol = ["Nombre", "Edad", "Objetivo", "Grasa" , "Peso(kg)", "Plan"]
 const arreglo = [
@@ -44,7 +44,7 @@ export const NutritionPlans = () => {
                         ></CustomInput>
                     </div>
                 </section>
-                <TableNutrition arregloColumns={arregloCol} arreglo={arreglo}></TableNutrition>
+                <PatentTable arregloColumns={arregloCol} arreglo={arreglo}></PatentTable>
             </section>
         </MainLayout>
     )

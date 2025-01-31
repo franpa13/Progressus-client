@@ -27,16 +27,19 @@ export const Attendance = () => {
   // BUSCAR ELEMENTO
   const [findElement, setFindElement] = useState("");
 
+
   useEffect(() => {
     showSpinner();
     const fetchUsers = async () => {
       try {
         const response = await useGetAllUsers();
         const socios = response.data.filter((user) =>
-            user.roles.includes("SOCIO")
-          );
-    
+          user.roles.includes("SOCIO")
+        );
+
         setUsers(socios);
+        console.log(socios, "sociossssss");
+
       } catch (e) {
         console.log(e, "error");
       } finally {
@@ -54,7 +57,7 @@ export const Attendance = () => {
       setCacnelAsist(false); // Ocultar el spinner
     }, 1000); // 2 segundos
   };
-  
+
   // ACEPTAR ASISTENCIA
   const sendAsistencia = async () => {
     setConfirmAsist(true);
@@ -94,7 +97,7 @@ export const Attendance = () => {
         setAlertError(true); // Si la clave es incorrecta
       }
     } catch (e) {
-      console.log(e,"Error al ingresar con clave");
+      console.log(e, "Error al ingresar con clave");
     } finally {
       setOpenModal(false); // Cerrar el modal después del intento
     }
@@ -177,38 +180,38 @@ export const Attendance = () => {
 
       {/* Modal para ingresar clave */}
       {openModal && (
-  <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white rounded-lg shadow-xl w-11/12 sm:w-96 p-6 relative">
-      {/* Botón de cerrar en la esquina */}
-      <button
-        onClick={() => setOpenModal(false)}
-        className="absolute top-2 right-2 text-red-600 hover:text-red-800 font-bold text-2xl"
-      >
-        &times;
-      </button>
+        <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white rounded-lg shadow-xl w-11/12 sm:w-96 p-6 relative">
+            {/* Botón de cerrar en la esquina */}
+            <button
+              onClick={() => setOpenModal(false)}
+              className="absolute top-2 right-2 text-red-600 hover:text-red-800 font-bold text-2xl"
+            >
+              &times;
+            </button>
 
-      <h3 className="text-lg font-semibold text-center mb-4">
-        ¿Quieres realizar un ingreso con clave?
-      </h3>
+            <h3 className="text-lg font-semibold text-center mb-4">
+              ¿Quieres realizar un ingreso con clave?
+            </h3>
 
-      <div className="mt-4">
-        <input
-          type="password"
-          placeholder="Ingresa tu clave"
-          value={userClave}
-          onChange={(e) => setUserClave(e.target.value)}
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-        />
-        <button
-          onClick={handleClaveSubmit}
-          className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
-        >
-          Confirmar
-        </button>
-      </div>
-    </div>
-  </div>
-)}
+            <div className="mt-4">
+              <input
+                type="password"
+                placeholder="Ingresa tu clave"
+                value={userClave}
+                onChange={(e) => setUserClave(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-md mb-4"
+              />
+              <button
+                onClick={handleClaveSubmit}
+                className="w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </MainLayout>
   );
 };
