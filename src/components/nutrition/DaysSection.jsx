@@ -12,9 +12,9 @@ import { createPlanNutrition } from '../../service/nutrition/createPlanNutrition
 import { RiAddCircleLine } from 'react-icons/ri';
 import { useStoreNutrition } from '../../store/useStoreNutrition';
 import { ModalAddFoodToPlan } from './ModalAddFoodToPlan';
+
 export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day }) => {
-
-
+ 
     const alimentos = useCrearPlan((state) => state.alimentos);
     const setAlimentos = useCrearPlan((state) => state.setAlimentos);
     const [tipoComida, setTipoComida] = useState("")
@@ -81,8 +81,8 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
         }
     };
     const handleClick = (tipoComida) => {
-        console.log(tipoComida , "click");
-        
+        console.log(tipoComida, "click");
+
         setOpenAddFood(true)
 
 
@@ -90,8 +90,8 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
     }
 
 
-    const columnsEditable = ["Alimento", "Cantidad", "Medida", ""]
-    const columns = ["Alimento", "Cantidad", "Medida"]
+    const columnsEditable = ["Alimento", "Cantidad", "Porcion(gr)", "Kcal", "Grasas", "Carbohidratos", "Proteinas", ""]
+    const columns = ["Alimento", "Cantidad", "Porcion(gr)", "Kcal", "Grasas", "Carbohidratos", "Proteinas",]
     const comidas = [{ name: "Desayuno", keys: "desayuno" }, { name: "Media Mañana", keys: "mediaMañana" }, { name: "Almuerzo", keys: "almuerzo" }, { name: "Media Tarde", keys: "mediaTarde" }, { name: "Cena", keys: "cena" }]
     return (
         <form className='mt-3'>
@@ -119,12 +119,12 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                         <div className='w-full flex flex-col  md:flex-row  md:justify-between md:items-center  '>
 
                             <div className='w-full   flex items-center justify-center'>
-                                <TableDays day={day} editable={editable} tipoComida={com.tipoComida} arregloColumns={isEditable ? columnsEditable : columns} arreglo={com.alimentos}></TableDays>
+                                <TableDays openAdd={openAddFood} day={day} editable={editable} tipoComida={com.tipoComida} arregloColumns={isEditable ? columnsEditable : columns} arreglo={com.alimentos}></TableDays>
 
                             </div>
                             {/* <Macros></Macros> */}
                         </div>
-                        <InfoNutri></InfoNutri>
+                        <InfoNutri comidas ={com.alimentos}></InfoNutri>
 
                     </div>
 
@@ -158,9 +158,9 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                                     </div>
 
                                     {/* Renderizar alimentos filtrados */}
-                                    <TableDays tipoComida={comida.name} day={day} arregloColumns={isEditable ? columnsEditable : columns} arreglo={alimentosFiltrados} />
+                                    <TableDays openAdd={openAddFood} tipoComida={comida.name} day={day} arregloColumns={isEditable ? columnsEditable : columns} arreglo={alimentosFiltrados} />
                                 </div>
-                                <InfoNutri></InfoNutri>
+                                <InfoNutri  comidas ={alimentosFiltrados}></InfoNutri>
                             </div>
                         );
                     })}
@@ -174,7 +174,7 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                 <ButtonSpinner label='Guardar dia'></ButtonSpinner>
 
             </div> */}
-            <ModalAddFoodToPlan editable ={editable} nombreDia={day} tipoComida={tipoComida} open={openAddFood} setOpen={setOpenAddFood}></ModalAddFoodToPlan>
+            <ModalAddFoodToPlan editable={editable} nombreDia={day} tipoComida={tipoComida} open={openAddFood} setOpen={setOpenAddFood}></ModalAddFoodToPlan>
             {day === "Sábado" && isEditable && !editable && <div className='flex justify-end w-full'>
                 <ButtonSpinner onClick={handleSubmit} loading={loading} label='Guardar plan'></ButtonSpinner>
             </div>}
