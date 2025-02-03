@@ -85,5 +85,6 @@ export * from "./nutrition/InfoNutri"
 export * from "./nutrition/NutritionTable"
 export * from "./nutrition/ModalAddPlan"
 export * from "./nutrition/ModalAddFoodToPlan"
+export * from "./nutrition/ModalAsignPlan"
 // ORDERS
 export * from "./orders/TableOrders"

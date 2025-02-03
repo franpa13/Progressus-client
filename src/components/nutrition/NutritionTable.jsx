@@ -6,6 +6,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import { ModalAsignPlan } from "./ModalAsignPlan";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
@@ -16,18 +17,22 @@ import { ModalEditUserNutri } from "./ModalEditUserNutri";
 import { ModalEditFood } from "./ModalEditFood";
 import { Link } from "react-router-dom";
 import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
+import { SnackbarDefault } from "../ui/snackbar/Snackbar";
 
 export const NutritionTable = ({
     arreglo = [],
     arregloColumns = [],
-    loading
+    loading,setAlertAsignedPlan
 }) => {
     const cargarPlanEditado = useEditPlan((state) => state.cargarPlanParaEditar);
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const setNombre = useStoreNutrition(state => state.setNombre);
+    const [planAsign, setPlanAsign] = useState(null)
     const setPlanForView = useStorePlanForView((state) => state.setPlanForView);
     const setIsEditable = useStorePlanForView((state) => state.setIsEditable);
+    const [asign, setAsign] = useState(false)
+
     // MUSCULO POR EJERCICIO
 
     const handleChangePage = (event, newPage) => {
@@ -47,8 +52,8 @@ export const NutritionTable = ({
         page * rowsPerPage + rowsPerPage
     );
     const handleClick = (plan, edit) => {
-        console.log(plan , "plannnn");
-        
+
+
         setNombre(null)
         setPlanForView(plan)
         // para ver si se puede editar o no el plan
@@ -59,6 +64,10 @@ export const NutritionTable = ({
 
             setIsEditable(false)
         }
+    }
+    const handleClickAsign = (plan) => {
+        setAsign(true)
+        setPlanAsign(plan)
     }
     return (
         <>
@@ -182,10 +191,15 @@ export const NutritionTable = ({
 
 
                                     <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        <div className="flex font-semibold  text-sm gap-5 justify-end  ">
+                                        <div className="flex font-semibold  text-sm gap-3 justify-end  ">
                                             <Link to={"/plansnutrition/createplannutrition"} onClick={() => handleClick(user, false)} className="text-customTextBlue  cursor-pointer"> <RemoveRedEyeOutlinedIcon></RemoveRedEyeOutlinedIcon></Link>
                                             <Link to={"/plansnutrition/editPlan"} onClick={() => handleClick(user, true)} className="cursor-pointer  text-customNavBar "><CreateOutlinedIcon></CreateOutlinedIcon> </Link>
-
+                                            <div
+                                                onClick={() => handleClickAsign(user)}
+                                                className="text-black underline cursor-pointer"
+                                            >
+                                                Asignar
+                                            </div>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -208,10 +222,9 @@ export const NutritionTable = ({
 
 
             </Paper>
-            {/* MODAL PARA  EDITAR PACIENTES */}
-            {/* <ModalEditUserNutri open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri> */}
-            {/* MODAL PARA EDITAR ALIMENTO */}
-            {/* <ModalEditFood open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood> */}
+       
+            {/* MODAL PARA  ASIGNAR PLAN PACIENTES */}
+            < ModalAsignPlan  setAlertAsignedPlan={setAlertAsignedPlan} open={asign} plan={planAsign} setOpen={setAsign}></ ModalAsignPlan>
         </>
     );
 };
