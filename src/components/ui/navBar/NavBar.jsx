@@ -187,10 +187,14 @@ export const NavBar = () => {
     },
     {
       title: "Beneficios",
-      icon: <SlPresent />,
+      icon: <HiOutlineUsers />,
       link: "/benefits",
     },
-
+    {
+      title: "Planes Nutricionales",
+      icon: <IoNutritionOutline />,
+      link: "/nutritionalsocio",
+    },
     {
       title: "Notificaciones",
       icon: <IoMdNotificationsOutline />,

@@ -32,6 +32,7 @@ import { AddExercises } from "./pages/plans/createPlans/addExercises/AddExercise
 import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
 import { Checkout } from "./pages/checkout/Checkout";
 import { CreateNutritionPlans } from "./pages";
+import { NutritionSocio } from "./pages/nutrition/NutritionSocio";
 
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
@@ -171,6 +172,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
         <ShopSocio />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/nutritionalsocio",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <NutritionSocio />
       </ProtectedRoute>
     ),
   },
