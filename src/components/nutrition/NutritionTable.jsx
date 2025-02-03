@@ -5,31 +5,34 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import { ModalAsignPlan } from "./ModalAsignPlan";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-
-
+import { useEditPlan, useStoreNutrition, useStorePlanForView } from "../../store/useStoreNutrition";
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { useEffect } from "react";
 import { ModalEditUserNutri } from "./ModalEditUserNutri";
 import { ModalEditFood } from "./ModalEditFood";
 import { Link } from "react-router-dom";
+import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
+import { SnackbarDefault } from "../ui/snackbar/Snackbar";
 
-export const TableNutrition = ({
+export const NutritionTable = ({
     arreglo = [],
     arregloColumns = [],
-    alimentos = false
+    loading,setAlertAsignedPlan
 }) => {
+    const cargarPlanEditado = useEditPlan((state) => state.cargarPlanParaEditar);
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const setNombre = useStoreNutrition(state => state.setNombre);
+    const [planAsign, setPlanAsign] = useState(null)
+    const setPlanForView = useStorePlanForView((state) => state.setPlanForView);
+    const setIsEditable = useStorePlanForView((state) => state.setIsEditable);
+    const [asign, setAsign] = useState(false)
 
-    // PARTE DE PACIENTES
-    const [edit, setEdit] = useState(false)
-    const [userToEdit, setUserToEdit] = useState()
-
-    // PARTE DE COMIDAS
-    const [editFood, setEditFood] = useState(false)
     // MUSCULO POR EJERCICIO
 
     const handleChangePage = (event, newPage) => {
@@ -48,15 +51,23 @@ export const TableNutrition = ({
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
+    const handleClick = (plan, edit) => {
 
-    const editUser = (user) => {
-        if (alimentos) {
-            setEditFood(true)
+
+        setNombre(null)
+        setPlanForView(plan)
+        // para ver si se puede editar o no el plan
+        if (edit) {
+            setIsEditable(true)
+            cargarPlanEditado(plan)
         } else {
 
-            setEdit(true)
+            setIsEditable(false)
         }
-        setUserToEdit(user)
+    }
+    const handleClickAsign = (plan) => {
+        setAsign(true)
+        setPlanAsign(plan)
     }
     return (
         <>
@@ -72,7 +83,7 @@ export const TableNutrition = ({
                                             align={
                                                 column == "Opciones" ||
                                                     column == "Plan" ||
-                                                    column === "Peso(kg)"
+                                                    column === "Peso(kg)" || column == "Acciones"
 
                                                     ? "right" : "left"
 
@@ -86,51 +97,31 @@ export const TableNutrition = ({
                             </TableRow>
                         </TableHead>
                         <div></div>
-                        {alimentos ? (
-                            <TableBody>
-                                {ejerciciosPaginados.map((item, index) => (
-                                    <TableRow
-                                        key={index}
-                                        sx={{
-                                            "&:last-child td, &:last-child th": { border: 0 },
-                                            "&:hover": {
-                                                backgroundColor: "#E6F7FF",
-                                            },
-                                        }}
-                                    >
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.alimento}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.porcion}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.calorias}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.carbohidratos}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.proteinas}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.grasas}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            <span
-                                                onClick={() => editUser(item)}
-                                                className="text-customTextBlue cursor-pointer"
-                                            >
-                                                Modificar
-                                            </span>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        ) : (
 
+
+                        {loading ? (
                             <TableBody>
-                                {/* {loading ? (
+                                <TableRow>
+                                    <TableCell colSpan={6} align="center">
+                                        <LoadingSkeleton
+                                            width={"100%"}
+                                            height={30}
+                                            count={5}
+                                        ></LoadingSkeleton>
+                                    </TableCell>
+                                </TableRow>
+                            </TableBody>) : arreglo.length === 0 && (
+                                <TableRow>
+                                    <TableCell
+                                        colSpan={2}
+                                        sx={{ fontSize: "18px" }}
+                                        align="center"
+                                    >
+                                        {` No se encontraron planes`}
+                                    </TableCell>
+                                </TableRow>)}
+                        {/* {loading ? (
+                                 <TableBody>
                                 <TableRow>
                                     <TableCell colSpan={6} align="center">
                                         <LoadingSkeleton
@@ -179,45 +170,42 @@ export const TableNutrition = ({
                                     </TableRow>
                                 ))
                             )} */}
-                                {ejerciciosPaginados.map((user, index) => (
+                        <TableBody>
+                            {ejerciciosPaginados.map((user, index) => (
 
-                                    <TableRow
-                                        key={index}
-                                        sx={{
-                                            "&:last-child td, &:last-child th": { border: 0 },
-                                            "&:hover": {
-                                                backgroundColor: "#E6F7FF",
-                                            },
-                                        }}
-                                    >
+                                <TableRow
+                                    key={index}
+                                    sx={{
+                                        "&:last-child td, &:last-child th": { border: 0 },
+                                        "&:hover": {
+                                            backgroundColor: "#E6F7FF",
+                                        },
+                                    }}
+                                >
 
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {user.nombre}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {user.edad}
-                                        </TableCell>
+                                    <TableCell sx={{ fontSize: "16px" }} align="left">
+                                        {user.nombre}
+                                    </TableCell>
 
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {user.objetivo}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            {user.peso}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            {user.plan}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
-                                                <span onClick={() => editUser(user)} className="text-customTextBlue  cursor-pointer">Editar</span>
-                                                <Link to={"/nutritionalplans/createplannutrition"} className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</Link>
 
+
+
+                                    <TableCell sx={{ fontSize: "16px" }} align="right">
+                                        <div className="flex font-semibold  text-sm gap-3 justify-end  ">
+                                            <Link to={"/plansnutrition/createplannutrition"} onClick={() => handleClick(user, false)} className="text-customTextBlue  cursor-pointer"> <RemoveRedEyeOutlinedIcon></RemoveRedEyeOutlinedIcon></Link>
+                                            <Link to={"/plansnutrition/editPlan"} onClick={() => handleClick(user, true)} className="cursor-pointer  text-customNavBar "><CreateOutlinedIcon></CreateOutlinedIcon> </Link>
+                                            <div
+                                                onClick={() => handleClickAsign(user)}
+                                                className="text-black underline cursor-pointer"
+                                            >
+                                                Asignar
                                             </div>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        )}
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+
                     </Table>
                 </TableContainer>
                 <TablePagination
@@ -234,10 +222,9 @@ export const TableNutrition = ({
 
 
             </Paper>
-            {/* MODAL PARA  EDITAR PACIENTES */}
-            <ModalEditUserNutri open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri>
-            {/* MODAL PARA EDITAR ALIMENTO */}
-            <ModalEditFood open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood>
+       
+            {/* MODAL PARA  ASIGNAR PLAN PACIENTES */}
+            < ModalAsignPlan  setAlertAsignedPlan={setAlertAsignedPlan} open={asign} plan={planAsign} setOpen={setAsign}></ ModalAsignPlan>
         </>
     );
 };

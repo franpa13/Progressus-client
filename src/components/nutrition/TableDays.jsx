@@ -1,32 +1,58 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // Asegúrate de importar useEffect
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-
-
-import { useEffect } from "react";
-
-
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { useCrearPlan, useEditPlan, useStorePlanForView } from "../../store/useStoreNutrition";
+import { useFoodById } from "../../service/nutrition/useFoodById";
+import { useSpinnerStore } from '../../store';
 export const TableDays = ({
+    openAdd , 
+    editable,
+    tipoComida,
+    day,
     arreglo = [],
     arregloColumns = [],
-
 }) => {
-    console.log(arreglo, "arregloooo");
-
+    const [foodData, setFoodData] = useState([]); // Estado para almacenar los datos de los alimentos
+    const eliminarAlimento = useCrearPlan((state) => state.eliminarAlimento);
+    const isEditable = useStorePlanForView((state) => state.isEditable);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const eliminarEditable = useEditPlan((state) => state.eliminarAlimentoEnPlanEditado);
+    const showSpinner = useSpinnerStore((state) => state.showSpinner);
+    const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
 
+    useEffect(() => {
+        showSpinner();
+        const fetchFoodData = async () => {
+            try {
 
+                const data = await Promise.all(
+                    arreglo.map(async (food) => {
+                        const response = await useFoodById(food.alimentoId);
+                        return response.data
 
-    // MUSCULO POR EJERCICIO
+                    })
+                );
+                setFoodData(data);
+            } catch (error) {
+                console.log(error);
+
+            } finally {
+                hideSpinner();
+            }
+        };
+
+        fetchFoodData();
+    }, [arreglo , openAdd]);
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -36,67 +62,51 @@ export const TableDays = ({
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-    // const ejerciciosFiltrados = arreglo.filter(
-    //   (exercise) => exercise.dia === selectedDay
-    // );
 
     const ejerciciosPaginados = arreglo.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
 
+    const deleteFood = (comida) => {
+        if (editable) {
+            eliminarEditable(day, tipoComida, comida.alimentoId);
+        }
+        eliminarAlimento(day, tipoComida, comida.alimentoId);
+    };
 
     return (
         <>
             <Paper>
                 <TableContainer>
-                    <Table  sx={{ minWidth: {xs:300 , xl:800}  }} aria-label="simple table">
+                    <Table sx={{ minWidth: { xl: 1200 } }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                {arregloColumns.map((column, index) => {
-                                    return (
-                                        <TableCell
-                                            key={index}
-                                            align={
-                                                column == "Cantidad" ||
-                                                    column == "Medida" ||
-                                                    column === "Peso"
-
-                                                    ? "center" : "left"
-
-                                            }
-                                            sx={{ fontWeight: "bold", fontSize: "16px" }}
-                                        >
-                                            {column}
-                                        </TableCell>
-                                    );
-                                })}
+                                {arregloColumns.map((column, index) => (
+                                    <TableCell
+                                        key={index}
+                                        align={
+                                            column == "Cantidad" ||
+                                                column == "Porcion(gr)" ||
+                                                column === "Kcal" || column === "Grasas" || column === "Carbohidratos" || column === "Proteinas"
+                                                ? "center"
+                                                : "left"
+                                        }
+                                        sx={{ fontWeight: "bold", fontSize: "16px" }}
+                                    >
+                                        {column}
+                                    </TableCell>
+                                ))}
                             </TableRow>
                         </TableHead>
-                        <div></div>
                         <TableBody>
-                            {/* {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} align="center">
-                                        <LoadingSkeleton
-                                            width={"100%"}
-                                            height={100}
-                                            count={5}
-                                        ></LoadingSkeleton>
-                                    </TableCell>
-                                </TableRow>
-                            ) : arreglo.length === 0 ? (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={myplans ? 8 : 6}
-                                        sx={{ fontSize: "18px" }}
-                                        align="center"
-                                    >
-                                        {` ${textSinEjercicios}`}
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                ejerciciosPaginados.map((exercise, index) => (
+                            {ejerciciosPaginados.map((user, index) => {
+                                // Buscar el alimento correspondiente en foodData
+                                const alimento = foodData.find(
+                                    (food) => food.id === user.alimentoId
+                                );
+
+                                return (
                                     <TableRow
                                         key={index}
                                         sx={{
@@ -106,55 +116,54 @@ export const TableDays = ({
                                             },
                                         }}
                                     >
-                                        <TableCell
-                                            sx={{ fontSize: "16px" }}
-                                            component="th"
-                                            scope="row"
-                                        >
-                                            Espalda
-                                        </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {exercise.nombre}
+                                            {alimento ? alimento.nombre :  <h1 className="text-lg font-bold ">
+                                                ...
+                                            </h1> }
                                         </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {exercise.descripcion}
+                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                            {user.cantidad}
                                         </TableCell>
-                                      
-                                  
+                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                            {alimento ? alimento.porcion :  <h1  className="text-lg font-bold"> 
+                                                ...
+                                            </h1> }
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                            {alimento ? alimento.calorias : <h1  className="text-lg font-bold">
+                                                ...
+                                            </h1> }
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                            {alimento ? alimento.grasas :  <h1  className="text-lg font-bold">
+                                                ...
+                                            </h1> }
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                            {alimento ? alimento.carbohidratos :  <h1  className="text-lg font-bold">
+                                                ...
+                                            </h1> }
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                            {alimento ? alimento.proteinas : <h1 className="text-lg font-bold">
+                                                ...
+                                            </h1> }
+                                        </TableCell>
+                                        {isEditable && (
+                                            <TableCell sx={{ fontSize: "16px" }} align="right">
+                                                <div className="flex font-semibold flex-col text-sm gap-2 items-end justify-end ">
+                                                    <span
+                                                        onClick={() => deleteFood(user)}
+                                                        className="text-red-600 text-xl  md:text-2xl cursor-pointer"
+                                                    >
+                                                        <MdOutlineDeleteOutline />
+                                                    </span>
+                                                </div>
+                                            </TableCell>
+                                        )}
                                     </TableRow>
-                                ))
-                            )} */}
-                            {ejerciciosPaginados.map((user, index) => (
-                                <TableRow
-                                    key={index}
-                                    sx={{
-                                        "&:last-child td, &:last-child th": { border: 0 },
-                                        "&:hover": {
-                                            backgroundColor: "#E6F7FF",
-                                        },
-                                    }}
-                                >
-
-                                    <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        {user.alimento}
-                                    </TableCell>
-                                    <TableCell sx={{ fontSize: "16px" }} align="center">
-                                        {user.cantidad}
-                                    </TableCell>
-
-                                    <TableCell sx={{ fontSize: "16px" }} align="center">
-                                        {user.medida}
-                                    </TableCell>
-
-                                    <TableCell sx={{ fontSize: "16px" }} align="right">
-                                        <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
-                                            <span className="text-red-600  cursor-pointer">Eliminar</span>
-
-
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
+                                );
+                            })}
                         </TableBody>
                     </Table>
                 </TableContainer>
@@ -169,10 +178,7 @@ export const TableDays = ({
                     labelRowsPerPage="Filas por página"
                     labelDisplayedRows={() => ""}
                 />
-
-
             </Paper>
-
         </>
     );
 };

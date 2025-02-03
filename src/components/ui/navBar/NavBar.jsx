@@ -212,11 +212,15 @@ export const NavBar = () => {
       title: "Mi cuenta",
       icon: <CgProfile />,
       link: "/account",
+    },    {
+      title: "Planes",
+      icon: <GrPlan />,
+      link: "/plansnutrition",
     },
     {
       title: "Pacientes",
       icon: <HiOutlineUsers />,
-      link: "/nutritionalplans",
+      link: "/patients",
     },
     {
       title: "Alimentos",

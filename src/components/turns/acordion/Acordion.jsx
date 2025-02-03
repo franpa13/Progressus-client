@@ -100,16 +100,32 @@ export const Acordion = ({
 
   };
 
+  // const handleModal = (cont, index, isDisabled) => {
+  //   if (reservasPorHora[cont] >= 40) {
+  //     setAlertMaxTurns(true);
+  //   } else {
+  //     if (turnosReservados && turnosReservados.length === 1) {
+  //       setUnTurnoPorDia(true);
+  //       return;
+  //     } else {
+  //       !isDisabled && onChangeHora(cont, index);
+  //       setOpen(true);
+  //     }
+  //   }
+  // };
   const handleModal = (cont, index, isDisabled) => {
     if (reservasPorHora[cont] >= 40) {
-      setAlertMaxTurns(true);
+      setAlertMaxTurns(true); // Mostrar alerta si el máximo de turnos está alcanzado
     } else {
-      if (turnosReservados && turnosReservados.length === 1) {
-        setUnTurnoPorDia(true);
+      // Verificar si el usuario ya tiene un turno reservado
+      if (turnosReservados && turnosReservados.length >= 2) {
+        // Si ya tiene 2 turnos reservados, muestra un mensaje de alerta o evita la acción
+        setAlertMaxTurns(true); // O podrías mostrar otro mensaje si lo prefieres
         return;
       } else {
-        !isDisabled && onChangeHora(cont, index);
-        setOpen(true);
+        // Si no tiene dos turnos, permite que reserve
+        !isDisabled && onChangeHora(cont, index); // Cambiar el horario de la reserva si no está deshabilitado
+        setOpen(true); // Abrir el modal para hacer la reserva
       }
     }
   };

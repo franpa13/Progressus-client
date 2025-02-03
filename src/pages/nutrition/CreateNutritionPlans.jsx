@@ -1,9 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
-import { Location, Title, DaysSection } from '../../components'
-
+import { Location, Title, DaysSection, SnackbarDefault } from '../../components'
+import { useCrearPlan, useStorePlanForView } from '../../store/useStoreNutrition'
+import { useStoreNutrition } from '../../store/useStoreNutrition'
+import { Link } from 'react-router-dom'
+import { MdOutlineKeyboardReturn } from 'react-icons/md'
 export const CreateNutritionPlans = () => {
-    const days = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+    const nombrePlanNutrition = useStoreNutrition(state => state.nombrePlanNutrition);
+    const isEditable = useStorePlanForView((state) => state.isEditable);
+    const setAlimentos = useCrearPlan((state) => state.setAlimentos);
+    // SOLO PARA VER
+    const planForView = useStorePlanForView(state => state.planForView);
+ const [alert, setAlert] = useState(false)
+    const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     const nutritionPlan = [
         {
             dia: "Lunes",
@@ -107,6 +116,12 @@ export const CreateNutritionPlans = () => {
             }
         }
     ];
+    console.log(planForView, "planForView");
+    // useEffect(() => {
+    //     if (isEditable) {
+    //         setAlimentos(planForView.dias)
+    //     }
+    // }, [])
 
     const [selectNav, setSelectNav] = useState("Lunes")
     return (
@@ -124,6 +139,20 @@ export const CreateNutritionPlans = () => {
                 <div className="w-full h-2 md:h-4 bg-customGray"></div>
                 {/* ////////////////////////////////////////////// */}
                 <section className='p-3'>
+
+                    <div className="flex flex-row-reverse justify-between items-start py-2 pb-4 md:pb-0 md:py-4">
+                        <Title title={nombrePlanNutrition == null ? planForView.nombre : nombrePlanNutrition}></Title>
+
+                        <Link
+                            className="w-1/12  md:w-[50px] flex justify-center items-center py-1 rounded text-white  bg-customNavBar hover:bg-customTextGreen"
+                            to={"/plansnutrition"}
+                        >
+                            <MdOutlineKeyboardReturn className="text-lg font-semibold md:text-2xl " />
+                        </Link>
+                    </div>
+                    <span className={"font-semibold flex text-center mb-5 w-full justify-center gap-1"}>
+                        Nota: El plan se guarda en el día <span className='text-customTextBlue'>Sábado</span>
+                    </span>
                     <div className="flex flex-wrap justify-between md:justify-center  w-full md:gap-10">
                         {days.map((day, i) => {
                             return (
@@ -141,19 +170,29 @@ export const CreateNutritionPlans = () => {
                         })}
 
                     </div>
-                    {nutritionPlan.map((plan) => {
-                        if (plan.dia === selectNav) {
-                            return (
-                                <div key={plan.dia}>
-                                    <DaysSection data={plan.comidas}></DaysSection>
-                                </div>
-                            );
-                        }
-                        return null;
-                    })}
+
+                    {nombrePlanNutrition == null ? (
+                        planForView.dias.map((plan) => {
+                            if (plan.dia === selectNav) {
+                                return (
+                                    <div key={plan.dia}>
+                                        <DaysSection dataPlan={plan} day={plan.dia} data={plan.comidas}></DaysSection>
+                                    </div>
+                                );
+                            }
+                            return null;
+                        })
+                    ) : (
+
+                        <DaysSection setAlert={setAlert} day={selectNav} data={[]}></DaysSection>
+
+                    )}
+
+
 
                 </section>
             </section>
+            <SnackbarDefault open={alert} setOpen={setAlert} message="El plan se guardo correctamente" />
         </MainLayout>
     )
 }

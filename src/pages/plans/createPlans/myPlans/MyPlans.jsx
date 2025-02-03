@@ -61,7 +61,7 @@ export const MyPlans = ({
             const traerPlanAsignado = await useGetPlanById(
               responsePlansSocio.data.planDeEntrenamientoId
             );
-            // Asegúrate de convertir el objeto en un arreglo si es necesario
+ 
             setPlansByUser([traerPlanAsignado.data.value.value]);
           }
         }

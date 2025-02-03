@@ -76,12 +76,15 @@ export * from "./notis/AcordeonNotis"
 
 
 //NUTRITION
-export * from "./nutrition/TableNutrition"
+export * from "./nutrition/PatentTable"
 export * from "./nutrition/ModalAddFood"
 export * from "./nutrition/DaysSection"
 export * from "./nutrition/TableDays"
 export * from "./nutrition/Macros"
 export * from "./nutrition/InfoNutri"
-
+export * from "./nutrition/NutritionTable"
+export * from "./nutrition/ModalAddPlan"
+export * from "./nutrition/ModalAddFoodToPlan"
+export * from "./nutrition/ModalAsignPlan"
 // ORDERS
 export * from "./orders/TableOrders"

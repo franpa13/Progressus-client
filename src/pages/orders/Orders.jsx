@@ -2,7 +2,15 @@ import React, { useState } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
 import { CustomInput, Location, Title, TableOrders } from '../../components'
 import { CiSearch } from 'react-icons/ci'
-
+const columns = ["ID" , "Fecha" , "Nombre del cliente" , "Precio" , "Estado" , "Opciones"]
+const ordersData = Array.from({ length: 50 }, (_, index) => ({
+  id: index + 1,
+  fecha: `2025-01-${(index % 31) + 1}`.padStart(10, '0'),
+  nombreCliente: `Cliente ${index + 1}`,
+  precio: `$${(Math.random() * 500).toFixed(2)}`,
+  estado: index % 3 === 0 ? "Pendiente" : index % 3 === 1 ? "Completado" : "Cancelado",
+  modificar: "Editar",
+}));
 export const Orders = () => {
   const [findElement, setFindElement] = useState("");
   const handleChange = (e) => {
@@ -38,7 +46,7 @@ export const Orders = () => {
 
           </div>
         </section>
-        <TableOrders ></TableOrders>
+        <TableOrders arregloColumns={columns} arreglo={ordersData} ></TableOrders>
       </section>
     </MainLayout>
   )
