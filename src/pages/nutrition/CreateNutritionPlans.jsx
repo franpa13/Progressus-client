@@ -176,7 +176,7 @@ export const CreateNutritionPlans = () => {
                             if (plan.dia === selectNav) {
                                 return (
                                     <div key={plan.dia}>
-                                        <DaysSection dataPlan={plan} day={plan.dia} data={plan.comidas}></DaysSection>
+                                        <DaysSection  dataPlan={plan} day={plan.dia} data={plan.comidas}></DaysSection>
                                     </div>
                                 );
                             }

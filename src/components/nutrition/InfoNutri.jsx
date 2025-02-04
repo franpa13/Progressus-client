@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useFoodById } from '../../service/nutrition/useFoodById';
 import { useSpinnerStore } from "./../../store/useSpinnerStore";
+
 export const InfoNutri = ({ comidas }) => {
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
@@ -11,10 +12,13 @@ export const InfoNutri = ({ comidas }) => {
     grasas: 0,
   });
 
+  // Caché para almacenar los datos de los alimentos
+  const [cache, setCache] = useState({});
+
   console.log(comidas, "comidas en el info");
 
   useEffect(() => {
-    showSpinner()
+    showSpinner();
     const fetchAndCalculateNutriInfo = async () => {
       // Inicializar acumuladores
       let totalKcal = 0;
@@ -25,19 +29,32 @@ export const InfoNutri = ({ comidas }) => {
       // Recorrer cada alimento en comidas
       for (const alimento of comidas) {
         try {
+          let foodData;
 
-          // Obtener los datos del alimento usando useFoodById
-          const response = await useFoodById(alimento.alimentoId);
-          const foodData = response.data;
-          console.log(foodData, "fud");
-          totalKcal = (totalKcal + foodData.calorias) * alimento.cantidad;
-          totalProt = (totalProt + foodData.proteinas) * alimento.cantidad;
-          totalHc = (totalHc + foodData.carbohidratos) * alimento.cantidad;
-          totalGrasas = (totalGrasas + foodData.grasas) * alimento.cantidad;
+          // Verificar si los datos del alimento ya están en el caché
+          if (cache[alimento.alimentoId]) {
+            foodData = cache[alimento.alimentoId]; // Usar datos del caché
+          } else {
+            // Obtener los datos del alimento usando useFoodById
+            const response = await useFoodById(alimento.alimentoId);
+            foodData = response.data;
+
+            // Almacenar los datos en el caché
+            setCache((prevCache) => ({
+              ...prevCache,
+              [alimento.alimentoId]: foodData,
+            }));
+          }
+
+          // Acumular los valores nutricionales
+          totalKcal += foodData.calorias * alimento.cantidad;
+          totalProt += foodData.proteinas * alimento.cantidad;
+          totalHc += foodData.carbohidratos * alimento.cantidad;
+          totalGrasas += foodData.grasas * alimento.cantidad;
         } catch (error) {
           console.error("Error al obtener los datos del alimento:", error);
         } finally {
-          hideSpinner()
+          hideSpinner();
         }
       }
 

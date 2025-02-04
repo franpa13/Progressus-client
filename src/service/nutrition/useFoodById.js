@@ -16,6 +16,6 @@ export const useFoodById = async (idFood) => {
 
         return response;
     } catch (error) {
-        console.log("Error al enviar la reserva:");
+        console.log("Error al obtener por id");
     }
 };
