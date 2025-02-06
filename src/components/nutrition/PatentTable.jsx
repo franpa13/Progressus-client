@@ -5,26 +5,30 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
-
-
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { useEffect } from "react";
 import { ModalEditUserNutri } from "./ModalEditUserNutri";
 import { ModalEditFood } from "./ModalEditFood";
 import { Link } from "react-router-dom";
+import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
+import { ModalDeletePatent } from "./ModalDeletePatent";
 // TABLA EN PACIENTES Y FOOD
 export const PatentTable = ({
+    setPatents,
+    loading = false,
     arreglo = [],
     arregloColumns = [],
     alimentos = false
 }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
     // PARTE DE PACIENTES
+    const [deletePatent, setDeletePatent] = useState(false)
     const [edit, setEdit] = useState(false)
     const [userToEdit, setUserToEdit] = useState()
 
@@ -58,6 +62,11 @@ export const PatentTable = ({
         }
         setUserToEdit(user)
     }
+    const deleteUser = (user) => {
+
+        setUserToEdit(user)
+        setDeletePatent(true)
+    }
     return (
         <>
             <Paper>
@@ -71,8 +80,9 @@ export const PatentTable = ({
                                             key={index}
                                             align={
                                                 column == "Opciones" ||
-                                                column == "Grasa"||
+                                                    column == "%Grasa" ||
                                                     column == "Plan" ||
+                                                    column == "Acciones" ||
                                                     column === "Peso(kg)"
 
                                                     ? "right" : "left"
@@ -86,17 +96,18 @@ export const PatentTable = ({
                                 })}
                             </TableRow>
                         </TableHead>
-                        <div></div>
-                        {alimentos ? (
-                            <TableBody>
-                                {ejerciciosPaginados.map((item, index) => (
+                        <TableBody>
+                            {loading ? (
+                                <TableCell colSpan={6}>
+                                    <LoadingSkeleton height={35} width={"100%"} className={"p-3"} count={rowsPerPage} />
+                                </TableCell>
+                            ) : alimentos ? (
+                                ejerciciosPaginados.map((item, index) => (
                                     <TableRow
                                         key={index}
                                         sx={{
                                             "&:last-child td, &:last-child th": { border: 0 },
-                                            "&:hover": {
-                                                backgroundColor: "#E6F7FF",
-                                            },
+                                            "&:hover": { backgroundColor: "#E6F7FF" },
                                         }}
                                     >
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
@@ -118,107 +129,48 @@ export const PatentTable = ({
                                             {item.grasas}
                                         </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            <span
-                                                onClick={() => editUser(item)}
-                                                className="text-customTextBlue cursor-pointer"
-                                            >
+                                            <span onClick={() => editUser(item)} className="text-customTextBlue cursor-pointer">
                                                 Modificar
                                             </span>
                                         </TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        ) : (
-
-                            <TableBody>
-                                {/* {loading ? (
-                                <TableRow>
-                                    <TableCell colSpan={6} align="center">
-                                        <LoadingSkeleton
-                                            width={"100%"}
-                                            height={100}
-                                            count={5}
-                                        ></LoadingSkeleton>
-                                    </TableCell>
-                                </TableRow>
-                            ) : arreglo.length === 0 ? (
-                                <TableRow>
-                                    <TableCell
-                                        colSpan={myplans ? 8 : 6}
-                                        sx={{ fontSize: "18px" }}
-                                        align="center"
-                                    >
-                                        {` ${textSinEjercicios}`}
-                                    </TableCell>
-                                </TableRow>
-                            ) : (
-                                ejerciciosPaginados.map((exercise, index) => (
-                                    <TableRow
-                                        key={index}
-                                        sx={{
-                                            "&:last-child td, &:last-child th": { border: 0 },
-                                            "&:hover": {
-                                                backgroundColor: "#E6F7FF",
-                                            },
-                                        }}
-                                    >
-                                        <TableCell
-                                            sx={{ fontSize: "16px" }}
-                                            component="th"
-                                            scope="row"
-                                        >
-                                            Espalda
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {exercise.nombre}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {exercise.descripcion}
-                                        </TableCell>
-                                      
-                                  
-                                    </TableRow>
                                 ))
-                            )} */}
-                                {ejerciciosPaginados.map((user, index) => (
-
+                            ) : (
+                                ejerciciosPaginados.map((user, index) => (
                                     <TableRow
                                         key={index}
                                         sx={{
                                             "&:last-child td, &:last-child th": { border: 0 },
-                                            "&:hover": {
-                                                backgroundColor: "#E6F7FF",
-                                            },
+                                            "&:hover": { backgroundColor: "#E6F7FF" },
                                         }}
                                     >
-
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
                                             {user.nombre}
                                         </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
                                             {user.edad}
                                         </TableCell>
-
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
                                             {user.objetivo}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="right">
+                                            {user.porcentajeDeGrasa}
                                         </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="right">
                                             {user.peso}
                                         </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            {user.plan}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="right">
-                                            <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
-                                                <span onClick={() => editUser(user)} className="text-customTextBlue  cursor-pointer">Editar</span>
-                                                <Link to={"/nutritionalplans/createplannutrition"} className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</Link>
+                                            <div className="flex font-semibold  text-sm gap-3 justify-end  ">
+                                                <button onClick={() => deleteUser(user)} className="cursor-pointer  text-red-500 "><DeleteOutlinedIcon></DeleteOutlinedIcon> </button>
+                                                <button onClick={() => editUser(user)} className="text-customNavBar  cursor-pointer"> <CreateOutlinedIcon ></CreateOutlinedIcon ></button>
 
                                             </div>
                                         </TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        )}
+                                ))
+                            )}
+                        </TableBody>
+
                     </Table>
                 </TableContainer>
                 <TablePagination
@@ -239,6 +191,9 @@ export const PatentTable = ({
             <ModalEditUserNutri open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri>
             {/* MODAL PARA EDITAR ALIMENTO */}
             <ModalEditFood open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood>
+
+            {/* MODAL PARA ELIMINAR PACIENTE */}
+            <ModalDeletePatent setPatents={setPatents} open={deletePatent} setOpen={setDeletePatent} elementEditable={userToEdit}></ModalDeletePatent>
         </>
     );
 };

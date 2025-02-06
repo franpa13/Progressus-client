@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
 import { CustomInput, Location, PatentTable, Title } from '../../components'
 import { CiSearch } from 'react-icons/ci'
-const arregloCol = ["Nombre", "Edad", "Objetivo", "Grasa" , "Peso(kg)", "Plan"]
+import { useGetPatents } from '../../service/nutrition/useGetPatents'
+import { Button } from '../../components'
+import { ModalAddPatent } from '../../components/nutrition/ModalAddPatent'
+import { IoMdAdd } from 'react-icons/io'
+const arregloCol = ["Nombre", "Edad", "Objetivo", "%Grasa", "Peso(kg)", "Acciones"]
 const arreglo = [
     { nombre: "Juan Pérez", edad: 30, objetivo: "Perder peso", peso: 70, plan: "No" },
     { nombre: "Ana Gómez", edad: 25, objetivo: "Tonificar", peso: 58, plan: "SI" },
@@ -12,11 +16,30 @@ const arreglo = [
     { nombre: "Laura Torres", edad: 22, objetivo: "Perder peso", peso: 60, plan: "No" },
 ];
 export const NutritionPlans = () => {
+    const [patents, setPatents] = useState([]);
     const [findElement, setFindElement] = useState("");
+    const [loading, setLoading] = useState(false)
+    const [addPatent, setAddPatent] = useState(false)
     const handleChange = (e) => {
         setFindElement(e.target.value);
     };
-    // BUSCAR ELEMENTO
+    useEffect(() => {
+        setLoading(true)
+        const traerPacientes = async () => {
+            try {
+                const data = await useGetPatents();
+                setPatents(data.data);
+            } catch (e) {
+                console.log(e, "errores");
+
+            }
+            finally {
+                setLoading(false)
+            }
+        }
+        traerPacientes();
+    }, []);
+    console.log(patents, "patents");
     return (
         <MainLayout>
             <section className="animate-fade-in-down md:mx-auto bg-white  rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
@@ -31,7 +54,8 @@ export const NutritionPlans = () => {
                 {/* DIVISION GRAY */}
                 <div className="w-full h-2 md:h-4 bg-customGray"></div>
                 {/* ////////////////////////////////////////////// */}
-                <section className="p-3 mb-4">
+
+                <section className="flex justify-between items-start p-3 mb-4">
                     <div className='flex justify-end md:w-1/5'>
 
                         <CustomInput
@@ -42,10 +66,21 @@ export const NutritionPlans = () => {
                             value={findElement}
                             onChange={handleChange}
                         ></CustomInput>
+
+                    </div>
+                    <div className="flex mt-2 md:mt-0 justify-end">
+                        <Button
+                            onClick={() => setAddPatent(true)}
+                            className="flex justify-start items-center gap-1"
+                            Icon={IoMdAdd}
+                            label="Añadir paciente"
+                        />
                     </div>
                 </section>
-                <PatentTable arregloColumns={arregloCol} arreglo={arreglo}></PatentTable>
+
+                <PatentTable setPatents={setPatents} loading={loading} arregloColumns={arregloCol} arreglo={patents}></PatentTable>
             </section>
+            <ModalAddPatent setPatents={setPatents} open={addPatent} setOpen={setAddPatent}></ModalAddPatent>
         </MainLayout>
     )
 }

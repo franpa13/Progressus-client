@@ -6,22 +6,31 @@ import { ButtonSpinner } from "../ui/buttons/ButtonSpinner";
 
 export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
   if (!elementEditable) return null;
+  const [loading, setLoading] = useState(false)
+  console.log(elementEditable, "element editable");
+
   const [form, setForm] = useState({
     nombre: elementEditable?.nombre,
     edad: elementEditable?.edad,
     objetivo: elementEditable?.objetivo,
-    peso: elementEditable?.peso
+    peso: elementEditable?.peso,
+    porcentajeDeGrasa
+      : elementEditable?.porcentajeDeGrasa
 
   });
+
   useEffect(() => {
 
     setForm({
       nombre: elementEditable?.nombre,
       edad: elementEditable?.edad,
       objetivo: elementEditable?.objetivo,
-      peso: elementEditable?.peso
+      peso: elementEditable?.peso,
+      porcentajeDeGrasa
+        : elementEditable?.porcentajeDeGrasa
+
     });
-  }, [elementEditable]);
+  }, [open]);
 
 
   // Manejar cambios en los inputs del formulario
@@ -32,16 +41,23 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
       [name]: value,
     }));
   };
+  const handleSubmit = async () => {
+    try {
+      let response;
+    } catch (e) {
+      console.log(e);
 
+    }
+  }
   return (
     <ModalLayout open={open} setOpen={setOpen} Icon={MdOutlineEdit}>
       <div className="flex justify-center items-center gap-1 mb-4">
-        <span className="font-semibold text-xl">Editar paciente:</span>
-        <span className="font-bold text-xl text-center text-customTextGreen">
+        <span className="font-semibold md:text-xl">Editar paciente:</span>
+        <span className="font-bold md:text-xl text-center text-customTextGreen">
           {elementEditable?.nombre}
         </span>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
 
         <div>
           <label className="font-semibold text-start w-full" htmlFor="">Edad : </label>
@@ -68,7 +84,7 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
         </div>
 
         <div>
-          <label className="font-semibold text-start w-full" htmlFor="">Peso : </label>
+          <label className="font-semibold text-start w-full" htmlFor="">Peso(kg) : </label>
           <CustomInput
             name="peso"
             type="number"
@@ -81,9 +97,25 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
 
 
         </div>
+        <div>
+          <label className="font-semibold text-start w-full" htmlFor="">Grasa(%) : </label>
+          <CustomInput
+            name="porcentajeGrasa"
+            type="number"
+            value={form.porcentajeDeGrasa
+            }
+            onChange={handleChange}
+            placeholder="Grasa"
+            label="Peso"
+            className="mb-4"
+          />
 
+
+        </div>
 
         <ButtonSpinner
+          loading={loading}
+
           label="Guardar Cambios"
           type="submit"
 
