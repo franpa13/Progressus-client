@@ -1,6 +1,6 @@
-import { Card, CardContent, Container, List, ListItem, ListItemText, Typography } from '@mui/material'
+import { Box, Card, CardContent, CardMedia, Container, List, ListItem, ListItemText, Typography } from '@mui/material'
 import React from 'react'
-
+import logoMp from "/logomp.png"
 export const SectionPaymentNutritionPlan = () => {
   return (
     <div className='animate-fade-in-down'>

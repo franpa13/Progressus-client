@@ -78,7 +78,7 @@ export const PlansNutrition = () => {
           </div>
         </section>
 
-        <NutritionTable setAlertAsignedPlan={setAlertAsignedPlan} loading={loading} arregloColumns={arregloCol} arreglo={filteredPlans} />
+        <NutritionTable setPlans={setPlans} setAlertAsignedPlan={setAlertAsignedPlan} loading={loading} arregloColumns={arregloCol} arreglo={filteredPlans} />
       </section>
 
       <ModalAddPlan open={addPlan} setOpen={setAddPlan} />

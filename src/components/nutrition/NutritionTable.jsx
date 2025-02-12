@@ -7,27 +7,30 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import { ModalAsignPlan } from "./ModalAsignPlan";
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { useEditPlan, useStoreNutrition, useStorePlanForView } from "../../store/useStoreNutrition";
 import CreateOutlinedIcon from '@mui/icons-material/CreateOutlined';
 import { useEffect } from "react";
-import { ModalEditUserNutri } from "./ModalEditUserNutri";
-import { ModalEditFood } from "./ModalEditFood";
+
 import { Link } from "react-router-dom";
 import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
-import { SnackbarDefault } from "../ui/snackbar/Snackbar";
+import { ModalDeletePlan } from "./ModalDeletePlan";
+
 
 export const NutritionTable = ({
     arreglo = [],
     arregloColumns = [],
-    loading,setAlertAsignedPlan
+    loading, setAlertAsignedPlan ,
+    setPlans
 }) => {
     const cargarPlanEditado = useEditPlan((state) => state.cargarPlanParaEditar);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const setNombre = useStoreNutrition(state => state.setNombre);
+    const [deletePlan, setDeletePlan] = useState(false)
     const [planAsign, setPlanAsign] = useState(null)
     const setPlanForView = useStorePlanForView((state) => state.setPlanForView);
     const setIsEditable = useStorePlanForView((state) => state.setIsEditable);
@@ -69,6 +72,10 @@ export const NutritionTable = ({
         setAsign(true)
         setPlanAsign(plan)
     }
+    const handleDelete = (plan) => {
+        setPlanAsign(plan)
+        setDeletePlan(true)
+    }
     return (
         <>
             <Paper>
@@ -105,8 +112,8 @@ export const NutritionTable = ({
                                     <TableCell colSpan={6} align="center">
                                         <LoadingSkeleton
                                             width={"100%"}
-                                            height={30}
-                                            count={5}
+                                            height={40}
+                                            count={10}
                                         ></LoadingSkeleton>
                                     </TableCell>
                                 </TableRow>
@@ -200,6 +207,7 @@ export const NutritionTable = ({
                                             >
                                                 Asignar
                                             </div>
+                                            <div onClick={() => handleDelete(user)} className="text-red-600  cursor-pointer"> <DeleteOutlineIcon></DeleteOutlineIcon> </div>
                                         </div>
                                     </TableCell>
                                 </TableRow>
@@ -222,9 +230,10 @@ export const NutritionTable = ({
 
 
             </Paper>
-       
+
             {/* MODAL PARA  ASIGNAR PLAN PACIENTES */}
-            < ModalAsignPlan  setAlertAsignedPlan={setAlertAsignedPlan} open={asign} plan={planAsign} setOpen={setAsign}></ ModalAsignPlan>
+            < ModalAsignPlan setAlertAsignedPlan={setAlertAsignedPlan} open={asign} plan={planAsign} setOpen={setAsign}></ ModalAsignPlan>
+            <ModalDeletePlan setPlans={setPlans} plan={planAsign} open={deletePlan} setOpen={setDeletePlan}></ModalDeletePlan>
         </>
     );
 };

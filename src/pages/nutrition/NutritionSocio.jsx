@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { MainLayout } from "../../layout/MainLayout";
-import { Container, Card, CardContent, Typography, Button, Grid, CardMedia, List, ListItem, ListItemText, Box } from '@mui/material';
+
 import { useGetPlanByIdUser } from '../../service/nutrition/useGetPlanByIdUser';
-import logoMp from "/logomp.png";
+
 import { useSpinnerStore, useStoreUserData } from '../../store';
 import { useGetPlanById } from '../../service/nutrition/useGetPlanById';
 import { SectionPaymentNutritionPlan } from '../../components/nutrition/SectionPaymentNutritionPlan';
