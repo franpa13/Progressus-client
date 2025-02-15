@@ -7,7 +7,7 @@ import { useStoreUserData } from "../../store";
 import { useGetRequestPaymentSocio } from "../../service/membership/useGetRequestPaymentSocio";
 import { useSpinnerStore } from "../../store";
 import { MdDeleteOutline } from "react-icons/md";
-
+import { useGetMembershipUser } from "../../service/nutrition/useGetMembershipUser";
 import { BiEditAlt } from "react-icons/bi";
 import { TableAsist } from "../../components/profile/TableAsist";
 import { useAsistProfile } from "../../service/profile/useAsistProfile";
@@ -19,6 +19,7 @@ export const Profile = () => {
   const [allMembership, setAllMembership] = useState(null);
   const setAvatar = useUserProfile((state) => state.setUserImage);
   const [loadingSkeleton, setLoadingSkeleton] = useState(false);
+  const [havePlan, setHavePlan] = useState(null);
   //  IMAGEN DE FOTO DE PERFIL
   const [isHovered, setIsHovered] = useState(false); // Estado para hover
   const fotoProfile = useUserProfile((state) => state.userImage);
@@ -33,6 +34,10 @@ export const Profile = () => {
         const response = await useGetRequestPaymentSocio(
           dataUser.identityUserId
         );
+        const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
+        if (havePlanRes.status === 200) {
+          setHavePlan(havePlanRes.data || null);
+        }
         if (response?.data) {
           setDataMembership(response.data);
           setAllMembership(response.data.historialSolicitudDePagos || []);
@@ -93,6 +98,8 @@ export const Profile = () => {
       closeSpinner();
     }, 2000);
   };
+  console.log(havePlan, "HAVE PLAN");
+
   return (
     <MainLayout>
       <div className="animate-fade-in-down bg-white md:mx-auto rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-4">
@@ -166,7 +173,7 @@ export const Profile = () => {
           </div>
           {/* HARDCODE */}
           {roleUser !== "ADMIN" &&
-            roleUser !== "ENTRENADOR" &&  roleUser !== "NUTRICIONISTA" && 
+            roleUser !== "ENTRENADOR" && roleUser !== "NUTRICIONISTA" &&
             (loadingSkeleton ? (
               <LoadingSkeleton
                 count={1}
@@ -183,12 +190,20 @@ export const Profile = () => {
                   Array.isArray(allMembership) &&
                   allMembership.length > 0 &&
                   lastMembership.estadoSolicitud.nombre === "Confirmado" ? (
+
                   <Stack
                     duracion={`${mesesDuracionMembresia} ${mesesDuracionMembresia === 1 ? "mes" : "meses"
                       }`}
                     titulo={dataMembership.membresia.nombre}
                     fechaFinalizacion={`Finaliza el ${fechaFinal}`}
                   />
+                ) : havePlan && havePlan.historialSolicitudDePagos[0].estadoSolicitud.nombre == "Confirmado" ? (
+                  <Stack
+                    duracion={"1 mes"}
+                    titulo={havePlan.membresia.nombre}
+
+                  />
+
                 ) : (
                   <Stack titulo="No tienes membresías activas" />
                 )}

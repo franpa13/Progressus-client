@@ -105,7 +105,6 @@ export const PricingPrices = ({
   }, []);
 
   // useEffect para traer dataPedido cuando cambia dataUserBuscado
-  // useEffect para traer dataPedido cuando cambia dataUserBuscado
   useEffect(() => {
     const traerDataPedido = async () => {
       setLoadingTable(true);
@@ -114,7 +113,7 @@ export const PricingPrices = ({
         const requestPayment = await useGetAllMembershipForSocio(
           dataUserBuscado.identityUserId
         );
-        console.log(dataUserBuscado.identityUserId , "id user");
+        console.log(dataUserBuscado.identityUserId, "id user");
 
         if (requestPayment) {
           // Filtrar los pagos que tienen al menos un historial con estado "Confirmado"
@@ -231,8 +230,8 @@ export const PricingPrices = ({
 
   const hanleCreateSolicitud = async (card) => {
     if (membership && membership.estadoSolicitud.nombre == "Confirmado") {
-      console.log(membership , "membershipppp");
-      
+      console.log(membership, "membershipppp");
+
       setOpenErrorMemb(true);
     } else {
       openSppiner();
@@ -270,26 +269,30 @@ export const PricingPrices = ({
 
   return (
     <div
-      className={`flex flex-col flex-wrap justify-center items-start md:items-start md:justify-around ${
-        dataUserBuscado !== null ? "gap-0" : "gap-4"
-      } md:gap-5 md:flex-row w-full  `}
+      className={`flex flex-col flex-wrap justify-center items-start md:items-start md:justify-around ${dataUserBuscado !== null ? "gap-0" : "gap-4"
+        } md:gap-5 md:flex-row w-full`}
     >
       {loading ? (
         <LoadingSkeleton
           variant="rectangular"
-          className={"w-full "}
+          className={"w-full"}
           count={4}
           width={400}
           height={300}
         />
       ) : (
         cards.map((card) => {
+          // Si el id de la tarjeta es 15, no la renderizamos
+          if (card.id === 15) {
+            return null;
+          }
+
           return (
             <div
               key={card.id}
-              className=" md:m-5 p-0 md:p-0 w-full my-5 md:w-1/3 md:my-4 transition duration-300 transform hover:scale-105 "
+              className="md:m-5 p-0 md:p-0 w-full my-5 md:w-1/3 md:my-4 transition duration-300 transform hover:scale-105"
             >
-              <div className="relative group ">
+              <div className="relative group">
                 <div className="absolute -inset-0 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg blur opacity-20 group-hover:opacity-80 transition duration-1000 group-hover:duration-200"></div>
                 <div className="relative px-7 py-6 bg-white ring-1 ring-gray-900/5 rounded-lg leading-none flex flex-col items-top justify-start space-y-6">
                   <div className="flex justify-between items-center">
@@ -306,8 +309,8 @@ export const PricingPrices = ({
                     ${card.precio}
                     <span className="text-lg font-normal text-gray-600"></span>
                   </div>
-                  <div className="flex w-full items-start justify-start gap-3 ">
-                    <IoMdCheckmarkCircleOutline className=" text-3xl  font-semibold text-customTextBlue"></IoMdCheckmarkCircleOutline>
+                  <div className="flex w-full items-start justify-start gap-3">
+                    <IoMdCheckmarkCircleOutline className="text-3xl font-semibold text-customTextBlue"></IoMdCheckmarkCircleOutline>
                     <span
                       className="w-5/6 font-semibold text-gray-700"
                       style={{ lineHeight: "1.2" }}
@@ -329,20 +332,20 @@ export const PricingPrices = ({
                       <button
                         onClick={() => hanleCreateSolicitud(card)}
                         style={{
-                          backgroundColor: "#009EE3", // Azul característico de Mercado Pago
-                          color: "white", // Texto blanco
-                          padding: "8px 15px", // Espaciado interno
-                          borderRadius: "5px", // Bordes redondeados
-                          fontWeight: "600", // Texto en negrita
-                          fontSize: "16px", // Tamaño de fuente
-                          border: "none", // Sin borde
-                          cursor: "pointer", // Manito al pasar el cursor
-                          display: "flex", // Para alinear el contenido
-                          alignItems: "center", // Centrar verticalmente
-                          justifyContent: "center", // Centrar horizontalmente
-                          gap: "10px", // Espacio entre el ícono y el texto
-                          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Sombra ligera
-                          transition: "background-color 0.3s ease", // Animación suave al pasar el cursor
+                          backgroundColor: "#009EE3",
+                          color: "white",
+                          padding: "8px 15px",
+                          borderRadius: "5px",
+                          fontWeight: "600",
+                          fontSize: "16px",
+                          border: "none",
+                          cursor: "pointer",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          gap: "10px",
+                          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+                          transition: "background-color 0.3s ease",
                         }}
                         onMouseOver={(e) =>
                           (e.currentTarget.style.backgroundColor = "#007BBE")
@@ -362,7 +365,7 @@ export const PricingPrices = ({
                   )}
                   {card.id == 10 && (
                     <div className="absolute -top-16 right-0 -mt-4 -mr-6 w-16 h-16 float-animation">
-                      <CgGym className="w-full h-full object-cover rounded-full " />
+                      <CgGym className="w-full h-full object-cover rounded-full" />
                     </div>
                   )}
                 </div>
@@ -371,6 +374,7 @@ export const PricingPrices = ({
           );
         })
       )}
+
       {roleUser === "ADMIN" &&
         (planElegido ? (
           <div className="flex flex-col md:mx-5 px-2 md:px-0 items-center justify-center w-full">
@@ -465,10 +469,9 @@ export const PricingPrices = ({
             <>
               <section className="flex items-center md:flex-row mt-4 md:mt-0 md:gap-2 justify-center flex-col">
                 <span className="md:text-xl font-semibold">{`Ultimos pagos de `}</span>
-                <span className="md:text-xl font-bold text-customTextGreen ">{` ${
-                  dataUserBuscado &&
+                <span className="md:text-xl font-bold text-customTextGreen ">{` ${dataUserBuscado &&
                   dataUserBuscado.nombre + " " + dataUserBuscado.apellido
-                }`}</span>
+                  }`}</span>
               </section>
               <span className="md:text-base font-light">
                 {dataUserBuscado.email}

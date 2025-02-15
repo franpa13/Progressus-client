@@ -2,58 +2,60 @@ import React, { useEffect, useState } from 'react';
 import { MainLayout } from "../../layout/MainLayout";
 
 import { useGetPlanByIdUser } from '../../service/nutrition/useGetPlanByIdUser';
-
 import { useSpinnerStore, useStoreUserData } from '../../store';
 import { useGetPlanById } from '../../service/nutrition/useGetPlanById';
 import { SectionPaymentNutritionPlan } from '../../components/nutrition/SectionPaymentNutritionPlan';
 import { SectionPlanSocio } from '../../components/nutrition/SectionPlanSocio';
+import { useGetMembershipUser } from '../../service/nutrition/useGetMembershipUser';
+import { WaitPlan } from '../../components/nutrition/WaitPlan';
+
 export const NutritionSocio = () => {
   const dataUser = useStoreUserData((state) => state.userData);
-  const [dataPlanUser, setDataPlanUser] = useState();
+  const [dataPlanUser, setDataPlanUser] = useState(null);
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
-  const [loading, setLoading] = useState(true);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
+  const [loading, setLoading] = useState(true);
+  const [havePlan, setHavePlan] = useState(null);
+
   useEffect(() => {
-    showSpinner()
+    showSpinner();
     const fetchPlanData = async () => {
       try {
+        const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
+        const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
 
-        const dataPlan = await useGetPlanByIdUser(dataUser.identityUserId);
+        if (havePlanRes.status === 200) {
+          setHavePlan(havePlanRes.data.historialSolicitudDePagos[0]?.estadoSolicitud?.nombre || null);
+        }
 
-        if (dataPlan.status === 200 || dataPlan.status === "200") {
-          const idPlan = dataPlan.data[0].planNutricionalId;
-
-
+        if (dataPlanRes.status === 200 && dataPlanRes.data.length > 0) {
+          const idPlan = dataPlanRes.data[0].planNutricionalId;
           const dataPlanDetails = await useGetPlanById(idPlan);
           setDataPlanUser(dataPlanDetails.data);
         }
-
       } catch (e) {
         console.log(e);
       } finally {
-        hideSpinner()
-        setLoading(false)
+        hideSpinner();
+        setLoading(false);
       }
     };
 
     fetchPlanData();
   }, [dataUser.identityUserId]);
 
-
-
   return (
     <MainLayout>
-      {!dataPlanUser && !loading ? (
-        <SectionPaymentNutritionPlan></SectionPaymentNutritionPlan>
+      {loading ? (
+        <div className='w-full flex justify-center '>Cargando..</div>
+      ) : havePlan === "Pendiente" || havePlan === null || !havePlan ? (
+        <SectionPaymentNutritionPlan />
+      ) : havePlan === "Confirmado" && !dataPlanUser ? (
+        <WaitPlan></WaitPlan>
       ) : (
-        <>
-          <SectionPlanSocio plan={dataPlanUser}></SectionPlanSocio>
-
-
-        </>
-
-
+        <SectionPlanSocio plan={dataPlanUser} />
       )}
+
     </MainLayout>
   );
 };

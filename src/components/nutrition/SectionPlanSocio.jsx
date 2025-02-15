@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { MainLayout } from '../../layout/MainLayout'
+
 import { Location } from '../ui/location/Location'
 import { Title } from '../ui/title/Title'
-import { Link } from 'react-router-dom'
+
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { DaysSection } from './DaysSection'
 export const SectionPlanSocio = ({ plan }) => {
