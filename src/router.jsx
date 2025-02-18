@@ -24,7 +24,8 @@ import {
   Food,
   PlansNutrition,
   Orders,
-  EditPlanNutrition
+  EditPlanNutrition,
+  ComprobantesSocio
 } from "./pages";
 import { ProductPage } from "./pages/shopSocio/ProductPage";
 import { Attendance } from "./pages/attendance/Attendance";
@@ -182,6 +183,14 @@ export const router = createBrowserRouter([
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
         <NutritionSocio />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/comprobantesSocio",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <ComprobantesSocio />
       </ProtectedRoute>
     ),
   },
