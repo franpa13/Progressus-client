@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, CardMedia, CircularProgress, Container, List, ListItem, ListItemText, Typography } from '@mui/material'
+import { Box, Card, CardContent, CardMedia, CircularProgress, Container, List, ListItem, ListItemText, Typography, Grid } from '@mui/material'
 import { useEffect, useState } from 'react'
 import React from 'react'
 import logoMp from "/logomp.png"
@@ -6,25 +6,23 @@ import { useSpinnerStore, useStoreUserData } from '../../store'
 import { useGetMemberships } from '../../service/membership/useGetMembership'
 import { useCreateRequestPayment } from '../../service/membership/useCreateRequestPayment'
 import { useRegisterComoMp } from '../../service/membership/useRegisterComoMp'
+
 export const SectionPaymentNutritionPlan = () => {
   const [isLoading, setIsLoading] = useState(false)
   const hideSpinner = useSpinnerStore(state => state.hideSpinner)
   const showSpinner = useSpinnerStore(state => state.showSpinner)
   const [idPlan, setIdPlan] = useState(null)
   const userData = useStoreUserData((state) => state.userData);
+
   useEffect(() => {
     showSpinner()
     const traerPlanNutri = async () => {
       try {
         const response = await useGetMemberships();
-
-
-
         const planNutri = response.data.find((membresia) => membresia.id === 15);
 
         if (planNutri) {
           setIdPlan(planNutri)
-
         } else {
           console.log("No se encontró la membresía con id 15");
         }
@@ -41,18 +39,12 @@ export const SectionPaymentNutritionPlan = () => {
   const handleCreateSolicitud = async () => {
     setIsLoading(true)
     const createPlan = await useCreateRequestPayment(15, 4, userData.identityUserId)
-    console.log(createPlan, "create plan");
     let idSolicitudMercadoPago;
     if (createPlan?.status == 200) {
       idSolicitudMercadoPago = createPlan.data.id;
     }
 
-    // REGISTRAR SOLICITUD COMO MERCADO PAGO
-    const registerComoMercadoPago = await useRegisterComoMp(
-      idSolicitudMercadoPago
-    );
-
-    // REDIRECCIÓN AL INIT POINT
+    const registerComoMercadoPago = await useRegisterComoMp(idSolicitudMercadoPago);
     const initPoint = registerComoMercadoPago?.data?.value?.initPoint;
     if (initPoint) {
       setIsLoading(false)
@@ -61,10 +53,11 @@ export const SectionPaymentNutritionPlan = () => {
       console.error("InitPoint no encontrado en la respuesta.");
     }
   }
+
   return (
-    <div className='animate-fade-in-down'>
+    <div className="animate-fade-in-down">
       <Container maxWidth="lg" sx={{ marginTop: '2rem', marginBottom: '2rem' }}>
-        <Card sx={{ display: 'flex', padding: '2rem', justifyContent: 'space-between' }}>
+        <Card sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, padding: '2rem', justifyContent: 'space-between' }}>
           <CardContent sx={{ flex: 1 }}>
             <Typography variant="h5" gutterBottom>
               Plan Nutricional Personalizado
@@ -98,7 +91,7 @@ export const SectionPaymentNutritionPlan = () => {
             <button
               onClick={handleCreateSolicitud}
               style={{
-                minWidth: '750px',
+                width: '100%', maxWidth: '350px',
                 backgroundColor: "#009EE3",
                 color: "white",
                 padding: "8px 15px",
@@ -125,7 +118,8 @@ export const SectionPaymentNutritionPlan = () => {
               Pagar con Mercado Pago
             </button>
           </CardContent>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1rem' }}>
+
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '1rem', marginTop: { xs: '1rem', md: 0 } }}>
             <Card sx={{ width: 250, boxShadow: 3 }}>
               <CardMedia
                 component="img"
