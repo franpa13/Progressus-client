@@ -4,6 +4,7 @@ import { BiLogOut } from "react-icons/bi";
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoNutritionOutline } from "react-icons/io5";
 import { GoHome } from "react-icons/go";
+import { HiCurrencyDollar } from "react-icons/hi";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
@@ -194,6 +195,11 @@ export const NavBar = () => {
       title: "Planes Nutricionales",
       icon: <IoNutritionOutline />,
       link: "/nutritionalsocio",
+    },
+    {
+      title: "Subir Comprobante",
+      icon: <HiCurrencyDollar />,
+      link: "/comprobantesSocio",
     },
     {
       title: "Notificaciones",
