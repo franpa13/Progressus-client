@@ -19,7 +19,7 @@ export const Profile = () => {
   const [allMembership, setAllMembership] = useState(null);
   const setAvatar = useUserProfile((state) => state.setUserImage);
   const [loadingSkeleton, setLoadingSkeleton] = useState(false);
-  const [havePlan, setHavePlan] = useState(null);
+  // const [havePlan, setHavePlan] = useState(null);
   //  IMAGEN DE FOTO DE PERFIL
   const [isHovered, setIsHovered] = useState(false); // Estado para hover
   const fotoProfile = useUserProfile((state) => state.userImage);
@@ -34,10 +34,10 @@ export const Profile = () => {
         const response = await useGetRequestPaymentSocio(
           dataUser.identityUserId
         );
-        const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
-        if (havePlanRes.status === 200) {
-          setHavePlan(havePlanRes.data || null);
-        }
+        // const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
+        // if (havePlanRes.status === 200) {
+        //   setHavePlan(havePlanRes.data || null);
+        // }
         if (response?.data) {
           setDataMembership(response.data);
           setAllMembership(response.data.historialSolicitudDePagos || []);
@@ -98,7 +98,7 @@ export const Profile = () => {
       closeSpinner();
     }, 2000);
   };
-  console.log(havePlan, "HAVE PLAN");
+  console.log(lastMembership, "HAVE PLAN en profile");
 
   return (
     <MainLayout>
@@ -190,23 +190,23 @@ export const Profile = () => {
                   Array.isArray(allMembership) &&
                   allMembership.length > 0 &&
                   lastMembership.estadoSolicitud.nombre === "Confirmado" ? (
-
                   <Stack
-                    duracion={`${mesesDuracionMembresia} ${mesesDuracionMembresia === 1 ? "mes" : "meses"
-                      }`}
+                    duracion={`${mesesDuracionMembresia} ${mesesDuracionMembresia === 1 ? "mes" : "meses"}`}
                     titulo={dataMembership.membresia.nombre}
                     fechaFinalizacion={`Finaliza el ${fechaFinal}`}
                   />
-                ) : havePlan && havePlan.historialSolicitudDePagos[0].estadoSolicitud.nombre == "Confirmado" ? (
-                  <Stack
-                    duracion={"1 mes"}
-                    titulo={havePlan.membresia.nombre}
-
-                  />
-
                 ) : (
                   <Stack titulo="No tienes membresías activas" />
                 )}
+                {/* : havePlan &&
+                  Array.isArray(havePlan.historialSolicitudDePagos) &&
+                  havePlan.historialSolicitudDePagos.length > 0 &&
+                  havePlan.historialSolicitudDePagos[0].estadoSolicitud.nombre == "Confirmado" ? (
+                  <Stack
+                    duracion={"1 mes"}
+                    titulo={havePlan.membresia.nombre}
+                  />
+                ) */}
               </div>
             ))}
 

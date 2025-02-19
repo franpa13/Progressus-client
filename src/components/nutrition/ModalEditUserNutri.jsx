@@ -3,7 +3,7 @@ import { ModalLayout } from "../../layout/ModalLayout";
 import { MdOutlineEdit } from "react-icons/md";
 import { CustomInput } from "../ui/input/CustomInput";
 import { ButtonSpinner } from "../ui/buttons/ButtonSpinner";
-
+import { useEditPatent } from "../../service/nutrition/useEditPatent";
 export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
   if (!elementEditable) return null;
   const [loading, setLoading] = useState(false)
@@ -43,7 +43,9 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
   };
   const handleSubmit = async () => {
     try {
-      let response;
+      let response = useEditPatent(form)
+      console.log(response , "response");
+      
     } catch (e) {
       console.log(e);
 
@@ -57,7 +59,7 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
           {elementEditable?.nombre}
         </span>
       </div>
-      <form onSubmit={handleSubmit}>
+      <form >
 
         <div>
           <label className="font-semibold text-start w-full" htmlFor="">Edad : </label>
@@ -115,9 +117,9 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
 
         <ButtonSpinner
           loading={loading}
-
+           onClick={handleSubmit}
           label="Guardar Cambios"
-          type="submit"
+  
 
         >
 

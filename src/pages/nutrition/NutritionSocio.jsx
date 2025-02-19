@@ -22,10 +22,12 @@ export const NutritionSocio = () => {
     const fetchPlanData = async () => {
       try {
         const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
+        
         const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
 
         if (havePlanRes.status === 200) {
-          setHavePlan(havePlanRes.data.historialSolicitudDePagos[0]?.estadoSolicitud?.nombre || null);
+          console.log(havePlanRes , "haveplan");
+          setHavePlan(havePlanRes.data.historialSolicitudDePagos[1]?.estadoSolicitud?.nombre || null);
         }
 
         if (dataPlanRes.status === 200 && dataPlanRes.data.length > 0) {
@@ -43,6 +45,7 @@ export const NutritionSocio = () => {
 
     fetchPlanData();
   }, [dataUser.identityUserId]);
+
 
   return (
     <MainLayout>
