@@ -67,6 +67,8 @@ export const PatentTable = ({
         setUserToEdit(user)
         setDeletePatent(true)
     }
+    console.log(arreglo , "arreglo");
+    
     return (
         <>
             <Paper>
@@ -188,7 +190,7 @@ export const PatentTable = ({
 
             </Paper>
             {/* MODAL PARA  EDITAR PACIENTES */}
-            <ModalEditUserNutri open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri>
+            <ModalEditUserNutri setPatents={setPatents} open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri>
             {/* MODAL PARA EDITAR ALIMENTO */}
             <ModalEditFood open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood>
 

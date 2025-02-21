@@ -14,12 +14,12 @@ import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { CgDanger } from "react-icons/cg";
 import { FaRegCalendarTimes } from "react-icons/fa";
-import { MdDeleteOutline } from "react-icons/md";
+
 import { useDeleteTurn } from "../../service/turns/useDeleteTurn";
-import { FaRegCalendarCheck } from "react-icons/fa";
+
 import { IoIosTimer } from "react-icons/io";
 import { useGetTurns } from "../../service/turns/use-getTurns";
-import { useDeleteTurns } from "../../service/turns/use-deleteTurn";
+
 import { useSpinnerStore, useStoreUserData } from "../../store";
 import { useMembershipStore } from "../../store/useStoreMembership";
 import { useNavigate } from "react-router-dom";

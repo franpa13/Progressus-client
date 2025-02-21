@@ -11,6 +11,8 @@ import {
   IoIosInformationCircleOutline,
   IoMdCheckmarkCircleOutline,
 } from "react-icons/io";
+import { ModalAddMembership } from "./ModalAddMembership";
+import { LuPencilLine } from "react-icons/lu";
 import { useSpinnerStore, useStoreUserData } from "../../../store";
 import { useMembershipStore } from "../../../store/useStoreMembership";
 import { useGetRequestPaymentSocio } from "../../../service/membership/useGetRequestPaymentSocio";
@@ -23,10 +25,11 @@ import { SelectNavegable } from "../selectNavegable/SelectNavegable";
 import { ButtonSpinner } from "../../ui/buttons/ButtonSpinner";
 import { TablePagos } from "../tablePagos/TablePagos";
 
-import { Title } from "../../ui/title/Title";
+
 import { useRegisterComoMp } from "../../../service/membership/useRegisterComoMp";
 import { useGetAllMembershipForSocio } from "../../../service/membership/useGetAllMembershipForSocio";
-import { SnackbarDefault } from "../../ui/snackbar/Snackbar";
+import { Button } from "../../ui/buttons/Button";
+
 const arregloColumns = ["Membresía", "Fecha", "Precio"];
 
 export const PricingPrices = ({
@@ -69,6 +72,9 @@ export const PricingPrices = ({
   // SPINNER HASTA QUE TRAIGAN TODOS LOS USERA
   const openSppiner = useSpinnerStore((state) => state.showSpinner);
   const closeSpinner = useSpinnerStore((state) => state.hideSpinner);
+  // CREAR MEMBRESIA PERSONALIZADA
+  const [addMembership, setAddMembership] = useState(false)
+
 
   // TRAER MEMBRESIAS
 
@@ -266,6 +272,7 @@ export const PricingPrices = ({
       }
     }
   };
+  console.log(planElegido, "plan elegido");
 
   return (
     <div
@@ -374,7 +381,13 @@ export const PricingPrices = ({
           );
         })
       )}
+      {roleUser === "ADMIN" && (
 
+        <div className="flex justify-end w-full px-6">
+
+          <Button onClick={() => setAddMembership(true)} Icon={LuPencilLine} className="flex items-center flex-row-reverse gap-3 bg-customTextBlue" label={"Crear Membresia Personalizada"}></Button>
+        </div>
+      )}
       {roleUser === "ADMIN" &&
         (planElegido ? (
           <div className="flex flex-col md:mx-5 px-2 md:px-0 items-center justify-center w-full">
@@ -394,6 +407,7 @@ export const PricingPrices = ({
           </div>
         ) : (
           <div className="flex flex-col md:mx-5 px-2 md:px-0 items-center justify-center w-full">
+
             <label
               htmlFor=""
               className="text-xl mb-3 text-customTextGreen  font-semibold"
@@ -507,6 +521,7 @@ export const PricingPrices = ({
           ></ModalAceptPayment>
         </div>
       )}
+      <ModalAddMembership setPlanElegido={setPlanElegido} open={addMembership} setOpen={setAddMembership} ></ModalAddMembership>
     </div>
   );
 };

@@ -4,7 +4,8 @@ import { MdOutlineEdit } from "react-icons/md";
 import { CustomInput } from "../ui/input/CustomInput";
 import { ButtonSpinner } from "../ui/buttons/ButtonSpinner";
 import { useEditPatent } from "../../service/nutrition/useEditPatent";
-export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
+import { useGetPatents } from "../../service/nutrition/useGetPatents";
+export const ModalEditUserNutri = ({ open, setOpen, elementEditable, setPatents }) => {
   if (!elementEditable) return null;
   const [loading, setLoading] = useState(false)
   console.log(elementEditable, "element editable");
@@ -31,6 +32,7 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
 
     });
   }, [open]);
+  console.log(form, "form");
 
 
   // Manejar cambios en los inputs del formulario
@@ -42,13 +44,20 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
     }));
   };
   const handleSubmit = async () => {
+    setLoading(true)
     try {
-      let response = useEditPatent(form)
-      console.log(response , "response");
-      
+      const response = await useEditPatent(elementEditable, form)
+      console.log(response, "response");
+      if (response.status == 204 || response.status == 200 || response.status == 200 || response.status == "204") {
+        setOpen(false)
+        const data = await useGetPatents();
+        setPatents(data.data);
+      }
     } catch (e) {
-      console.log(e);
+      console.log(e, "errores");
 
+    } finally {
+      setLoading(false)
     }
   }
   return (
@@ -102,10 +111,9 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
         <div>
           <label className="font-semibold text-start w-full" htmlFor="">Grasa(%) : </label>
           <CustomInput
-            name="porcentajeGrasa"
+            name="porcentajeDeGrasa"
             type="number"
-            value={form.porcentajeDeGrasa
-            }
+            value={form.porcentajeDeGrasa}
             onChange={handleChange}
             placeholder="Grasa"
             label="Peso"
@@ -117,9 +125,9 @@ export const ModalEditUserNutri = ({ open, setOpen, elementEditable }) => {
 
         <ButtonSpinner
           loading={loading}
-           onClick={handleSubmit}
+          onClick={handleSubmit}
           label="Guardar Cambios"
-  
+
 
         >
 

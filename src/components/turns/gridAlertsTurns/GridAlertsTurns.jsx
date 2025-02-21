@@ -70,7 +70,7 @@ export const GridAlertsTurns = ({
         setOpen={setAlertMaxTurns}
         severity={"warning"}
         duration={7000}
-        message={"Se alcanzó el máximo de cupos en este horario!"}
+        message={"Se alcanzó el máximo de cupos !"}
       ></SnackbarDefault>
       {/* ALERT SI INTENTA SELECCIONAR DOS TURNOS AL MISMO HORARIO*/}
       {/* {alertDuplicatedTurn && (

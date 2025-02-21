@@ -1,19 +1,22 @@
 import { api } from "../api"; // Asegúrate de que la ruta sea correcta
 
-export const useEditPatent = async (patent) => {
-console.log(patent , "patent");
+export const useEditPatent = async (dataFix, patent) => {
 
+
+const porcentajeDeGrasa = parseFloat(patent.porcentajeDeGrasa);
+console.log(porcentajeDeGrasa , "porcentajeDegrasa");
 
     try {
         const response = await api.put(
-            `/ActualizarPaciente/${patent.id}`, // Usa el ID del plan para la URL
+            `/ActualizarPaciente/${dataFix.id}`, // Usa el ID del plan para la URL
             {
-                id: patent.id, // Incluye el ID en el cuerpo si es necesario
-                Nombre: patent.nombre, // Nombre del plan
-                Objetivo: patent.dias,
-                PorcetajeDeGrasa : patent.porcentajeGrasa ,
-                Edad : patent.edad ,
-                Peso : patent.peso
+                id: dataFix.id, // Incluye el ID en el cuerpo si es necesario
+                nombre: dataFix.nombre, // Nombre del plan
+                objetivo: patent.objetivo, 
+
+                porcentajeDeGrasa : porcentajeDeGrasa  ,
+                edad : patent.edad ,
+                peso : patent.peso
                  // Arreglo de días con comidas y alimentos
             },
             {
