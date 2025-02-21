@@ -130,7 +130,7 @@ export const SectionPaymentNutritionPlan = () => {
               <CardMedia
                 component="img"
                 height="50"
-                image="/public/nutricionista.jpg"
+                image="/nutricionista.jpg"
                 alt="Nutricionista"
               />
               <CardContent>
