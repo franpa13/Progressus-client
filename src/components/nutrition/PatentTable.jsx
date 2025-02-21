@@ -23,7 +23,8 @@ export const PatentTable = ({
     loading = false,
     arreglo = [],
     arregloColumns = [],
-    alimentos = false
+    alimentos = false,
+    setFood
 }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -67,8 +68,8 @@ export const PatentTable = ({
         setUserToEdit(user)
         setDeletePatent(true)
     }
-    console.log(arreglo , "arreglo");
-    
+    console.log(arreglo, "arreglo");
+
     return (
         <>
             <Paper>
@@ -113,7 +114,7 @@ export const PatentTable = ({
                                         }}
                                     >
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {item.alimento}
+                                            {item.nombre}
                                         </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
                                             {item.porcion}
@@ -192,7 +193,7 @@ export const PatentTable = ({
             {/* MODAL PARA  EDITAR PACIENTES */}
             <ModalEditUserNutri setPatents={setPatents} open={edit} setOpen={setEdit} elementEditable={userToEdit}></ModalEditUserNutri>
             {/* MODAL PARA EDITAR ALIMENTO */}
-            <ModalEditFood open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood>
+            <ModalEditFood setFood={setFood} open={editFood} setOpen={setEditFood} elementEditable={userToEdit}></ModalEditFood>
 
             {/* MODAL PARA ELIMINAR PACIENTE */}
             <ModalDeletePatent setPatents={setPatents} open={deletePatent} setOpen={setDeletePatent} elementEditable={userToEdit}></ModalDeletePatent>

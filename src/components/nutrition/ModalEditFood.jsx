@@ -3,36 +3,38 @@ import { ModalLayout } from "../../layout/ModalLayout";
 import { MdOutlineEdit } from "react-icons/md";
 import { CustomInput } from "../ui/input/CustomInput";
 import { ButtonSpinner } from "../ui/buttons/ButtonSpinner";
+import { useEditFood } from "../../service/nutrition/useEditFood";
+import { useGetFood } from "../../service/nutrition/useGetFood";
 
-export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
-    // Si no hay un elemento editable, no se renderiza nada
+export const ModalEditFood = ({ open, setOpen, elementEditable, setFood }) => {
+
     if (!elementEditable) return null;
 
-  
 
-    // Estado del formulario inicializado con los datos del elemento editable
+    const [load, setLoad] = useState(false)
+
     const [form, setForm] = useState({
         alimento: elementEditable?.nombre || "",
-        porcion: elementEditable?.porcion || "",
-        calorias: elementEditable?.calorias || "",
-        carbohidratos: elementEditable?.carbohidratos || "",
-        proteinas: elementEditable?.proteinas || "",
-        grasas: elementEditable?.grasas || "",
+        porcion: elementEditable?.porcion || 0,
+        calorias: elementEditable?.calorias || 0,
+        carbohidratos: elementEditable?.carbohidratos || 0,
+        proteinas: elementEditable?.proteinas || 0,
+        grasas: elementEditable?.grasas || 0,
     });
 
-    // Efecto para actualizar el formulario cuando cambie el elemento editable
+
     useEffect(() => {
         setForm({
-            alimento: elementEditable?.nombre || "",
-            porcion: elementEditable?.porcion || "",
-            calorias: elementEditable?.calorias || "",
-            carbohidratos: elementEditable.carbohidratos || "",
-            proteinas: elementEditable?.proteinas || "",
-            grasas: elementEditable?.grasas || "",
+            limento: elementEditable?.nombre || "",
+            porcion: elementEditable?.porcion || 0,
+            calorias: elementEditable?.calorias || 0,
+            carbohidratos: elementEditable?.carbohidratos || 0,
+            proteinas: elementEditable?.proteinas || 0,
+            grasas: elementEditable?.grasas || 0,
         });
     }, [elementEditable]);
-  
-    // Manejar cambios en los inputs del formulario
+
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setForm((prevForm) => ({
@@ -41,12 +43,30 @@ export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
         }));
     };
 
-    // Manejar el envío del formulario
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
+        setLoad(true)
         e.preventDefault();
-        // Aquí puedes implementar la lógica para guardar los cambios
-        console.log("Formulario enviado:", form);
-        setOpen(false); // Cerrar el modal después de guardar
+        try {
+
+            const resp = await useEditFood(form, elementEditable)
+            console.log(resp, "Res");
+            if (resp.status == 200 || resp.status == 201 || resp.status == "200" || resp.status == "201") {
+                const response = await useGetFood()
+
+                if (resp) {
+
+                    setFood(response.data)
+                }
+            }
+        } catch (e) {
+            console.log(e, "errores");
+
+        } finally {
+            setLoad(false)
+            setOpen(false);
+        }
+
     };
 
     return (
@@ -57,12 +77,13 @@ export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
                     {elementEditable?.nombre}
                 </span>
             </div>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div>
                     <label className="font-semibold text-start w-full" htmlFor="porcion">
                         Porción:
                     </label>
                     <CustomInput
+                        type="number"
                         name="porcion"
                         value={form.porcion}
                         onChange={handleChange}
@@ -91,7 +112,7 @@ export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
                     </label>
                     <CustomInput
                         name="carbohidratos"
-                     
+                        type="number"
                         value={form?.carbohidratos}
                         onChange={handleChange}
                         placeholder="Carbohidratos"
@@ -107,6 +128,7 @@ export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
                         Proteínas:
                     </label>
                     <CustomInput
+                        type="number"
                         name="proteinas"
                         value={form.proteinas}
                         onChange={handleChange}
@@ -120,6 +142,7 @@ export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
                         Grasas:
                     </label>
                     <CustomInput
+                        type="number"
                         name="grasas"
                         value={form.grasas}
                         onChange={handleChange}
@@ -128,7 +151,7 @@ export const ModalEditFood = ({ open, setOpen, elementEditable }) => {
                         className="mb-4"
                     />
                 </div>
-                <ButtonSpinner label="Guardar Cambios" type="submit" />
+                <ButtonSpinner loading={load} onClick={handleSubmit} label="Guardar Cambios" />
             </form>
         </ModalLayout>
     );

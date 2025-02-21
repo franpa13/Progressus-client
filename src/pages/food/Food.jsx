@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { MainLayout } from '../../layout/MainLayout'
 import { Button, CustomInput, Location, Title, PatentTable } from '../../components'
-
+import { useGetFood } from '../../service/nutrition/useGetFood'
 import { CiSearch } from 'react-icons/ci'
 import { IoMdAdd } from 'react-icons/io'
 import { ModalAddFood } from '../../components'
@@ -58,11 +58,23 @@ const columnasAlimentos = [
 ];
 
 export const Food = () => {
+  const [food, setFood] = useState([])
   const [findElement, setFindElement] = useState("");
   const [addElement, setAddElement] = useState(false)
   const handleChange = (e) => {
     setFindElement(e.target.value);
   };
+  useEffect(() => {
+    const traerData = async () => {
+      const resp = await useGetFood()
+    
+      if (resp) {
+
+        setFood(resp.data)
+      }
+    }
+    traerData()
+  }, [])
   return (
     <MainLayout>
       <section className="animate-fade-in-down md:mx-auto bg-white  rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
@@ -100,8 +112,8 @@ export const Food = () => {
             </div>
           </div>
         </section>
-        <PatentTable arreglo={alimentos} arregloColumns={columnasAlimentos} alimentos={true} ></PatentTable>
-        <ModalAddFood open={addElement} setOpen={setAddElement}></ModalAddFood>
+        <PatentTable setFood={setFood} arreglo={food} arregloColumns={columnasAlimentos} alimentos={true} ></PatentTable>
+        <ModalAddFood  setData={setFood} open={addElement} setOpen={setAddElement}></ModalAddFood>
       </section>
     </MainLayout>
   )

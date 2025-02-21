@@ -3,32 +3,27 @@ import { ModalLayout } from "../../layout/ModalLayout";
 import { MdOutlineEdit } from "react-icons/md";
 import { CustomInput } from "../ui/input/CustomInput";
 import { ButtonSpinner } from "../ui/buttons/ButtonSpinner";
-
-export const ModalAddFood = ({ open, setOpen }) => {
-    // Si no hay un elemento editable, no se renderiza nada
-
-
-
-
-    // Estado del formulario inicializado con los datos del elemento editable
+import { useCreateFood } from "../../service/nutrition/useCreateFood";
+import { useGetFood } from "../../service/nutrition/useGetFood";
+export const ModalAddFood = ({ open, setOpen, setData }) => {
+    const [load, setLoad] = useState(false)
     const [form, setForm] = useState({
         alimento: "",
-        porcion :"",
-        calorias : "",
-        carbohidratos : "",
-        proteinas : "",
-        grasas : "",
+        porcion: 0,
+        calorias: 0,
+        carbohidratos: 0,
+        proteinas: 0,
+        grasas: 0,
     });
 
-    // Efecto para actualizar el formulario cuando cambie el elemento editable
     useEffect(() => {
         setForm({
             alimento: "",
-            porcion :"",
-            calorias : "",
-            carbohidratos : "",
-            proteinas : "",
-            grasas : "",
+            porcion: 0,
+            calorias: 0,
+            carbohidratos: 0,
+            proteinas: 0,
+            grasas: 0,
         });
     }, []);
 
@@ -38,17 +33,45 @@ export const ModalAddFood = ({ open, setOpen }) => {
 
         setForm((prevForm) => ({
             ...prevForm,
-            [name]: type === "number" ? Number(value) : value, // Convierte a número si el tipo es "number"
+            [name]: type === "number" ? Number(value) : value,
         }));
     };
 
 
     // Manejar el envío del formulario
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+        setLoad(true)
         e.preventDefault();
-        // Aquí puedes implementar la lógica para guardar los cambios
+        try {
+            const resp = await useCreateFood(form)
+            if (resp && resp.status == 201 || resp.status == "201") {
+                const responseData = await useGetFood()
+                console.log(responseData, "response al crear");
+                if (responseData) {
 
-        setOpen(false); // Cerrar el modal después de guardar
+                    setData(responseData.data)
+                }
+
+            }
+
+        } catch (e) {
+            console.log(e, "err");
+
+        } finally {
+            setOpen(false);
+            setLoad(false)
+            setForm({
+                alimento: "",
+                porcion: 0,
+                calorias: 0,
+                carbohidratos: 0,
+                proteinas: 0,
+                grasas: 0,
+            });
+        }
+
+
+
     };
     console.log(typeof (form.calorias), "form");
 
@@ -58,7 +81,7 @@ export const ModalAddFood = ({ open, setOpen }) => {
                 <span className="font-semibold text-xl">Agregar alimento:</span>
 
             </div>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div>
                     <label className="font-semibold text-start w-full" htmlFor="porcion">
                         Nombre
@@ -147,7 +170,7 @@ export const ModalAddFood = ({ open, setOpen }) => {
                         className="mb-4"
                     />
                 </div>
-                <ButtonSpinner label="Guardar Cambios" type="submit" />
+                <ButtonSpinner loading={load} onClick={handleSubmit} label="Guardar Cambios" />
             </form>
         </ModalLayout>
     );
