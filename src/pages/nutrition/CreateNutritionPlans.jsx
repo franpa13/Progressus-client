@@ -5,13 +5,14 @@ import { useCrearPlan, useStorePlanForView } from '../../store/useStoreNutrition
 import { useStoreNutrition } from '../../store/useStoreNutrition'
 import { Link } from 'react-router-dom'
 import { MdOutlineKeyboardReturn } from 'react-icons/md'
+import { TabsComponent } from '../../components/ui/tabs/Tabs'
 export const CreateNutritionPlans = () => {
     const nombrePlanNutrition = useStoreNutrition(state => state.nombrePlanNutrition);
     const isEditable = useStorePlanForView((state) => state.isEditable);
     const setAlimentos = useCrearPlan((state) => state.setAlimentos);
     // SOLO PARA VER
     const planForView = useStorePlanForView(state => state.planForView);
- const [alert, setAlert] = useState(false)
+    const [alert, setAlert] = useState(false)
     const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
     const nutritionPlan = [
         {
@@ -153,7 +154,7 @@ export const CreateNutritionPlans = () => {
                     <span className={"font-semibold flex text-center mb-5 w-full justify-center gap-1"}>
                         Nota: El plan se guarda en el día <span className='text-customTextBlue'>Sábado</span>
                     </span>
-                    <div className="flex flex-wrap  justify-between md:justify-center  w-full md:gap-16">
+                    {/* <div className="flex flex-wrap  justify-between md:justify-center  w-full md:gap-16">
                         {days.map((day, i) => {
                             return (
 
@@ -169,14 +170,17 @@ export const CreateNutritionPlans = () => {
                             )
                         })}
 
-                    </div>
+                    </div> */}
+                    <div className='flex my-6 w-full justify-center items-center'>
+                        <TabsComponent days={days} selectNav={selectNav} setSelectNav={setSelectNav} />
 
+                    </div>
                     {nombrePlanNutrition == null ? (
                         planForView.dias.map((plan) => {
                             if (plan.dia === selectNav) {
                                 return (
                                     <div key={plan.dia}>
-                                        <DaysSection  dataPlan={plan} day={plan.dia} data={plan.comidas}></DaysSection>
+                                        <DaysSection dataPlan={plan} day={plan.dia} data={plan.comidas}></DaysSection>
                                     </div>
                                 );
                             }
