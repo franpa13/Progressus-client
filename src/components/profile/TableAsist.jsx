@@ -22,6 +22,7 @@ export const TableAsist = ({ data, columns }) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  console.log(data[0].fechaAsistencia, "data");
 
   const paginatedData = data.slice(
     page * rowsPerPage,
@@ -59,7 +60,10 @@ export const TableAsist = ({ data, columns }) => {
                         {dayjs(row.fechaAsistencia).format("DD-MM-YYYY")}
                       </TableCell>
                       <TableCell sx={{ fontSize: "16px" }} align="right">
-                        <SpellcheckOutlinedIcon sx={{ color: "#1890FF" ,fontWeight:"bold" }}  />
+                        {dayjs(row.fechaAsistencia).format("HH:mm")}
+                      </TableCell>
+                      <TableCell sx={{ fontSize: "16px" }} align="right">
+                        <SpellcheckOutlinedIcon sx={{ color: "#1890FF", fontWeight: "bold" }} />
                       </TableCell>
                     </TableRow>
                   ))}

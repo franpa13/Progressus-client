@@ -26,7 +26,7 @@ export const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
   const roleUser = dataUser.roles[0];
   const [userAsist, setUserAsist] = useState([]);
-  const arregloColumns = ["Fecha", ""];
+  const arregloColumns = ["Fecha","Hora", ""];
   useEffect(() => {
     const traerMembresiaActiva = async () => {
       setLoadingSkeleton(true);

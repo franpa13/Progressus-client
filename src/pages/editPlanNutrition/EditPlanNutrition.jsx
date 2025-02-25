@@ -5,6 +5,7 @@ import { useEditPlan } from '../../store/useStoreNutrition'
 import { MdOutlineKeyboardReturn } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { useUpdatePlan } from '../../service/nutrition/useUpdatePlan'
+import { TabsComponent } from '../../components/ui/tabs/Tabs'
 export const EditPlanNutrition = () => {
   const [alert, setAlert] = useState(false)
   const planEditable = useEditPlan((state) => state.planEditado);
@@ -55,15 +56,14 @@ export const EditPlanNutrition = () => {
           </Link>
         </div>
 
-        <div className="flex flex-wrap justify-between md:justify-center  w-full md:gap-10">
+        {/* <div className="flex flex-wrap gap-x-20 mb-4 gap-y-6 justify-between md:justify-center  w-full md:gap-16">
           {days.map((day, i) => {
             return (
-
               <span
                 key={i}
                 onClick={() => setSelectNav(day)}
-                className={`transition-all font-bold cursor-pointer p-1  ${selectNav === day &&
-                  "border-b-2 border-customTextGreen text-customTextGreen md:text-lg"
+                className={`transition-all text-base  md:text-xl font-bold cursor-pointer p-1  ${selectNav === day &&
+                  "border-b-2 border-customTextGreen text-customTextGreen md:text-2xl"
                   }`}
               >
                 {day}
@@ -71,8 +71,11 @@ export const EditPlanNutrition = () => {
             )
           })}
 
-        </div>
+        </div> */}
+        <div className='flex my-6 w-full justify-center items-center'>
+        <TabsComponent days={days} selectNav={selectNav} setSelectNav={setSelectNav} />
 
+        </div>
 
 
         {planEditable.dias.map((plan) => {
@@ -86,7 +89,7 @@ export const EditPlanNutrition = () => {
 
               </div>
             );
-          } 
+          }
           // else {
           //   return <Title title={"No se encontraron comidas asignadas a este dia"} className={"text-customTextBlue flex justify-center mt-6"}></Title>
           // }

@@ -153,15 +153,15 @@ export const CreateNutritionPlans = () => {
                     <span className={"font-semibold flex text-center mb-5 w-full justify-center gap-1"}>
                         Nota: El plan se guarda en el día <span className='text-customTextBlue'>Sábado</span>
                     </span>
-                    <div className="flex flex-wrap justify-between md:justify-center  w-full md:gap-10">
+                    <div className="flex flex-wrap  justify-between md:justify-center  w-full md:gap-16">
                         {days.map((day, i) => {
                             return (
 
                                 <span
                                     key={i}
                                     onClick={() => setSelectNav(day)}
-                                    className={`transition-all font-bold cursor-pointer p-1  ${selectNav === day &&
-                                        "border-b-2 border-customTextGreen text-customTextGreen md:text-lg"
+                                    className={`transition-all text-xl font-bold cursor-pointer p-1  ${selectNav === day &&
+                                        "border-b-2 border-customTextGreen text-customTextGreen md:text-2xl"
                                         }`}
                                 >
                                     {day}
