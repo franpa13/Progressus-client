@@ -13,7 +13,7 @@ import { useCrearPlan, useEditPlan, useStorePlanForView } from "../../store/useS
 import { useFoodById } from "../../service/nutrition/useFoodById";
 import { useSpinnerStore } from '../../store';
 export const TableDays = ({
-    openAdd , 
+    openAdd,
     editable,
     tipoComida,
     day,
@@ -51,7 +51,7 @@ export const TableDays = ({
         };
 
         fetchFoodData();
-    }, [arreglo , openAdd]);
+    }, [arreglo, openAdd]);
 
 
     const handleChangePage = (event, newPage) => {
@@ -79,15 +79,15 @@ export const TableDays = ({
         <>
             <Paper>
                 <TableContainer>
-                    <Table sx={{ minWidth: { xl: 1200 } }} aria-label="simple table">
+                    <Table sx={{ minWidth: { xl: 1500 } }} aria-label="simple table">
                         <TableHead>
                             <TableRow>
                                 {arregloColumns.map((column, index) => (
                                     <TableCell
                                         key={index}
                                         align={
-                                            column == "Cantidad" ||
-                                                column == "Porcion(gr)" ||
+
+                                            column == "Porcion(gr)" ||
                                                 column === "Kcal" || column === "Grasas" || column === "Carbohidratos" || column === "Proteinas"
                                                 ? "center"
                                                 : "left"
@@ -112,24 +112,27 @@ export const TableDays = ({
                                         sx={{
                                             "&:last-child td, &:last-child th": { border: 0 },
                                             "&:hover": {
-                                                backgroundColor: "#E6F7FF",
+                                                backgroundColor: "#E4F5D0",
                                             },
                                         }}
                                     >
                                         <TableCell sx={{ fontSize: "16px" }} align="left">
-                                            {alimento ? alimento.nombre :  <h1 className="text-lg font-bold ">
+                                            {alimento ? alimento.nombre : <h1 className="text-lg font-bold ">
                                                 ...
-                                            </h1> }
+                                            </h1>}
+                                        </TableCell>
+                                        <TableCell sx={{ fontSize: "16px" }} align="left">
+                                            <span className="w-full text-center ml-6">
+
+                                                {user.cantidad}
+                                            </span>
                                         </TableCell>
                                         <TableCell sx={{ fontSize: "16px" }} align="center">
-                                            {user.cantidad}
-                                        </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="center">
-                                            {alimento ? alimento.porcion :  <h1  className="text-lg font-bold"> 
+                                            {alimento ? alimento.porcion : <h1 className="text-lg font-bold">
                                                 ...
-                                            </h1> }
+                                            </h1>}
                                         </TableCell>
-                                        <TableCell sx={{ fontSize: "16px" }} align="center">
+                                        {/* <TableCell sx={{ fontSize: "16px" }} align="center">
                                             {alimento ? alimento.calorias : <h1  className="text-lg font-bold">
                                                 ...
                                             </h1> }
@@ -148,7 +151,7 @@ export const TableDays = ({
                                             {alimento ? alimento.proteinas : <h1 className="text-lg font-bold">
                                                 ...
                                             </h1> }
-                                        </TableCell>
+                                        </TableCell> */}
                                         {isEditable && (
                                             <TableCell sx={{ fontSize: "16px" }} align="right">
                                                 <div className="flex font-semibold flex-col text-sm gap-2 items-end justify-end ">

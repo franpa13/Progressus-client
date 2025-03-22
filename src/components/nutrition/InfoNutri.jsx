@@ -71,7 +71,7 @@ export const InfoNutri = ({ comidas }) => {
   }, [comidas]); // Ejecutar cada vez que comidas cambie
 
   return (
-    <div className='p-2 text-base mt-6 flex justify-between rounded-md font-semibold bg-customGreenLigth'>
+    <div className='p-2 text-base mt-6 flex gap-4 flex-wrap w-full md:w-[1500px] justify-between rounded-md font-semibold bg-customBlue'>
       <p>kcal: {nutriInfo.kcal.toFixed(2)}</p> {/* Mostrar kcal con 2 decimales */}
       <p>prot: {nutriInfo.prot.toFixed(2)}</p> {/* Mostrar prot con 2 decimales */}
       <p>hc: {nutriInfo.hc.toFixed(2)}</p>     {/* Mostrar hc con 2 decimales */}

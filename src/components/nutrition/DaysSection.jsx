@@ -55,8 +55,8 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
         setTipoComida(tipoComida);
     };
 
-    const columnsEditable = ["Alimento", "Cantidad", "Porcion(gr)", "Kcal", "Grasas", "Carbohidratos", "Proteinas", ""];
-    const columns = ["Alimento", "Cantidad", "Porcion(gr)", "Kcal", "Grasas", "Carbohidratos", "Proteinas"];
+    const columnsEditable = ["Alimento", "Cantidad", "Porcion(gr)", ""];
+    const columns = ["Alimento", "Cantidad", "Porcion(gr)"];
     const comidas = [
         { name: "Desayuno", keys: "desayuno" },
         { name: "Media Mañana", keys: "mediaMañana" },
@@ -64,26 +64,26 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
         { name: "Media Tarde", keys: "mediaTarde" },
         { name: "Cena", keys: "cena" },
     ];
-    
+
     const calculateMacros = async (comidas) => {
-    
+
         let totalKcal = 0;
         let totalProt = 0;
         let totalHc = 0;
         let totalGrasas = 0;
-        
+
         // Recorrer cada comida
         for (const comida of comidas) {
             // Recorrer cada alimento en la comida
             for (const alimento of comida.alimentos) {
-             
-                
+
+
                 try {
                     // Obtener los datos del alimento desde la API
                     const response = await useFoodById(alimento.alimentoId);
-                    
-                    console.log(response.data , "response de data");
-                    
+
+                    console.log(response.data, "response de data");
+
                     const foodData = response.data;
 
                     // Calcular los valores nutricionales basados en la cantidad
@@ -113,21 +113,22 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
 
         fetchData();
     }, [data]);
-   
+
 
     return (
         <form className='mt-3'>
             {data.length > 0 ? (
                 data.map((com, i) => {
-                    console.log(i, "index");
+
 
                     const alimentos = data[com.tipoComida];
                     return (
-                        <div className='my-5 border-b-2 pb-4' key={i}>
-                            <Title className={"text-customTextBlue text-center mb-5 w-full justify-center"} title={com.tipoComida} />
+                        <div className='mb-28 pb-12 border-b-2 ' key={i}>
+                            <h1>editar</h1>
+                            <h1 className={"text-3xl lg:text-4xl underline text-black font-semibold  text-center mb-5 w-full justify-center"} > {com.tipoComida}</h1>
                             {isEditable && (
                                 <div className="flex justify-end">
-                                    <Tooltip title={`Añadir alimentos al ${com.name}`}>
+                                    <Tooltip className='mb-4' title={`Añadir alimentos al ${com.name ? com?.name : com?.tipoComida}`}>
                                         <span className="bg-customButtonGreen hover:bg-green-800 rounded p-1">
                                             <RiAddCircleLine
                                                 onClick={() => handleClick(com.tipoComida)}
@@ -137,8 +138,14 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                                     </Tooltip>
                                 </div>
                             )}
-                            <TableDays openAdd={openAddFood} day={day} editable={editable} tipoComida={com.tipoComida} arregloColumns={isEditable ? columnsEditable : columns} arreglo={com.alimentos} />
-                            <InfoNutri index={i}  setCalculoMacros={setCalculoMacros} comidas={com.alimentos} />
+                            <div className='flex w-full justify-center items-center'>
+
+                                <TableDays openAdd={openAddFood} day={day} editable={editable} tipoComida={com.tipoComida} arregloColumns={isEditable ? columnsEditable : columns} arreglo={com.alimentos} />
+                            </div>
+                            <div className='w-full flex justify-center'>
+                                <InfoNutri index={i} setCalculoMacros={setCalculoMacros} comidas={com.alimentos} />
+
+                            </div>
                         </div>
                     );
                 })
@@ -152,23 +159,48 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                             .find(c => c.tipoComida === comida.name)?.alimentos || [];
 
                         return (
-                            <div key={index} className='my-6'>
-                                <Title className="text-customTextBlue text-center mb-5 w-full justify-center" title={comida.name} />
-                                <div className="flex flex-col gap-5">
+                            <div className='mb-28 pb-12 border-b-2 ' key={index}>
+                                <h1 className={"text-3xl lg:text-4xl underline text-black font-semibold  text-center mb-5 w-full justify-center"} > {comida.name}</h1>
+                                {isEditable && (
                                     <div className="flex justify-end">
-                                        <Tooltip title={`Añadir alimentos al ${comida.name}`}>
+                                        <Tooltip className='mb-4' title={`Añadir alimentos al ${comida.name}`}>
                                             <span className="bg-customButtonGreen hover:bg-green-800 rounded p-1">
                                                 <RiAddCircleLine
-                                                    onClick={() => handleClick(comida.name)}
+                                                    onClick={() => handleClick(com.tipoComida)}
                                                     className="cursor-pointer text-3xl text-white"
                                                 />
                                             </span>
                                         </Tooltip>
                                     </div>
+                                )}
+                                <div className='flex w-full justify-center items-center'>
+
                                     <TableDays openAdd={openAddFood} tipoComida={comida.name} day={day} arregloColumns={isEditable ? columnsEditable : columns} arreglo={alimentosFiltrados} />
                                 </div>
-                                <InfoNutri index={index}  setCalculoMacros={setCalculoMacros} comidas={alimentosFiltrados} />
+                                <div className='w-full flex justify-center'>
+                                    <InfoNutri index={index} setCalculoMacros={setCalculoMacros} comidas={alimentosFiltrados} />
+
+                                </div>
                             </div>
+                            // <div key={index} className='mb-28 pb-12 border-b-2 ' >
+                            //     <h1 className={"text-3xl lg:text-4xl underline text-black font-semibold  text-center mb-5 w-full justify-center"} > {comida.name}</h1>
+                            //     <div className="flex flex-col gap-5">
+                            //         <div className="flex justify-end">
+                            //             <Tooltip className='mb-4' title={`Añadir alimentos al ${comida.name}`}>
+                            //                 <span className="bg-customButtonGreen hover:bg-green-800 rounded p-1">
+                            //                     <RiAddCircleLine
+                            //                         onClick={() => handleClick(comida.name)}
+                            //                         className="cursor-pointer text-3xl text-white"
+                            //                     />
+                            //                 </span>
+                            //             </Tooltip>
+                            //         </div>
+                            //         <div className='flex w-full justify-center items-center'>
+                            //             <TableDays openAdd={openAddFood} tipoComida={comida.name} day={day} arregloColumns={isEditable ? columnsEditable : columns} arreglo={alimentosFiltrados} />
+                            //         </div>
+                            //     </div>
+                            //     <InfoNutri index={index} setCalculoMacros={setCalculoMacros} comidas={alimentosFiltrados} />
+                            // </div>
                         );
                     })}
                 </>

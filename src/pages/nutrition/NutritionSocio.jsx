@@ -22,11 +22,11 @@ export const NutritionSocio = () => {
     const fetchPlanData = async () => {
       try {
         const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
-        
+
         const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
 
         if (havePlanRes.status === 200) {
-          console.log(havePlanRes , "haveplan");
+          console.log(havePlanRes, "haveplan");
           setHavePlan(havePlanRes.data.historialSolicitudDePagos[1]?.estadoSolicitud?.nombre || null);
         }
 
