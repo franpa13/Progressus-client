@@ -31,7 +31,7 @@ export const Checkout = () => {
 
               <AlertCheckout text={"Los pedidos únicamente se retiran por el gimnasio. No realizamos envíos, una vez confirmado el pago o reserva se puede retirar"} severity="info" ></AlertCheckout>
             </div>
-            <PaymentCheckout></PaymentCheckout>
+            <PaymentCheckout cart ={cart}></PaymentCheckout>
           </div>
           {/* Resumen del carrito */}
           <div className="w-full mt-6 md:mt-0 md:w-1/3">
