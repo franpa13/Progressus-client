@@ -36,6 +36,8 @@ import { ViewPlan } from "./pages/plans/createPlans/viewPlan/ViewPlan";
 import { Checkout } from "./pages/checkout/Checkout";
 import { CreateNutritionPlans } from "./pages";
 import { NutritionSocio } from "./pages/nutrition/NutritionSocio";
+import { CodeScanner } from "./pages/codeScanner/CodeScanner";
+import { CodeWriter } from "./pages/codeScanner/CodeWriter";
 
 //RUTAS PROTEGIDAS
 export const router = createBrowserRouter([
@@ -305,5 +307,22 @@ export const router = createBrowserRouter([
         <Orders />
       </ProtectedRoute>
     ),
+  },
+  // SCANNERS
+  {
+    path: "/scanner",
+    element: (
+      <ProtectedRoute allowedRoles={["SOCIO"]}>
+        <CodeScanner />
+      </ProtectedRoute>
+    )
+  },
+  {
+    path: "/writer",
+    element: (
+      <ProtectedRoute allowedRoles={["ADMIN"]}>
+        <CodeWriter />
+      </ProtectedRoute>
+    )
   },
 ])

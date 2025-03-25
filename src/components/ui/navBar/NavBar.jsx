@@ -8,6 +8,7 @@ import { HiCurrencyDollar } from "react-icons/hi";
 import { HiOutlineUsers } from "react-icons/hi2";
 import { CgProfile } from "react-icons/cg";
 import { FaGift } from "react-icons/fa";
+import { BsQrCodeScan } from "react-icons/bs";
 import MoreOutlinedIcon from '@mui/icons-material/MoreOutlined';
 import { TbUserCheck } from "react-icons/tb";
 import { FaRegAddressCard } from "react-icons/fa";
@@ -16,6 +17,8 @@ import { BsMenuButtonWide } from "react-icons/bs";
 import { CgGym } from "react-icons/cg";
 import { MdOutlineInventory } from "react-icons/md";
 import { IoStatsChartOutline } from "react-icons/io5";
+
+import { IoQrCodeOutline } from "react-icons/io5";
 import { FiShoppingCart } from "react-icons/fi";
 import { GrPlan } from "react-icons/gr";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -91,13 +94,19 @@ export const NavBar = () => {
       link: "/shopAdmin",
     }, {
       title: "Pedidos",
-      icon: <MoreOutlinedIcon  fontSize="small" />,
+      icon: <MoreOutlinedIcon fontSize="small" />,
       link: "/orders",
     },
     {
       title: "Ingreso",
       icon: <TbUserCheck />,
       link: "/attendance",
+    },
+    
+    {
+      title: "QR code",
+      icon: <IoQrCodeOutline />,
+      link: "/writer",
     },
     {
       title: "Usuarios",
@@ -197,6 +206,11 @@ export const NavBar = () => {
       link: "/nutritionalsocio",
     },
     {
+      title: "Scanner QR",
+      icon: <BsQrCodeScan />,
+      link: "/scanner",
+    },
+    {
       title: "Subir Comprobante",
       icon: <HiCurrencyDollar />,
       link: "/comprobantesSocio",
@@ -218,7 +232,7 @@ export const NavBar = () => {
       title: "Mi cuenta",
       icon: <CgProfile />,
       link: "/account",
-    },    {
+    }, {
       title: "Planes",
       icon: <GrPlan />,
       link: "/plansnutrition",
