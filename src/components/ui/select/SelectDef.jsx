@@ -17,6 +17,8 @@ export const SelectDef = ({
   fontWeight = "normal", // Agregar fontWeight como prop
   ...props
 }) => {
+  console.log(options , "op");
+  
   return (
     <Box sx={{ minWidth: 120, ...sx }}>
       <FormControl

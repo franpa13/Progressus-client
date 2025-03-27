@@ -34,7 +34,7 @@ export const TableExercices = ({
   setAlertExerciseEdit,
   setExercices
 }) => {
-  console.log(arreglo, "arrgelo en table");
+
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
   // DIALOG DE INFO

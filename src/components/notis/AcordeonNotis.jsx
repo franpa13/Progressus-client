@@ -1,43 +1,30 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
-import MuiAccordionSummary, {
-  accordionSummaryClasses,
-} from '@mui/material/AccordionSummary';
+import MuiAccordionSummary, { accordionSummaryClasses } from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+
 
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
   border: `1px solid ${theme.palette.divider}`,
-  '&:not(:last-child)': {
-    borderBottom: 0,
-  },
-  '&::before': {
-    display: 'none',
-  },
+  '&:not(:last-child)': { borderBottom: 0 },
+  '&::before': { display: 'none' },
 }));
 
 const AccordionSummary = styled((props) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />}
-    {...props}
-  />
+  <MuiAccordionSummary expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: '0.9rem' }} />} {...props} />
 ))(({ theme }) => ({
   backgroundColor: 'rgba(0, 0, 0, .03)',
   flexDirection: 'row-reverse',
-  [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]:
-  {
+  [`& .${accordionSummaryClasses.expandIconWrapper}.${accordionSummaryClasses.expanded}`]: {
     transform: 'rotate(90deg)',
   },
-  [`& .${accordionSummaryClasses.content}`]: {
-    marginLeft: theme.spacing(1),
-  },
-  ...theme.applyStyles('dark', {
-    backgroundColor: 'rgba(255, 255, 255, .05)',
-  }),
+  [`& .${accordionSummaryClasses.content}`]: { marginLeft: theme.spacing(1) },
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
@@ -45,67 +32,96 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-export const AcordeonNotis = () => {
-  const [expanded, setExpanded] = React.useState('');
+export const AcordeonNotis = ({ notificaciones }) => {
+
+  const [expanded, setExpanded] = useState('');
+  const [showAll, setShowAll] = useState(false);
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
 
-  const notificaciones = [
-    {
-      id: 'panel1',
-      titulo: 'Nueva clase de spinning',
-      contenido: 'Se ha agregado una nueva clase de spinning los jueves a las 7 PM.',
-      fecha: '2025-01-10',
-      hora: '14:30',
-    },
-    {
-      id: 'panel2',
-      titulo: 'Promoción especial',
-      contenido: 'Descuento del 20% en membresías anuales hasta el final del mes.',
-      fecha: '2025-01-09',
-      hora: '10:00',
-    },
-    {
-      id: 'panel3',
-      titulo: 'Cambio de horario',
-      contenido: 'El horario de yoga de los miércoles ha cambiado a las 6 PM.',
-      fecha: '2025-01-08',
-      hora: '16:45',
-    },
-  ];
+  // Función para formatear la fecha
+  const formatFecha = (fecha) => {
+    if (!fecha) return 'Fecha no disponible';
+    const date = new Date(fecha);
+    return new Intl.DateTimeFormat('es-ES', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(date);
+  };
+
+  // Ordenar notificaciones por fecha (más recientes primero)
+  const notificacionesOrdenadas = [...notificaciones].sort((a, b) => {
+    const dateA = a.fechaCreacion ? new Date(a.fechaCreacion).getTime() : 0;
+    const dateB = b.fechaCreacion ? new Date(b.fechaCreacion).getTime() : 0;
+    return dateB - dateA; // Orden descendente
+  });
+
+  // Obtener las notificaciones a mostrar
+  const notificacionesAMostrar = showAll
+    ? notificacionesOrdenadas.slice(0, 12)
+    : notificacionesOrdenadas.slice(0, 5);
 
   return (
     <div>
-      {notificaciones.map((noti) => (
-        <Accordion
-          key={noti.id}
-          expanded={expanded === noti.id}
-          onChange={handleChange(noti.id)}
-          sx={{ my: '5px' }}
-        >
-          <AccordionSummary
-            aria-controls={`${noti.id}-content`}
-            id={`${noti.id}-header`}
-          >
-            <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-              <Typography component="span">{noti.titulo}</Typography>
-              <Typography
-                component="span"
-                variant="caption"
-                fontSize={"16px"}
-                sx={{ color: 'black' }}
+      {notificacionesAMostrar?.length > 0 ? (
+        <>
+          {notificacionesAMostrar.map((noti, index) => (
+            <Accordion key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)} sx={{ my: '8px' }}>
+              <AccordionSummary aria-controls={`panel${index}-content`} id={`panel${index}-header`}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                  <Typography component="span">{noti.titulo}</Typography>
+                  <Typography component="span" variant="caption" fontSize="16px" sx={{ color: 'black' }}>
+                    {formatFecha(noti.fechaCreacion)}
+                  </Typography>
+                </div>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Typography>{noti.cuerpo}</Typography>
+              </AccordionDetails>
+            </Accordion>
+          ))}
+
+          {/* Botones de control */}
+          <div className='flex justify-start w-full' style={{ textAlign: 'center', margin: '20px 0' }}>
+            {notificacionesOrdenadas.length > 5 && !showAll && (
+              <Button
+                variant="contained"
+                onClick={() => setShowAll(true)}
+                sx={{
+                  backgroundColor: '#3f51b5',
+                  '&:hover': { backgroundColor: '#303f9f' },
+                  marginRight: '10px'
+                }}
               >
-                {`${noti.fecha} | ${noti.hora}`}
-              </Typography>
-            </div>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>{noti.contenido}</Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
+                Mostrar más (12)
+              </Button>
+            )}
+
+            {showAll && (
+              <Button
+                variant="outlined"
+                onClick={() => setShowAll(false)}
+                sx={{
+                  color: '#3f51b5',
+                  borderColor: '#3f51b5',
+                  '&:hover': { borderColor: '#303f9f' }
+                }}
+              >
+                Mostrar menos (5)
+              </Button>
+            )}
+          </div>
+        </>
+      ) : (
+        <Typography variant="body1" sx={{ textAlign: 'center', padding: '20px' }}>
+          No hay notificaciones disponibles.
+        </Typography>
+      )}
     </div>
   );
 };
