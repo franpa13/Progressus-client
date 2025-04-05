@@ -8,11 +8,15 @@ import { CircularProgress } from '@mui/material';
 export const PaymentCheckout = ({ cart }) => {
     const [load, setLoad] = useState(false)
     const dataUser = useStoreUserData((state) => state.userData);
+    
     // Transformar el carrito al formato requerido
     const cartFormatted = cart.map(item => ({
         id: item.id,
         cantidad: item.quantity
     }));
+    console.log(cart, "cart");
+    
+console.log(cartFormatted, "cartFormatted");
 
     const handlePay = async () => {
         try {

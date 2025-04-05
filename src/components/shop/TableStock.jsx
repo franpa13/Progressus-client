@@ -9,10 +9,12 @@ import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
+import { ModalEditProd } from "./ModalEditProd";
 
-export const TableStock = ({ loading, arreglo, arregloColumns }) => {
-  console.log(arreglo);
+export const TableStock = ({ loading, arreglo, arregloColumns,setData }) => {
 
+  const [edit, setEdit] = useState();
+  const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -29,7 +31,10 @@ export const TableStock = ({ loading, arreglo, arregloColumns }) => {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-
+  const handleEdit = (row) => {
+    setEdit(row);
+    setOpen(true);
+  }
   return (
     <Paper>
       <TableContainer>
@@ -84,6 +89,7 @@ export const TableStock = ({ loading, arreglo, arregloColumns }) => {
                     <div className="flex justify-end gap-[6px]">
                       {/* EDITAR ELEMENTO */}
                       <div
+                        onClick={() => handleEdit(row)}
                         // onClick={() => editElement(element)}
                         className="p-[3px] bg-customTextBlue hover:bg-blue-700 rounded cursor-pointer"
                       >
@@ -116,6 +122,7 @@ export const TableStock = ({ loading, arreglo, arregloColumns }) => {
         labelRowsPerPage="Filas por página"
         labelDisplayedRows={() => ""}
       />
+      <ModalEditProd open={open} setOpen={setOpen} editable={edit} setData = {setData}></ModalEditProd>
     </Paper>
   );
 };

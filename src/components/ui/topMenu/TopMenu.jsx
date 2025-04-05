@@ -6,12 +6,17 @@ import { useStoreUserData, useUserProfile } from "../../../store";
 import logo from "/progressus.png";
 import { useStoreMenu } from "../../../store";
 import { Link } from "react-router-dom";
+import { useNotificacionesUsuario } from "../../../hooks/notificaciones/useNotis";
 export const TopMenu = () => {
+  
   const imageProfile = useUserProfile((state) => state.userImage);
   //ABRIR EL NAVBAR
   const openNavBar = useStoreMenu((state) => state.openNavBar);
   const dataUser = useStoreUserData((state) => state.userData);
   const firstName = dataUser.nombre ? dataUser.nombre.split(" ")[0] : "";
+  const { notificaciones, loading, error } = useNotificacionesUsuario(dataUser.identityUserId);
+
+
   return (
     <div className="bg-customNavBar md:mb-5 p-2 md:py-2 shadow-xl sticky top-0 flex z-30 justify-between items-center md:items-center font-semibold text-lg text-white">
       <div className="flex justify-center items-center">
@@ -49,7 +54,7 @@ export const TopMenu = () => {
           className=" hidden  md:block relative cursor-pointer hover:bg-customTextGreen rounded transition-all p-1"
         >
           <span className="absolute text-xs rounded-full px-1 font-bold -top-1 bg-red-700 text-white -right-1">
-            3
+            {notificaciones?.length}
           </span>
           <IoMdNotificationsOutline className="w-9 h-9 md:w-7 md:h-7"></IoMdNotificationsOutline>
         </Link>

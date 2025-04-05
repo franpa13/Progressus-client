@@ -39,7 +39,7 @@ export const Notifications = () => {
         </div>
         <div className="w-full h-2 md:h-4 bg-customGray"></div>
         <section className="p-3 mb-4">
-          {dataUser.roles[0] == "SOCIO" || dataUser.role == "ENTRENADOR" ? (
+          {dataUser.roles[0] == "SOCIO" || dataUser.roles[0] == "ENTRENADOR" ? (
 
             <AcordeonNotis notificaciones={notificaciones} />
           ) : (

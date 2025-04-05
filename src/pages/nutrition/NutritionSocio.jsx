@@ -17,18 +17,22 @@ export const NutritionSocio = () => {
   const [loading, setLoading] = useState(true);
   const [havePlan, setHavePlan] = useState(null);
 
+
   useEffect(() => {
     showSpinner();
     const fetchPlanData = async () => {
       try {
         const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
 
+console.log(havePlanRes, "haveplanres");
+
         const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
 
-        if (havePlanRes.status === 200) {
+        if (havePlanRes != undefined && havePlanRes?.status === 200) {
           console.log(havePlanRes, "haveplan");
           setHavePlan(havePlanRes.data.historialSolicitudDePagos[1]?.estadoSolicitud?.nombre || null);
-        }
+        } 
+
 
         if (dataPlanRes.status === 200 && dataPlanRes.data.length > 0) {
           const idPlan = dataPlanRes.data[0].planNutricionalId;

@@ -15,9 +15,9 @@ import { CiSearch } from "react-icons/ci";
 
 export const ShopAdmin = () => {
   const [alertAddProd, setAlertAddProd] = useState(false);
-  const [products, setProducts] = useState([]); // Lista completa de productos
-  const [filteredProducts, setFilteredProducts] = useState([]); // Lista filtrada de productos
-  const [findElement, setFindElement] = useState(""); // Valor del campo de búsqueda
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [findElement, setFindElement] = useState("");
   const [loadSkeleton, setLoadSkeleton] = useState(true);
   const [modal, setModal] = useState(false);
   useEffect(() => {
@@ -26,7 +26,7 @@ export const ShopAdmin = () => {
         const traerProd = await useGetAllProducts();
         const allProducts = traerProd?.data.value || [];
         setProducts(allProducts);
-        setFilteredProducts(allProducts); // Inicialmente, mostrar todos los productos
+        setFilteredProducts(allProducts);
       } catch (e) {
         console.log(e, "errores");
       } finally {
@@ -35,7 +35,7 @@ export const ShopAdmin = () => {
     };
     traerProducts();
   }, []);
- 
+
   const handleChange = (e) => {
     const value = e.target.value.toLowerCase();
     setFindElement(value);
@@ -86,6 +86,7 @@ export const ShopAdmin = () => {
         </section>
         {/* Pasar la lista filtrada a la tabla */}
         <TableStock
+         setData={setFilteredProducts}
           loading={loadSkeleton}
           arregloColumns={arregloCol}
           arreglo={filteredProducts}

@@ -5,13 +5,14 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-
+import { ModalEditState } from "./ModalEditState";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import TablePagination from "@mui/material/TablePagination";
 
 
 import { useEffect } from "react";
+import { ModalViewPedidos } from "./ModalViewPedidos";
 
 
 export const TableOrders = ({
@@ -22,8 +23,9 @@ export const TableOrders = ({
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
-
-
+    const [open, setOpen] = useState(false)
+    const [pedido, setPedido] = useState({})
+    const [openModalView, setOpenModalView] = useState(false)
     // MUSCULO POR EJERCICIO
 
     const handleChangePage = (event, newPage) => {
@@ -42,7 +44,20 @@ export const TableOrders = ({
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
+    const modal = (user, name) => {
 
+        if (name == "edit") {
+            setPedido(user)
+            setOpen(true)
+
+        } else {
+            setOpenModalView(true)
+            setPedido(user.carrito)
+        }
+
+
+
+    }
 
     return (
         <>
@@ -58,7 +73,7 @@ export const TableOrders = ({
                                             align={
                                                 column == "Opciones" ||
                                                     column == "Precio" ||
-                                                    column === "Estado"
+                                                    column === "Estado del pago"
 
                                                     ? "right" : "left"
 
@@ -149,10 +164,11 @@ export const TableOrders = ({
                                     <TableCell sx={{ fontSize: "16px" }} align="right">
                                         {user.estado}
                                     </TableCell>
+
                                     <TableCell sx={{ fontSize: "16px" }} align="right">
                                         <div className="flex font-semibold flex-col text-sm gap-2 justify-end ">
-                                            <span className="text-customTextBlue  cursor-pointer">Editar</span>
-                                            <span className="cursor-pointer  text-customNavBar ">Crear/Modificar plan</span>
+                                            <span onClick={() => modal(user, "edit")} className="text-customTextBlue  cursor-pointer">Editar</span>
+                                            <span onClick={() => modal(user, "view")} className="text-customTextGreen cursor-pointer"> Ver Productos</span>
 
                                         </div>
                                     </TableCell>
@@ -175,7 +191,8 @@ export const TableOrders = ({
 
 
             </Paper>
-
+            <ModalEditState dataPedido={pedido} open={open} setOpen={setOpen}></ModalEditState>
+            <ModalViewPedidos dataPedido={pedido} open={openModalView} setOpen={setOpenModalView}></ModalViewPedidos>
         </>
     );
 };
