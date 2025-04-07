@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PaidIcon from '@mui/icons-material/Paid';
 import logoMp from "/logomp.png";
 import { useCreatePayment } from '../../service/shop/useCreatePayment';
+import { useCreatePedido } from '../../service/shop/useCreatePedido';
 import { useStoreUserData } from '../../store';
 import { CircularProgress } from '@mui/material';
 
@@ -18,6 +19,33 @@ export const PaymentCheckout = ({ cart }) => {
         try {
             setLoad(true)
             const response = await useCreatePayment(dataUser.identityUserId, cartFormatted)
+            console.log(response.data, "data");
+
+            if (response?.status == "200" || response.status == 200) {
+
+                // REDIRECCIÓN AL INIT POINT
+                const initPoint = response?.data?.preference?.initPoint;
+                if (initPoint) {
+
+                    window.location.href = initPoint; // Redirige al usuario
+                } else {
+                    console.error("InitPoint no encontrado en la respuesta.");
+                }
+            }
+        } catch (e) {
+            console.log(e, "errores");
+
+        } finally {
+            setLoad(false)
+        }
+
+
+    }
+    
+    const handlePayCash = async () => {
+        try {
+            setLoad(true)
+            const response = await useCreatePedido(dataUser.identityUserId, cartFormatted)
             console.log(response.data, "data");
 
             if (response?.status == "200" || response.status == 200) {
@@ -85,6 +113,7 @@ export const PaymentCheckout = ({ cart }) => {
 
             <div className='flex md:flex-row flex-col gap-3 mt-12'>
                 <button
+                    onClick={handlePayCash}
                     style={{
                         backgroundColor: "#7CB305",
                         color: "white",
