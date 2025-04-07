@@ -5,7 +5,7 @@ import { api } from "../api";
 export const useGetAllUsers = async () => {
   try {
     const response = await api.get(
-      `/api/Auth/usuarios`, { timeout: 10000 }
+      `/api/Auth/usuarios`, { timeout: 30000 }
     );
     console.log(response
       , "resp en hook"

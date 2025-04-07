@@ -4,6 +4,7 @@ import { CustomInput, Location, Title, TableOrders } from '../../components'
 import { useGetPedidos } from '../../service/requestShop/getRequest'
 import { useGetAllUsers } from '../../service/auth/use-getAllUsers'
 import { CiSearch } from 'react-icons/ci'
+import { useSpinnerStore } from '../../store'
 
 const columns = ["ID", "Fecha de pago", "Nombre del cliente",  "Precio", "Estado del pago", "Opciones"]
 
@@ -12,10 +13,12 @@ export const Orders = () => {
   const [ordersData, setOrdersData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [users, setUsers] = useState([]);
-
+  const showSpinner = useSpinnerStore((state) => state.showSpinner);
+  const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
   // Obtener usuarios primero
   useEffect(() => {
     const fetchUsers = async () => {
+      showSpinner();
       try {
         const response = await useGetAllUsers();
         if (response && response.data) {
@@ -25,6 +28,8 @@ export const Orders = () => {
         }
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
+      }finally{
+        hideSpinner();
       }
     };
 
@@ -75,10 +80,12 @@ export const Orders = () => {
         order.estado.toLowerCase().includes(searchTerm) ||
         order.precio.toLowerCase().includes(searchTerm)
       );
+    
+      
       setFilteredData(filtered);
     }
   };
-
+  console.log(filteredData, "filtered data");
   return (
     <MainLayout>
       <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">

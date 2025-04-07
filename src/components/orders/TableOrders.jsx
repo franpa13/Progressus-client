@@ -26,6 +26,7 @@ export const TableOrders = ({
     const [open, setOpen] = useState(false)
     const [pedido, setPedido] = useState({})
     const [openModalView, setOpenModalView] = useState(false)
+    const [price, setPrice] = useState(0)
     // MUSCULO POR EJERCICIO
 
     const handleChangePage = (event, newPage) => {
@@ -45,6 +46,8 @@ export const TableOrders = ({
         page * rowsPerPage + rowsPerPage
     );
     const modal = (user, name) => {
+       console.log(user, "Car");
+    setPrice(user?.precio)
 
         if (name == "edit") {
             setPedido(user)
@@ -192,7 +195,7 @@ export const TableOrders = ({
 
             </Paper>
             <ModalEditState dataPedido={pedido} open={open} setOpen={setOpen}></ModalEditState>
-            <ModalViewPedidos dataPedido={pedido} open={openModalView} setOpen={setOpenModalView}></ModalViewPedidos>
+            <ModalViewPedidos dataPedido={pedido} open={openModalView} total={price} setOpen={setOpenModalView}></ModalViewPedidos>
         </>
     );
 };

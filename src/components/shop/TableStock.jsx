@@ -10,6 +10,7 @@ import TablePagination from "@mui/material/TablePagination";
 import { MdDeleteOutline, MdOutlineEdit } from "react-icons/md";
 import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
 import { ModalEditProd } from "./ModalEditProd";
+import { ModalDeleteProd } from "./ModalDeleteProd";
 
 export const TableStock = ({ loading, arreglo, arregloColumns,setData }) => {
 
@@ -17,7 +18,7 @@ export const TableStock = ({ loading, arreglo, arregloColumns,setData }) => {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
+const [openDelete, setOpenDelete] = useState(false);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -34,6 +35,10 @@ export const TableStock = ({ loading, arreglo, arregloColumns,setData }) => {
   const handleEdit = (row) => {
     setEdit(row);
     setOpen(true);
+  }
+  const deleteElement = (row) => {
+    setEdit(row);
+    setOpenDelete(true);
   }
   return (
     <Paper>
@@ -98,7 +103,7 @@ export const TableStock = ({ loading, arreglo, arregloColumns,setData }) => {
 
                       {/* ELIMINAR ELEMENTO */}
                       <div
-                        // onClick={() => deleteElement(element)}
+                        onClick={() => deleteElement(row)}
                         className="p-[3px] bg-red-600 hover:bg-red-800 rounded  cursor-pointer"
                       >
                         <MdDeleteOutline className="text-white text-xl"></MdDeleteOutline>
@@ -123,6 +128,7 @@ export const TableStock = ({ loading, arreglo, arregloColumns,setData }) => {
         labelDisplayedRows={() => ""}
       />
       <ModalEditProd open={open} setOpen={setOpen} editable={edit} setData = {setData}></ModalEditProd>
+      <ModalDeleteProd open={openDelete} setOpen={setOpenDelete} editable={edit} setData = {setData}></ModalDeleteProd>
     </Paper>
   );
 };
