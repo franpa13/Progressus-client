@@ -47,7 +47,7 @@ export const Orders = () => {
           const user = usersList.find(u => u.identityUserId === pedido.usuarioId);
           
           return {
-            id: pedido.id.substring(0, 8), // Tomamos solo los primeros 8 caracteres del ID
+            id: pedido.id, // Tomamos solo los primeros 8 caracteres del ID
             fecha: new Date(pedido.fechaCreacion).toLocaleDateString(),
             nombreCliente: user ? `${user.nombre} ${user.apellido}` : 'Cliente no encontrado',
             carrito : pedido.carrito.items,
@@ -114,7 +114,7 @@ export const Orders = () => {
             </div>
           </div>
         </section>
-        <TableOrders arregloColumns={columns} arreglo={filteredData}></TableOrders>
+        <TableOrders onUpdate={() => fetchPedidos(users)} arregloColumns={columns} arreglo={filteredData}></TableOrders>
       </section>
     </MainLayout>
   )

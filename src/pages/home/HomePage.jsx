@@ -17,6 +17,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useMembershipStore } from "../../store/useStoreMembership";
 import { useGetRequestPaymentSocio } from "../../service/membership/useGetRequestPaymentSocio";
+import { useGetActiveUser } from "../../service/users/useGetActiveUser";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -50,7 +51,17 @@ export const HomePage = () => {
     const fetchData = async () => {
       try {
         const userResponse = await useDataUser(email);
-        setAllDataUser(userResponse.data);
+        let isActiveUser;
+        if (userResponse?.status == 200) {
+          // status del user
+          const responseStatusData = await useGetActiveUser(userResponse?.data.identityUserId);
+          isActiveUser = responseStatusData?.data?.isActive;
+
+        }
+
+
+        const dataUser = { ...userResponse.data, isActiveUser: isActiveUser };
+        setAllDataUser(dataUser);
 
         if (userResponse?.data?.identityUserId) {
           const turnsResponse = await useGetTurns(
@@ -98,9 +109,8 @@ export const HomePage = () => {
       const now = dayjs();
 
       const filteredTurns = turnosReservados.filter((turno) => {
-        const fechaHora = `${turno.fechaReserva.split("T")[0]}T${
-          turno.horaInicio
-        }`;
+        const fechaHora = `${turno.fechaReserva.split("T")[0]}T${turno.horaInicio
+          }`;
         const turnoDateTime = dayjs(fechaHora);
         return turnoDateTime.isAfter(now);
       });
@@ -108,31 +118,36 @@ export const HomePage = () => {
       const closestTurn =
         filteredTurns.length > 0
           ? filteredTurns.sort((a, b) => {
-              const fechaHoraA = `${a.fechaReserva.split("T")[0]}T${
-                a.horaInicio
+            const fechaHoraA = `${a.fechaReserva.split("T")[0]}T${a.horaInicio
               }`;
-              const fechaHoraB = `${b.fechaReserva.split("T")[0]}T${
-                b.horaInicio
+            const fechaHoraB = `${b.fechaReserva.split("T")[0]}T${b.horaInicio
               }`;
 
-              const dateA = dayjs(fechaHoraA);
-              const dateB = dayjs(fechaHoraB);
+            const dateA = dayjs(fechaHoraA);
+            const dateB = dayjs(fechaHoraB);
 
-              return dateA.diff(dateB);
-            })[0]
+            return dateA.diff(dateB);
+          })[0]
           : null;
 
       setTurnoMasCercano(closestTurn);
     }
   }, [turnosReservados]);
+  console.log(dataUser?.membresiaActiva, "membresia activa");
 
   // Manejo del click para navegar a los turnos
   const handleLinkClick = () => {
-    if (!membership || membership?.estadoSolicitud?.nombre !== "Confirmado") {
+    if (!dataUser?.membresiaActiva) {
       setOpenErrorTurns(true);
       return;
+      // if (!membership || membership?.estadoSolicitud?.nombre !== "Confirmado") {
+      //   setOpenErrorTurns(true);
+      //   return;
+      // }
+    } else {
+
+      navigate("/turns");
     }
-    navigate("/turns");
   };
   const [isMobile, setIsMobile] = useState(false);
   console.log(turnoMasCercano, "turno mas cercano");

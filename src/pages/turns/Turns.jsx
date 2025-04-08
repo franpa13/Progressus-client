@@ -40,17 +40,21 @@ export const Turns = () => {
       horarios: ["19:00", "20:00", "21:00", "22:00"],
     },
   ];
+
+  // if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
+  //   navigate("/membership");
+  // }
+  /////////////////////////////////////
+  const dataUser = useStoreUserData((state) => state.userData);
+  const [turnosReservados, setTurnosReservados] = useState([]);
   // VER SI TIENE MEMBRESIA ACTIVA
   const membership = useMembershipStore((state) => state.membershipData);
 
   const navigate = useNavigate();
-  if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
+  if (dataUser?.membresiaActiva == false) {
     navigate("/membership");
-  }
-  /////////////////////////////////////
-  const dataUser = useStoreUserData((state) => state.userData);
-  const [turnosReservados, setTurnosReservados] = useState([]);
 
+  }
   // SPINNER LOGIN
   const { showSpinner, hideSpinner } = useSpinnerStore();
   // DIA FROMATEADO

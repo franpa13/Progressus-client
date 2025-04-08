@@ -18,7 +18,7 @@ import { ModalViewPedidos } from "./ModalViewPedidos";
 export const TableOrders = ({
     arreglo = [],
     arregloColumns = [],
-
+onUpdate
 }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -46,8 +46,8 @@ export const TableOrders = ({
         page * rowsPerPage + rowsPerPage
     );
     const modal = (user, name) => {
-       console.log(user, "Car");
-    setPrice(user?.precio)
+
+        setPrice(user?.precio)
 
         if (name == "edit") {
             setPedido(user)
@@ -152,7 +152,7 @@ export const TableOrders = ({
                                 >
 
                                     <TableCell sx={{ fontSize: "16px" }} align="left">
-                                        #{user.id}
+                                        #{user.id.substring(0, 8)}
                                     </TableCell>
                                     <TableCell sx={{ fontSize: "16px" }} align="left">
                                         {user.fecha}
@@ -194,7 +194,7 @@ export const TableOrders = ({
 
 
             </Paper>
-            <ModalEditState dataPedido={pedido} open={open} setOpen={setOpen}></ModalEditState>
+            <ModalEditState onUpdate={onUpdate}  dataPedido={pedido} open={open} setOpen={setOpen}></ModalEditState>
             <ModalViewPedidos dataPedido={pedido} open={openModalView} total={price} setOpen={setOpenModalView}></ModalViewPedidos>
         </>
     );

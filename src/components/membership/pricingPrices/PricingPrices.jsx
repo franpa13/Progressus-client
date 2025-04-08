@@ -29,6 +29,7 @@ import { TablePagos } from "../tablePagos/TablePagos";
 import { useRegisterComoMp } from "../../../service/membership/useRegisterComoMp";
 import { useGetAllMembershipForSocio } from "../../../service/membership/useGetAllMembershipForSocio";
 import { Button } from "../../ui/buttons/Button";
+import { useGetActiveUser } from "../../../service/users/useGetActiveUser";
 
 const arregloColumns = ["Membresía", "Fecha", "Precio"];
 
@@ -143,7 +144,7 @@ export const PricingPrices = ({
 
     traerDataPedido();
   }, [dataUserBuscado]);
-  console.log(arregloRows, "arreglo rows");
+
 
   // Se ejecuta cada vez que cambia dataUserBuscado
 
@@ -164,10 +165,9 @@ export const PricingPrices = ({
           lastMembership = allMembership[allMembership.length - 1];
         }
       }
-
+      const isActiveUser = await useGetActiveUser(idUser)
       if (
-        lastMembership &&
-        lastMembership.estadoSolicitud.nombre === "Confirmado"
+        isActiveUser?.data.isActive
       ) {
         setTextAlert(dataUserBuscado.nombre);
         setOpenErrorMemb(true);
@@ -235,8 +235,8 @@ export const PricingPrices = ({
   };
 
   const hanleCreateSolicitud = async (card) => {
-    if (membership && membership.estadoSolicitud.nombre == "Confirmado") {
-      console.log(membership, "membershipppp");
+    if (userData.membresiaActiva) {
+      
 
       setOpenErrorMemb(true);
     } else {

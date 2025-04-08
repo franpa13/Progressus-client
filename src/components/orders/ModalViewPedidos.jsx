@@ -60,7 +60,7 @@ export const ModalViewPedidos = ({ open, setOpen, dataPedido ,total }) => {
                                     <p className="text-gray-600 mt-1">{producto.descripcion}</p>
                                 </div>
                                 <div className='flex w-1/5 md:w-1/3 flex-col justify-end items-end gap-2'>
-                                    <img className='w-11/12 md:w-1/6' src={producto.imagenUrl} alt={`imagen de ${producto.nombre}`} />
+                                    <img className='w-11/12 md:w-1/3' src={producto.imagenUrl} alt={`imagen de ${producto.nombre}`} />
                                     <span className="text-gray-600">Cantidad: {producto.cantidad}</span>
 
                                 </div>
@@ -80,9 +80,9 @@ export const ModalViewPedidos = ({ open, setOpen, dataPedido ,total }) => {
                             </div>
                         </li>
                     ))}
-                    <li className='mt-8'>
+                    <p className='pt-6'>
                         <h2 className='font-semibold text-lg'>Total : {total && total}</h2>
-                    </li>
+                    </p>
                 </ul>
               
             )}

@@ -26,21 +26,29 @@ export const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
   const roleUser = dataUser.roles[0];
   const [userAsist, setUserAsist] = useState([]);
-  const arregloColumns = ["Fecha","Hora", ""];
+  const arregloColumns = ["Fecha", "Hora", ""];
   useEffect(() => {
+
+
+
     const traerMembresiaActiva = async () => {
       setLoadingSkeleton(true);
       try {
-        const response = await useGetRequestPaymentSocio(
-          dataUser.identityUserId
-        );
-        // const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
-        // if (havePlanRes.status === 200) {
-        //   setHavePlan(havePlanRes.data || null);
-        // }
-        if (response?.data) {
-          setDataMembership(response.data);
-          setAllMembership(response.data.historialSolicitudDePagos || []);
+        // ver si el usuario tiene membresía activa
+        if (dataUser?.membresiaActiva) {
+
+
+          const response = await useGetRequestPaymentSocio(
+            dataUser.identityUserId
+          );
+          // const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
+          // if (havePlanRes.status === 200) {
+          //   setHavePlan(havePlanRes.data || null);
+          // }
+          if (response?.data) {
+            setDataMembership(response.data);
+            setAllMembership(response.data.historialSolicitudDePagos || []);
+          }
         }
         const responseAsist = await useAsistProfile(dataUser.identityUserId);
         // const responseAsist = await useAsistProfile(
@@ -58,6 +66,7 @@ export const Profile = () => {
     };
 
     traerMembresiaActiva();
+
   }, [dataUser.identityUserId]);
 
   const lastMembership =

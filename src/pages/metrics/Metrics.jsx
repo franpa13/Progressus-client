@@ -13,6 +13,7 @@ import { IoMdAdd } from "react-icons/io";
 import { useStoreUserData } from "../../store";
 import { ModalAddMetric } from "../../components/metrics/ModalAddMetric";
 import { useGetMetric } from "../../service/metrics/useGetMetric";
+import { useNavigate } from "react-router-dom";
 
 export const Metrics = () => {
   const userData = useStoreUserData((state) => state.userData);
@@ -21,13 +22,19 @@ export const Metrics = () => {
   const [alert, setAlert] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // Estado para el buscador
-
+  const navigate = useNavigate();
   useEffect(() => {
-    const traerData = async () => {
-      const resp = await useGetMetric(userData.identityUserId);
-      setMetrics(resp?.data || []);
-    };
-    traerData();
+    if (userData.membresiaActiva) {
+
+
+      const traerData = async () => {
+        const resp = await useGetMetric(userData.identityUserId);
+        setMetrics(resp?.data || []);
+      };
+      traerData();
+    }else{
+      navigate("/membership")
+    }
   }, []);
 
   // Función para manejar el cambio en el input de búsqueda

@@ -8,6 +8,7 @@ import { SectionPaymentNutritionPlan } from '../../components/nutrition/SectionP
 import { SectionPlanSocio } from '../../components/nutrition/SectionPlanSocio';
 import { useGetMembershipUser } from '../../service/nutrition/useGetMembershipUser';
 import { WaitPlan } from '../../components/nutrition/WaitPlan';
+import { useNavigate } from 'react-router-dom';
 
 export const NutritionSocio = () => {
   const dataUser = useStoreUserData((state) => state.userData);
@@ -17,37 +18,43 @@ export const NutritionSocio = () => {
   const [loading, setLoading] = useState(true);
   const [havePlan, setHavePlan] = useState(null);
 
-
+    const navigate = useNavigate();
   useEffect(() => {
-    showSpinner();
-    const fetchPlanData = async () => {
-      try {
-        const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
-
-console.log(havePlanRes, "haveplanres");
-
-        const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
-
-        if (havePlanRes != undefined && havePlanRes?.status === 200) {
-          console.log(havePlanRes, "haveplan");
-          setHavePlan(havePlanRes.data.historialSolicitudDePagos[1]?.estadoSolicitud?.nombre || null);
-        } 
-
-
-        if (dataPlanRes.status === 200 && dataPlanRes.data.length > 0) {
-          const idPlan = dataPlanRes.data[0].planNutricionalId;
-          const dataPlanDetails = await useGetPlanById(idPlan);
-          setDataPlanUser(dataPlanDetails.data);
+    if(dataUser.membresiaActiva ){
+  
+  
+      showSpinner();
+      const fetchPlanData = async () => {
+        try {
+          const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
+  
+          console.log(havePlanRes, "haveplanres");
+  
+          const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
+  
+          if (havePlanRes != undefined && havePlanRes?.status === 200) {
+            console.log(havePlanRes, "haveplan");
+            setHavePlan(havePlanRes.data.historialSolicitudDePagos[1]?.estadoSolicitud?.nombre || null);
+          }
+  
+  
+          if (dataPlanRes.status === 200 && dataPlanRes.data.length > 0) {
+            const idPlan = dataPlanRes.data[0].planNutricionalId;
+            const dataPlanDetails = await useGetPlanById(idPlan);
+            setDataPlanUser(dataPlanDetails.data);
+          }
+        } catch (e) {
+          console.log(e);
+        } finally {
+          hideSpinner();
+          setLoading(false);
         }
-      } catch (e) {
-        console.log(e);
-      } finally {
-        hideSpinner();
-        setLoading(false);
-      }
-    };
-
-    fetchPlanData();
+      };
+  
+      fetchPlanData();
+    }else{
+      navigate("/membership")
+    }
   }, [dataUser.identityUserId]);
 
 

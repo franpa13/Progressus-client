@@ -34,6 +34,7 @@ export const useStoreUser = create((set, get) => ({
 }));
 
 // Store para los datos del usuario
+// Store para los datos del usuario
 export const useStoreUserData = create((set) => ({
   // Estado inicial del usuario (se intenta cargar desde localStorage si existe)
   email: localStorage.getItem("user-email") || "",
@@ -44,6 +45,7 @@ export const useStoreUserData = create((set) => ({
     nombre: "Eduardo",
     roles: [],
     telefono: null,
+    membresiaActiva: false, // Nuevo campo
   },
 
   // Función para actualizar el email del usuario y guardarlo en localStorage
@@ -54,9 +56,20 @@ export const useStoreUserData = create((set) => ({
 
   // Función para actualizar los datos del usuario y guardarlos en localStorage
   setUserData: (data) => {
-    set({ userData: data });
-    localStorage.setItem("user-data", JSON.stringify(data));
+    const currentData = {
+      apellido: data.apellido || "",
+      email: data.email || "",
+      identityUserId: data.identityUserId || "",
+      nombre: data.nombre || "",
+      roles: data.roles || [],
+      telefono: data.telefono || null,
+      membresiaActiva: data.isActiveUser?? false, // Asegura que siempre tenga valor booleano
+    };
+
+    set({ userData: currentData });
+    localStorage.setItem("user-data", JSON.stringify(currentData));
   },
+
   clearUserData: () => {
     set({
       email: "",
@@ -67,6 +80,7 @@ export const useStoreUserData = create((set) => ({
         nombre: "",
         roles: [],
         telefono: null,
+        membresiaActiva: false, // Aseguramos que se limpie también
       },
     });
     localStorage.removeItem("user-email");
