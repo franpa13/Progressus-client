@@ -55,7 +55,7 @@ export const AcordeonNotis = ({ notificaciones }) => {
   };
 
   // Ordenar notificaciones por fecha (más recientes primero)
-  const notificacionesOrdenadas = [...notificaciones].sort((a, b) => {
+  const notificacionesOrdenadas = [...notificaciones]?.sort((a, b) => {
     const dateA = a.fechaCreacion ? new Date(a.fechaCreacion).getTime() : 0;
     const dateB = b.fechaCreacion ? new Date(b.fechaCreacion).getTime() : 0;
     return dateB - dateA; // Orden descendente
