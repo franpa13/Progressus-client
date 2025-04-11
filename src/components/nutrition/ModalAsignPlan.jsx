@@ -3,7 +3,7 @@ import { ModalLayout } from '../../layout/ModalLayout'
 import { IoNutritionOutline } from "react-icons/io5";
 import { SelectNavegable } from '../membership/selectNavegable/SelectNavegable';
 import { useSpinnerStore } from '../../store';
-import { useGetAllUsers } from '../../service/auth/use-getAllUsers';
+import { useGetAllUsersWhitMembership } from '../../service/auth/use-getAllUsers';
 
 import { useAsignPlanNutri } from '../../service/nutrition/useAsignPlanNutri';
 import { ButtonSpinner } from '../ui/buttons/ButtonSpinner';
@@ -20,15 +20,11 @@ export const ModalAsignPlan = ({ open, setOpen, plan,setAlertAsignedPlan }) => {
         showSpinner();
         const fetchUsers = async () => {
             try {
-                const response = await useGetAllUsers();
-                console.log(response.data, "response de usuarios");
+                const response = await useGetAllUsersWhitMembership();
+                
 
-
-                const socios = response.data.filter((user) =>
-                    user.roles.includes("SOCIO")
-                );
-
-                setUsers(socios);
+             
+                setUsers(response?.data || []);
             } catch (e) {
                 console.log(e, "error");
             } finally {

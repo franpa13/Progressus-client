@@ -15,6 +15,7 @@ import {
     Button
 } from '@mui/material';
 import { useGetAllProducts } from '../../service/shop/useGetAllProducts';
+import { useGetCategories } from '../../service/shop/useGetCategories';
 
 export const ModalEditProd = ({ open, setOpen, editable, setData }) => {
     // Estado del formulario
@@ -35,7 +36,7 @@ export const ModalEditProd = ({ open, setOpen, editable, setData }) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
-
+    const [categories, setCategories] = useState([]);
     // Cargar datos del producto cuando cambia 'editable'
     useEffect(() => {
         if (editable) {
@@ -53,7 +54,18 @@ export const ModalEditProd = ({ open, setOpen, editable, setData }) => {
             });
         }
     }, [editable]);
-
+    // Obtener categorías
+    useEffect(() => {
+        const traerCategorias = async () => {
+            try {
+                const res = await useGetCategories();
+                setCategories(res?.data || []);
+            } catch (error) {
+                console.error("Error al traer categorías:", error);
+            }
+        };
+        traerCategorias();
+    }, []);
     // Manejar cambios en los inputs
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -96,8 +108,9 @@ export const ModalEditProd = ({ open, setOpen, editable, setData }) => {
     };
 
     // Categorías y talles predefinidos (puedes modificarlos según tus necesidades)
-    const categorias = ['Ropa', 'Accesorios', 'Calzado', 'Otros'];
+
     const talles = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Único'];
+console.log(categories , "categories");
 
     return (
         <ModalLayout
@@ -144,9 +157,10 @@ export const ModalEditProd = ({ open, setOpen, editable, setData }) => {
                                     onChange={handleChange}
                                     required
                                 >
-                                    {categorias.map((cat) => (
-                                        <MenuItem key={cat} value={cat}>{cat}</MenuItem>
+                                    {categories.length > 0 && categories.map((cat:any) => (
+                                        <MenuItem key={cat.id} value={cat.nombre}>{cat.nombre}</MenuItem>
                                     ))}
+
                                 </Select>
                             </FormControl>
 

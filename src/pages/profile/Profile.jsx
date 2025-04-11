@@ -11,6 +11,8 @@ import { useGetMembershipUser } from "../../service/nutrition/useGetMembershipUs
 import { BiEditAlt } from "react-icons/bi";
 import { TableAsist } from "../../components/profile/TableAsist";
 import { useAsistProfile } from "../../service/profile/useAsistProfile";
+import { useGetMembershipSinNutri } from "../../service/membership/useGetMembershipSinNutri";
+
 export const Profile = () => {
   const dataUser = useStoreUserData((state) => state.userData);
   const [dataMembership, setDataMembership] = useState(null);
@@ -26,6 +28,7 @@ export const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
   const roleUser = dataUser.roles[0];
   const [userAsist, setUserAsist] = useState([]);
+
   const arregloColumns = ["Fecha", "Hora", ""];
   useEffect(() => {
 
@@ -38,9 +41,11 @@ export const Profile = () => {
         if (dataUser?.membresiaActiva) {
 
 
-          const response = await useGetRequestPaymentSocio(
+          const response = await useGetMembershipSinNutri(
             dataUser.identityUserId
           );
+          console.log(response , "response al traer membresía activa");
+          
           // const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
           // if (havePlanRes.status === 200) {
           //   setHavePlan(havePlanRes.data || null);
@@ -107,7 +112,7 @@ export const Profile = () => {
       closeSpinner();
     }, 2000);
   };
-  console.log(lastMembership, "HAVE PLAN en profile");
+  
 
   return (
     <MainLayout>

@@ -13,7 +13,8 @@ export const ChartBar = ({
   series = [],
   height = 300,
   sx = {},
-  barColor = "#1976d2", // Color predeterminado
+  barColor = "#1976d2",
+  isBalanceMensual = false// Color predeterminado
 }) => {
   const [tickPlacement, setTickPlacement] = React.useState("middle");
   const [tickLabelPlacement, setTickLabelPlacement] = React.useState("middle");
@@ -35,12 +36,19 @@ export const ChartBar = ({
   // Filtrar los ticks del eje Y
   const updatedYAxis = yAxis.map((axis) => ({
     ...axis,
-    ticks: filterTicks(axis.ticks || []), // Filtrar los ticks si están definidos
+    ticks: filterTicks(axis.ticks || []),
+    valueFormatter: isBalanceMensual
+      ? (value) => {
+        if (value >= 1000) return `${Math.round(value / 1000)}k`;
+        return value.toString();
+      }
+      : undefined,
   }));
 
   return (
-    <div className="w-full md:w-5/6 text-xs">
+    <div className="w-full md:w-3/4 text-xs">
       <BarChart
+
         dataset={dataset}
         xAxis={xAxis.map((axis) => ({
           ...axis,
@@ -51,6 +59,7 @@ export const ChartBar = ({
         series={updatedSeries} // Usar las series actualizadas con el color
         height={height}
         sx={{
+
           [`& .${axisClasses.directionY} .${axisClasses.label}`]: {
             transform: "translateX(-10px)",
           },

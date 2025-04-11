@@ -16,3 +16,18 @@ export const useGetAllUsers = async () => {
     console.log(e, "errores");
   }
 };
+// TRAER users con memebresia nutri
+export const useGetAllUsersWhitMembership = async () => {
+  try {
+    const response = await api.get(
+      `/api/SolicitudDePago/ObtenerUsuariosConMembresiaNutricionalConfirmada`, { timeout: 30000 }
+    );
+    console.log(response
+      , "resp en hook"
+    );
+
+    return response;
+  } catch (e) {
+    console.log(e, "errores");
+  }
+};

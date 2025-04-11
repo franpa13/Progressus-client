@@ -122,10 +122,10 @@ export const NotisAdmin = () => {
 
     return (
         <>
-            <section className='w-full flex justify-center'>
-                <div className='w-1/2 pr-4 flex flex-col items-center justify-center border-r-2'>
+            <section className='w-full flex  justify-center'>
+                <div className='w-full pr-4 flex flex-col items-center justify-center '>
                     <h2 className='text-xl font-semibold'>Enviar Notificación a un usuario específico</h2>
-                    <section className='w-full flex flex-wrap justify-between my-6'>
+                    <section className='w-full flex flex-wrap justify-center gap-4 my-6'>
                         <div className='w-[300px]'>
                             <SelectNotis
                                 fullWidth
@@ -170,34 +170,7 @@ export const NotisAdmin = () => {
                     />
                 </div>
 
-                <div className='w-1/2 pl-4 flex flex-col items-center justify-center'>
-                    <h2 className='text-xl font-semibold'>Enviar Notificación por ID</h2>
-                    <div className='w-[300px] mt-6'>
-                        <CustomInput
-                            label="Ingrese ID de usuario"
-                            value={usuarioDeterminado}
-                            onChange={(e) => setUsuarioDeterminado(e.target.value)}
-                        />
-                    </div>
-                    <div className='w-[300px] mt-4'>
-                        <SelectNotis
-                            fullWidth
-                            label='Seleccione plantilla'
-                            value={plantillaSeleccionada?.id || ''}
-                            onChange={handleChangePlantilla}
-                            options={plantillas.map(plantilla => ({
-                                value: plantilla.id,
-                                label: `${plantilla.titulo} - ${truncarTexto(plantilla.cuerpo)}`
-                            }))}
-                        />
-                    </div>
-                    <ButtonSpinner
-                        className='bg-blue-600 mt-4'
-                        label='Enviar Notificación'
-                        onClick={handleEnviarNotificacionManual}
-                        loading={loadingEnvioManual}
-                    />
-                </div>
+                
             </section>
 
             <SnackbarDefault

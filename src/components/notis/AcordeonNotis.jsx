@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import MuiAccordion from '@mui/material/Accordion';
@@ -6,6 +6,8 @@ import MuiAccordionSummary, { accordionSummaryClasses } from '@mui/material/Acco
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { useNotificacionesUsuario } from '../../hooks/notificaciones/useNotis';
+import { useSpinnerStore, useStoreUserData } from '../../store';
 
 
 const Accordion = styled((props) => (
@@ -32,8 +34,11 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
   borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-export const AcordeonNotis = ({ notificaciones }) => {
-
+export const AcordeonNotis = () => {
+  const showSpinner = useSpinnerStore((state) => state.showSpinner);
+  const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
+  const dataUser = useStoreUserData((state) => state.userData);
+  const { notificaciones, loading, error } = useNotificacionesUsuario(dataUser?.identityUserId);
   const [expanded, setExpanded] = useState('');
   const [showAll, setShowAll] = useState(false);
 
@@ -53,9 +58,14 @@ export const AcordeonNotis = ({ notificaciones }) => {
       minute: '2-digit',
     }).format(date);
   };
-
-  // Ordenar notificaciones por fecha (más recientes primero)
-  const notificacionesOrdenadas = [...notificaciones]?.sort((a, b) => {
+  useEffect(() => {
+    if (loading) {
+      showSpinner();
+    } else {
+      hideSpinner();
+    }
+  }, [loading]);
+  const notificacionesOrdenadas = [...(notificaciones || [])].sort((a, b) => {
     const dateA = a.fechaCreacion ? new Date(a.fechaCreacion).getTime() : 0;
     const dateB = b.fechaCreacion ? new Date(b.fechaCreacion).getTime() : 0;
     return dateB - dateA; // Orden descendente
@@ -70,7 +80,7 @@ export const AcordeonNotis = ({ notificaciones }) => {
     <div>
       {notificacionesAMostrar?.length > 0 ? (
         <>
-          {notificacionesAMostrar.map((noti, index) => (
+          {notificacionesAMostrar?.map((noti, index) => (
             <Accordion key={index} expanded={expanded === `panel${index}`} onChange={handleChange(`panel${index}`)} sx={{ my: '8px' }}>
               <AccordionSummary aria-controls={`panel${index}-content`} id={`panel${index}-header`}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
@@ -88,7 +98,7 @@ export const AcordeonNotis = ({ notificaciones }) => {
 
           {/* Botones de control */}
           <div className='flex justify-start w-full' style={{ textAlign: 'center', margin: '20px 0' }}>
-            {notificacionesOrdenadas.length > 5 && !showAll && (
+            {notificacionesOrdenadas?.length > 5 && !showAll && (
               <Button
                 variant="contained"
                 onClick={() => setShowAll(true)}

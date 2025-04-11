@@ -401,6 +401,7 @@ export const Stats = () => {
                 {/* MEMBRESIAS POR MES */}
                 <div className="w-full flex items-center justify-center">
                   <ChartBar
+                  isBalanceMensual={true}
                     dataset={ingresosDataset}
                     xAxis={[
                       {
@@ -411,13 +412,13 @@ export const Stats = () => {
                     ]}
                     yAxis={[
                       {
-                        label: "Ingresos Totales",
+                        label: "",
                       },
                     ]}
                     series={[
                       {
                         dataKey: "montoTotal",
-                        label: "Ingresos",
+                
                       },
                     ]}
                     barColor="#28A745" // Color de las barras
