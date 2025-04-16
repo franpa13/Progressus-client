@@ -354,7 +354,7 @@ export const TableDay = ({
                 </h2>
                 {exercise?.musculosDeEjercicio?.length > 0 ? (
                   exercise.musculosDeEjercicio.map((muscle, index) => (
-                    <li key={index}>-{muscle.musculo.nombre}</li>
+                    <li key={index}>-{muscle?.musculo?.nombre}</li>
 
                   ))
                 ) : (
