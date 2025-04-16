@@ -1,22 +1,31 @@
 import React from "react";
 import { Footer, NavBar, TopMenu } from "../components";
-import { useSpinnerStore, useStoreAlert, useStoreUserData } from "../store";
+import { useSpinnerStore, useStoreUserData } from "../store";
 import { Spinner } from "../components";
+import { Chatbot } from "../components/chatbot/Chatbot";
+import { useLocation } from "react-router-dom";
+
 export const MainLayout = ({ children }) => {
-  const prueba = useStoreAlert((state) => state.alert);
   const isLoading = useSpinnerStore((state) => state.isLoading);
+  const location = useLocation();
+  const dataUser = useStoreUserData((state) => state.userData);
+  // Define las rutas donde se debe mostrar el Chatbot
+  const routesWithChatbot = ["/plansnutrition", "/nutritionalsocio", "/exercices", "/plans"];
 
+  // Verifica si la ruta actual comienza con alguna de las rutas permitidas
+  const shouldShowChatbot = routesWithChatbot.some(path =>
+    location.pathname.startsWith(path)
+  );
 
+  const isSocio = dataUser?.roles[0] == "SOCIO"
+  
   return (
-    <body className="bg-customGray ">
-      <Spinner open={isLoading}></Spinner>
+    <body className="bg-customGray">
+      <Spinner open={isLoading} />
       <TopMenu />
       <NavBar />
-
-      {/* Contenedor del contenido principal con flex-grow para ocupar el espacio restante */}
-      <main className="flex-1 ">{children}</main>
-
-      {/* Footer siempre al fondo, sin margen adicional */}
+      {shouldShowChatbot && isSocio && <Chatbot />}
+      <main className="flex-1">{children}</main>
       <Footer />
     </body>
   );

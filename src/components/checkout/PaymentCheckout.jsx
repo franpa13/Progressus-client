@@ -17,7 +17,7 @@ export const PaymentCheckout = ({ cart }) => {
     }));
     console.log(cart, "cart");
     
-console.log(cartFormatted, "cartFormatted");
+
 
     const handlePay = async () => {
         try {

@@ -3,6 +3,7 @@ import { CustomInput, Location, Title, NutritionTable, Button, ModalAddPlan, Sna
 import { useGetAllPlans } from "../../service/nutrition/useGetAllPlans";
 import { MainLayout } from "../../layout/MainLayout"
 import { useEffect, useState } from "react";
+
 import { IoMdAdd } from "react-icons/io";
 const arregloCol = ["Nombre del plan", "Acciones"]
 const arreglo = [
@@ -83,6 +84,7 @@ export const PlansNutrition = () => {
 
       <ModalAddPlan open={addPlan} setOpen={setAddPlan} />
       <SnackbarDefault message={"El plan se ha asignado correctamente"} open={alertAsignedPlan} setOpen={setAlertAsignedPlan}></SnackbarDefault>
+    
     </MainLayout>
   );
 };
