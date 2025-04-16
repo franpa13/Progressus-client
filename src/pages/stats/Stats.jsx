@@ -11,10 +11,13 @@ import { useGetMemberConfirm } from "../../service/stats/useGetMemberConfirm";
 import { IoTodayOutline } from "react-icons/io5";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { SelectDef } from "../../components";
+import { FaMedal } from "react-icons/fa";
 import { RiMoneyDollarBoxLine } from "react-icons/ri";
 import { ChartBarHorizontal } from "../../components/stats/ChartBarHorizontal";
 import { useSpinnerStore } from "../../store";
 import { useGetAsistForHour } from "../../service/stats/useGetAsistForHour";
+import { useGetTypes } from "../../service/stats/useGetTypes";
+import { PieChart } from "@mui/x-charts";
 export const Stats = () => {
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
@@ -29,7 +32,7 @@ export const Stats = () => {
   const [asistForHour, setAsistForHour] = useState([]);
   // MEMBRESIAS CONFIRMADAS POR MES
   const [membershipConfirm, setMembershipConfirm] = useState([]);
-
+  const [types, setTypes] = useState([])
   //INGRESOS MENSUALES
   const [ingresos, setIngresos] = useState([]);
   useEffect(() => {
@@ -46,11 +49,15 @@ export const Stats = () => {
         // TRAER MEMBRESIAS CONFIRMADAS POR MES
         const traerConfirm = await useGetMemberConfirm();
         setMembershipConfirm(traerConfirm?.data || []);
-        console.log(traerConfirm , "traer confrim");
-        
+        console.log(traerConfirm, "traer confrim");
+
         // INGRESOS
         const traerIngresos = await useGetIngresosMensuales();
         setIngresos(traerIngresos?.data || []);
+
+        //TIPOS
+        const tiposMembresias = await useGetTypes()
+        setTypes(tiposMembresias?.data)
       } catch (e) {
         console.log(e, "error a traer stats");
       } finally {
@@ -175,7 +182,15 @@ export const Stats = () => {
     montoTotal: ingreso.montoTotal,
   }));
 
+
   ///////////////////////////////////////////////////////////////
+  const typesDataset = types?.map((tipo,index) => ({
+    id: index,
+    value: tipo.cantidad,
+    label: tipo.nombreMembresia,
+  }));
+console.log(types , "types");
+
   return (
     <MainLayout>
       <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
@@ -188,19 +203,17 @@ export const Stats = () => {
           <div className="flex justify-center gap-4">
             <span
               onClick={() => setSelectNav("Asistencia/Turnos")}
-              className={`transition-all font-bold cursor-pointer p-1 ${
-                selectNav === "Asistencia/Turnos" &&
+              className={`transition-all font-bold cursor-pointer p-1 ${selectNav === "Asistencia/Turnos" &&
                 "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-              }`}
+                }`}
             >
               Asistencias/Turnos
             </span>
             <span
               onClick={() => setSelectNav("Membresias")}
-              className={`transition-all font-bold cursor-pointer p-1  ${
-                selectNav === "Membresias" &&
+              className={`transition-all font-bold cursor-pointer p-1  ${selectNav === "Membresias" &&
                 "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-              }`}
+                }`}
             >
               Membresias
             </span>
@@ -401,7 +414,7 @@ export const Stats = () => {
                 {/* MEMBRESIAS POR MES */}
                 <div className="w-full flex items-center justify-center">
                   <ChartBar
-                  isBalanceMensual={true}
+                    isBalanceMensual={true}
                     dataset={ingresosDataset}
                     xAxis={[
                       {
@@ -418,7 +431,7 @@ export const Stats = () => {
                     series={[
                       {
                         dataKey: "montoTotal",
-                
+
                       },
                     ]}
                     barColor="#28A745" // Color de las barras
@@ -427,6 +440,38 @@ export const Stats = () => {
               </div>
               {/* /////////////////////////////////// */}
               <div className="w-full shadow-md h-4"></div>
+              {/* TIPOS MEMBRESIAS */}
+              <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
+                <div className="flex items-center gap-3">
+                  <Title
+                    className={"text-customTextGreen "}
+                    title={"Membresias por tipo"}
+                  ></Title>
+                  <FaMedal className="text-xl md:text-3xl font-bold"></FaMedal >
+                </div>
+
+                {/* <div className="flex justify-end w-full items-center">
+                  <SelectDef
+                    value={selectedYear}
+                    label="Seleccionar Año:"
+                    options={availableYears}
+                    onChange={selectYear}
+                    variant={"filled"}
+                  />
+                </div> */}
+                {/* MEMBRESIAS POR MES */}
+                <div className="w-full flex items-center justify-center">
+                  <PieChart
+                    series={[
+                      {
+                        data:typesDataset
+                      },
+                    ]}
+                    width={800}
+                    height={220}
+                  />
+                </div>
+              </div>
             </>
           )}
         </section>
