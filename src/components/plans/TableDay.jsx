@@ -71,11 +71,13 @@ export const TableDay = ({
   // ABRIR Y CERRAR VIDEO DE YT
   const handleOpen = async (link, ejercicio) => {
     showSpinner();
-    console.log(ejercicio, "ejercoicocp");
-
     try {
       const resp = await useGetExerciseById(ejercicio.ejercicioId);
-      setExercise(resp.data);
+      // Transforma los músculos a array de strings si son objetos
+      console.log(resp.data, "respe");
+
+
+      setExercise(resp?.data);
     } catch (e) {
       console.log(e, "errores");
     } finally {
@@ -88,7 +90,9 @@ export const TableDay = ({
     setOpenVideo(false);
     setVideoUrl("");
   };
-  console.log(arreglo, "arreglo en table day");
+
+
+
   const deleteExercise = (exercise) => {
     setExerciseDelete(exercise);
     setModalDeleteExercise(true);
@@ -120,7 +124,7 @@ export const TableDay = ({
       );
       if (sendRutin.status === 200) {
         setDisabledForDay(day, true);
-        setAlertDayFinish(true) 
+        setAlertDayFinish(true)
         setDaySelected(day)
       }
 
@@ -132,6 +136,7 @@ export const TableDay = ({
     }
   };
   const disabled = isDisabledForDay(day);
+  console.log(exercise?.musculosDeEjercicio, "ex");
 
   return (
     <div>
@@ -347,9 +352,10 @@ export const TableDay = ({
                 <h2 className=" text-black underline  font-semibold col-span-full">
                   Músculos involucrados
                 </h2>
-                {exercise?.musculosDeEjercicio.length > 0 ? (
+                {exercise?.musculosDeEjercicio?.length > 0 ? (
                   exercise.musculosDeEjercicio.map((muscle, index) => (
-                    <li key={index}>-{muscle}</li>
+                    <li key={index}>-{muscle.musculo.nombre}</li>
+
                   ))
                 ) : (
                   <>
@@ -365,11 +371,26 @@ export const TableDay = ({
                 )}
               </ul>
               <div className="flex w-1/2 justify-center">
-                <img
-                  className="w-2/3 object-contain"
-                  src="/progressus.png"
-                  alt="Progressus logo"
-                />
+                <div className="flex w-1/2 justify-center">
+                  {exercise?.imagenMaquina ? (
+                    <img
+                      className="w-2/3 object-contain"
+                      src={exercise.imagenMaquina}
+                      alt={exercise.nombre}
+                      onError={(e) => {
+                        e.currentTarget.src = "/progressus.png";
+                        e.currentTarget.className = "w-2/3 object-contain opacity-80";
+                      }}
+                    />
+                  ) : (
+                    <img
+                      className="w-2/3 object-contain opacity-80"
+                      src="/progressus.png"
+                      alt="Progressus logo"
+                    />
+                  )}
+                </div>
+
               </div>
             </div>
           </div>
