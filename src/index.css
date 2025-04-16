@@ -55,10 +55,10 @@ body {
 	--chat--header--border-bottom: none;
 	--chat--header--border-bottom: none;
 	--chat--header--border-bottom: none;
-	--chat--heading--font-size: 2em;
+	--chat--heading--font-size: 1.2em;
 	--chat--header--color: var(--chat--color-light);
 	--chat--subtitle--font-size: inherit;
-	--chat--subtitle--line-height: 1.8;
+	--chat--subtitle--line-height: 1.2;
 
 	--chat--textarea--height: 50px;
 
