@@ -18,7 +18,7 @@ import { ModalViewPedidos } from "./ModalViewPedidos";
 export const TableOrders = ({
     arreglo = [],
     arregloColumns = [],
-onUpdate
+    onUpdate
 }) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -40,8 +40,18 @@ onUpdate
     // const ejerciciosFiltrados = arreglo.filter(
     //   (exercise) => exercise.dia === selectedDay
     // );
+    const ordenadoPorFechaReciente = [...arreglo].sort((a, b) => {
+        const [diaA, mesA, anioA] = a.fecha.split('/').map(Number);
+        const [diaB, mesB, anioB] = b.fecha.split('/').map(Number);
 
-    const ejerciciosPaginados = arreglo.slice(
+        const fechaA = new Date(anioA, mesA - 1, diaA);
+        const fechaB = new Date(anioB, mesB - 1, diaB);
+
+        return fechaB - fechaA;
+    });
+
+
+    const ejerciciosPaginados = ordenadoPorFechaReciente?.slice(
         page * rowsPerPage,
         page * rowsPerPage + rowsPerPage
     );
@@ -57,10 +67,8 @@ onUpdate
             setOpenModalView(true)
             setPedido(user.carrito)
         }
-
-
-
     }
+
 
     return (
         <>
@@ -140,7 +148,7 @@ onUpdate
                                     </TableRow>
                                 ))
                             )} */}
-                            {ejerciciosPaginados.map((user, index) => (
+                            {ejerciciosPaginados?.map((user, index) => (
                                 <TableRow
                                     key={index}
                                     sx={{
@@ -194,7 +202,7 @@ onUpdate
 
 
             </Paper>
-            <ModalEditState onUpdate={onUpdate}  dataPedido={pedido} open={open} setOpen={setOpen}></ModalEditState>
+            <ModalEditState onUpdate={onUpdate} dataPedido={pedido} open={open} setOpen={setOpen}></ModalEditState>
             <ModalViewPedidos dataPedido={pedido} open={openModalView} total={price} setOpen={setOpenModalView}></ModalViewPedidos>
         </>
     );

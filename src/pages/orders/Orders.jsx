@@ -6,15 +6,16 @@ import { useGetAllUsers } from '../../service/auth/use-getAllUsers'
 import { CiSearch } from 'react-icons/ci'
 import { useSpinnerStore } from '../../store'
 
-const columns = ["ID", "Fecha de pago", "Nombre del cliente",  "Precio", "Estado del pago", "Opciones"]
+const columns = ["ID", "Fecha de pago", "Nombre del cliente", "Precio", "Estado del pago", "Opciones"]
 
 export const Orders = () => {
-  const [findElement, setFindElement] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [ordersData, setOrdersData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [users, setUsers] = useState([]);
   const showSpinner = useSpinnerStore((state) => state.showSpinner);
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
+
   // Obtener usuarios primero
   useEffect(() => {
     const fetchUsers = async () => {
@@ -28,7 +29,7 @@ export const Orders = () => {
         }
       } catch (error) {
         console.error("Error al obtener usuarios:", error);
-      }finally{
+      } finally {
         hideSpinner();
       }
     };
@@ -47,10 +48,10 @@ export const Orders = () => {
           const user = usersList.find(u => u.identityUserId === pedido.usuarioId);
           
           return {
-            id: pedido.id, // Tomamos solo los primeros 8 caracteres del ID
+            id: pedido.id,
             fecha: new Date(pedido.fechaCreacion).toLocaleDateString(),
             nombreCliente: user ? `${user.nombre} ${user.apellido}` : 'Cliente no encontrado',
-            carrito : pedido.carrito.items,
+            carrito: pedido.carrito.items,
             precio: `$${pedido.total.toLocaleString()}`,
             estado: pedido.estado,
             modificar: "Editar",
@@ -66,26 +67,29 @@ export const Orders = () => {
     }
   };
 
-  const handleChange = (e) => {
-    const searchTerm = e.target.value.toLowerCase();
-    setFindElement(searchTerm);
+  // Función para manejar la búsqueda
+  const handleSearch = (e) => {
+    const term = e.target.value.toLowerCase();
+    setSearchTerm(term);
     
-    if (searchTerm === "") {
+    if (!term) {
       setFilteredData(ordersData);
-    } else {
-      const filtered = ordersData.filter(order => 
-        order.id.toLowerCase().includes(searchTerm) ||
-        order.nombreCliente.toLowerCase().includes(searchTerm) ||
-        order.email.toLowerCase().includes(searchTerm) ||
-        order.estado.toLowerCase().includes(searchTerm) ||
-        order.precio.toLowerCase().includes(searchTerm)
-      );
-    
-      
-      setFilteredData(filtered);
+      return;
     }
+
+    const filtered = ordersData.filter(order => {
+      return (
+        order.id.toLowerCase().includes(term) ||
+        order.nombreCliente.toLowerCase().includes(term) ||
+        order.fecha.toLowerCase().includes(term) ||
+        order.estado.toLowerCase().includes(term) ||
+        order.precio.toLowerCase().includes(term)
+      );
+    });
+    
+    setFilteredData(filtered);
   };
-  console.log(filteredData, "filtered data");
+
   return (
     <MainLayout>
       <section className="animate-fade-in-down md:mx-auto bg-white rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
@@ -102,19 +106,23 @@ export const Orders = () => {
         {/* ////////////////////////////////////////////// */}
         <section className="p-3 mb-4">
           <div className='flex md:flex-row flex-col justify-end items-start md:items-center md:gap-3 w-full'>
-            <div>
+            <div className="w-full md:w-64">
               <CustomInput
-                classNameInput="md:p-1.5"
-                className="border-gray-300 md:p-0"
+                classNameInput="md:p-1.5 w-full"
+                className="border-gray-300 md:p-0 w-full"
                 Icon={CiSearch}
-                placeholder="Buscar"
-                value={findElement}
-                onChange={handleChange}
-              ></CustomInput>
+                placeholder="Buscar por ID, nombre, fecha, estado..."
+                value={searchTerm}
+                onChange={handleSearch}
+              />
             </div>
           </div>
         </section>
-        <TableOrders onUpdate={() => fetchPedidos(users)} arregloColumns={columns} arreglo={filteredData}></TableOrders>
+        <TableOrders 
+          onUpdate={() => fetchPedidos(users)} 
+          arregloColumns={columns} 
+          arreglo={filteredData}
+        />
       </section>
     </MainLayout>
   )

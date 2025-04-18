@@ -27,7 +27,7 @@ export const ModalEditState = ({ open, setOpen, dataPedido,onUpdate}) => {
     <ModalLayout open={open} setOpen={setOpen} Icon="" >
       <div className='flex flex-col gap-4 p-0'>
 
-      <h2 className='text-center'>Cambiar el estado del pedido con id {dataPedido?.id?.substring(0, 8)} a <span className='font-semibold  text-green-600'>pagado
+      <h2 className='text-center'>Cambiar el estado del pedido con id #{dataPedido?.id?.substring(0, 8)} a <span className='font-semibold  text-green-600'>pagado
       </span> ?
 
       </h2>

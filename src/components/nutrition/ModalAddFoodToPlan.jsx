@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 export const ModalAddFoodToPlan = ({ editable, nombreDia, tipoComida, open, setOpen }) => {
     console.log(tipoComida, "tipocomiaaaa");
-    
+
     const agregarAlimentos = useCrearPlan((state) => state.agregarAlimento);
     const agregarAlimentoEnPlanEditado = useEditPlan((state) => state.agregarAlimentoEnPlanEditado);
     const [alimentos, setAlimentos] = useState([]);
@@ -37,7 +37,7 @@ export const ModalAddFoodToPlan = ({ editable, nombreDia, tipoComida, open, setO
                 console.log("final");
             }
         };
-        
+
         traerAlimentos();
     }, []);
 
@@ -64,9 +64,11 @@ export const ModalAddFoodToPlan = ({ editable, nombreDia, tipoComida, open, setO
     // Manejar el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (editable) {
-            agregarAlimentoEnPlanEditado(nombreDia, tipoComida, form)
-        }
+        console.log(nombreDia, tipoComida, form, "data a agregar");
+
+
+        agregarAlimentoEnPlanEditado(nombreDia, tipoComida, form)
+
         agregarAlimentos(nombreDia, tipoComida, form)
         setOpen(false);
         console.log("Formulario enviado:", form);

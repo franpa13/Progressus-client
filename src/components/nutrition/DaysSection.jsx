@@ -153,6 +153,7 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                 <>
                     {comidas.map((comida, index) => {
 
+
                         let alimentosFiltrados = alimentos
                             .filter(a => a.dia === day)
                             .flatMap(a => a.comidas)
@@ -160,13 +161,13 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
 
                         return (
                             <div className='mb-28 pb-12 border-b-2 ' key={index}>
-                                <h1 className={"text-3xl lg:text-4xl underline text-black font-semibold  text-center mb-5 w-full justify-center"} > {comida.name}</h1>
+                                <h1 className={"text-3xl lg:text-4xl underline text-black font-semibold  text-center mb-5 w-full justify-center"} > {comida?.name}</h1>
                                 {isEditable && (
                                     <div className="flex justify-end">
-                                        <Tooltip className='mb-4' title={`Añadir alimentos al ${comida.name}`}>
+                                        <Tooltip className='mb-4' title={`Añadir alimentos al ${comida?.name}`}>
                                             <span className="bg-customButtonGreen hover:bg-green-800 rounded p-1">
                                                 <RiAddCircleLine
-                                                    onClick={() => handleClick(com.tipoComida)}
+                                                    onClick={() => handleClick(comida?.name)}
                                                     className="cursor-pointer text-3xl text-white"
                                                 />
                                             </span>
