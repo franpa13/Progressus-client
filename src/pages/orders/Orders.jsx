@@ -41,24 +41,27 @@ export const Orders = () => {
   const fetchPedidos = async (usersList) => {
     try {
       const response = await useGetPedidos();
+  
       if (response && response.data) {
-        // Transformar los datos de la API al formato que necesita la tabla
-        const transformedData = response.data.map(pedido => {
-          // Buscar el usuario correspondiente
-          const user = usersList.find(u => u.identityUserId === pedido.usuarioId);
-          
-          return {
-            id: pedido.id,
-            fecha: new Date(pedido.fechaCreacion).toLocaleDateString(),
-            nombreCliente: user ? `${user.nombre} ${user.apellido}` : 'Cliente no encontrado',
-            carrito: pedido.carrito.items,
-            precio: `$${pedido.total.toLocaleString()}`,
-            estado: pedido.estado,
-            modificar: "Editar",
-            originalData: pedido // Guardamos los datos originales por si los necesitamos
-          };
-        });
-        
+        const transformedData = response.data
+          .map(pedido => {
+            const user = usersList.find(u => u.identityUserId === pedido.usuarioId);
+            const fechaCreacion = new Date(pedido.fechaCreacion);
+  
+            return {
+              id: pedido.id,
+              fecha: fechaCreacion.toLocaleDateString() + " " + fechaCreacion.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              nombreCliente: user ? `${user.nombre} ${user.apellido}` : 'Cliente no encontrado',
+              carrito: pedido.carrito.items,
+              precio: `$${pedido.total.toLocaleString()}`,
+              estado: pedido.estado,
+              modificar: "Editar",
+              originalData: pedido,
+              fechaCreacionObj: fechaCreacion 
+            };
+          })
+          .sort((a, b) => b.fechaCreacionObj - a.fechaCreacionObj);
+  
         setOrdersData(transformedData);
         setFilteredData(transformedData);
       }
@@ -66,7 +69,8 @@ export const Orders = () => {
       console.error("Error al obtener pedidos:", error);
     }
   };
-
+  
+  
   // Función para manejar la búsqueda
   const handleSearch = (e) => {
     const term = e.target.value.toLowerCase();
@@ -89,6 +93,7 @@ export const Orders = () => {
     
     setFilteredData(filtered);
   };
+
 
   return (
     <MainLayout>

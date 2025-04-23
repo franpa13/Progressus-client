@@ -5,18 +5,19 @@ import { useCreatePayment } from '../../service/shop/useCreatePayment';
 import { useCreatePedido } from '../../service/shop/useCreatePedido';
 import { useStoreUserData } from '../../store';
 import { CircularProgress } from '@mui/material';
-
+import { SnackbarDefault } from '../ui/snackbar/Snackbar';
 export const PaymentCheckout = ({ cart }) => {
     const [load, setLoad] = useState(false)
+    const [loadCash, setLoadCash] = useState(false)
     const dataUser = useStoreUserData((state) => state.userData);
-    
+    const [alert, setAlert] = useState(false)
     // Transformar el carrito al formato requerido
     const cartFormatted = cart.map(item => ({
         id: item.id,
         cantidad: item.quantity
     }));
     console.log(cart, "cart");
-    
+
 
 
     const handlePay = async () => {
@@ -45,29 +46,22 @@ export const PaymentCheckout = ({ cart }) => {
 
 
     }
-    
+
     const handlePayCash = async () => {
         try {
-            setLoad(true)
+            setLoadCash(true)
             const response = await useCreatePedido(dataUser.identityUserId, cartFormatted)
             console.log(response.data, "data");
 
             if (response?.status == "200" || response.status == 200) {
 
-                // REDIRECCIÓN AL INIT POINT
-                const initPoint = response?.data?.preference?.initPoint;
-                if (initPoint) {
-
-                    window.location.href = initPoint; // Redirige al usuario
-                } else {
-                    console.error("InitPoint no encontrado en la respuesta.");
-                }
+                setAlert(true)
             }
         } catch (e) {
             console.log(e, "errores");
 
         } finally {
-            setLoad(false)
+            setLoadCash(false)
         }
 
 
@@ -141,13 +135,19 @@ export const PaymentCheckout = ({ cart }) => {
                         (e.currentTarget.style.backgroundColor = "#7CB305")
                     }
                 >
-                    <PaidIcon sx={{ fontSize: "33px" }} />
+                    {loadCash ? (
+                        <CircularProgress size={24} color="inherit" />
+                    ) : (
+                        <PaidIcon sx={{ fontSize: "33px" }} />
+                    )}
+
                     Pagar con efectivo
                 </button>
                 <p className='w-full md:w-1/2 md:ml-3 font-semibold'>
                     Si selecciona efectivo su pedido quedará pendiente hasta que se presente al gimnasio a efectuar el pago y retiro del mismo.
                 </p>
             </div>
+            <SnackbarDefault severity="primary" position={{ vertical: "top", horizontal: "center" }} open={alert} setOpen={setAlert} message={"Su pedido ha sido registrado, dirigase al local para abonar y recibir el producto."}></SnackbarDefault>
         </div>
     );
 };
