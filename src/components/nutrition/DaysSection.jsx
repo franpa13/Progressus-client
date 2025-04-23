@@ -124,7 +124,6 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                     const alimentos = data[com.tipoComida];
                     return (
                         <div className='mb-28 pb-12 border-b-2 ' key={i}>
-                            <h1>editar</h1>
                             <h1 className={"text-3xl lg:text-4xl underline text-black font-semibold  text-center mb-5 w-full justify-center"} > {com.tipoComida}</h1>
                             {isEditable && (
                                 <div className="flex justify-end">

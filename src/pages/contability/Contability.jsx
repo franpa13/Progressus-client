@@ -55,7 +55,7 @@ export const Contability = () => {
   const columns = ["Nombre", "Fecha", "Descripcion", "Monto"];
   const factureData = {
     fecha: dayjs().format("YYYY-MM-DD"),
-    title: `Pagos en efectivo del mes ${selectedDate}`,
+    title: `Registro de ingresos  ${selectedDate}`,
   };
 
   const generatePdf = () => {
@@ -146,7 +146,7 @@ export const Contability = () => {
         <section className="p-3 mb-4">
           <div className="flex w-full justify-between flex-wrap gap-2 items-center">
             <div className="flex items-center gap-1 md:gap-3">
-              <Title title={"Pagos en efectivo del último mes"}></Title>
+              <Title title={"Registro de ingresos del ultimo mes"}></Title>
               <PiPiggyBankDuotone className="text-xl md:text-3xl"></PiPiggyBankDuotone>
             </div>
             <div className="hidden md:block">
