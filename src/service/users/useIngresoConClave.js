@@ -1,13 +1,11 @@
 import axios from "axios";
+import { api } from "../api";
 
 export const useIngresoConClave = async (userId, clave) => {
-  console.log(userId, "userId");
-  console.log(clave, "clave");
-
   try {
     // Realizando la solicitud POST al endpoint que mencionaste
-    const response = await axios.post(
-      `https://localhost:44309/api/ReservasTurnos/ingresoConClave/${userId}/${clave}`,
+    const response = await api.post(
+      `/api/ReservasTurnos/IngresoConClave/${userId}/${clave}`,
       {
         headers: {
           "Content-Type": "application/json", // Asegúrate de que sea el tipo de contenido correcto

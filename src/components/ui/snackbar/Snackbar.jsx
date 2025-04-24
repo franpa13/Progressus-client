@@ -44,7 +44,7 @@ export const SnackbarDefault = ({
             alignItems: "center",
           }}
         >
-          <h1 className="md:text-lg"> {message}</h1>
+          <h1 className="md:text-lg" style={{fontSize: "24px"}}> {message}</h1>
         </Alert>
       </Snackbar>
     </div>
