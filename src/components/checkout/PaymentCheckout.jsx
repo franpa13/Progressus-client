@@ -9,6 +9,7 @@ import { SnackbarDefault } from '../ui/snackbar/Snackbar';
 export const PaymentCheckout = ({ cart }) => {
     const [load, setLoad] = useState(false)
     const [loadCash, setLoadCash] = useState(false)
+    const [habilitarCash, setHabilitarCash] = useState(false)
     const dataUser = useStoreUserData((state) => state.userData);
     const [alert, setAlert] = useState(false)
     // Transformar el carrito al formato requerido
@@ -56,6 +57,8 @@ export const PaymentCheckout = ({ cart }) => {
             if (response?.status == "200" || response.status == 200) {
 
                 setAlert(true)
+                setHabilitarCash(true)
+
             }
         } catch (e) {
             console.log(e, "errores");
@@ -112,15 +115,19 @@ export const PaymentCheckout = ({ cart }) => {
             <div className='flex md:flex-row flex-col gap-3 mt-12'>
                 <button
                     onClick={handlePayCash}
+                    disabled={habilitarCash} 
                     style={{
-                        backgroundColor: "#7CB305",
+                        // backgroundColor: "#7CB305",
+                        backgroundColor: habilitarCash ? "#BFBFBF" : "#7CB305",
                         color: "white",
                         padding: "8px 15px",
                         borderRadius: "5px",
                         fontWeight: "600",
                         fontSize: "16px",
                         border: "none",
-                        cursor: "pointer",
+                        // cursor: "pointer",
+                        cursor: habilitarCash ? "not-allowed" : "pointer",
+                        opacity: habilitarCash ? 0.7 : 1,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -128,12 +135,16 @@ export const PaymentCheckout = ({ cart }) => {
                         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                         transition: "background-color 0.3s ease",
                     }}
-                    onMouseOver={(e) =>
+                    onMouseOver={(e) =>{
+                        if (!habilitarCash) {
                         (e.currentTarget.style.backgroundColor = "#5B8C00")
                     }
-                    onMouseOut={(e) =>
+                    }}
+                    onMouseOut={(e) =>{
+                        if (!habilitarCash) {
                         (e.currentTarget.style.backgroundColor = "#7CB305")
-                    }
+                        }
+                    }}
                 >
                     {loadCash ? (
                         <CircularProgress size={24} color="inherit" />
@@ -147,7 +158,7 @@ export const PaymentCheckout = ({ cart }) => {
                     Si selecciona efectivo su pedido quedará pendiente hasta que se presente al gimnasio a efectuar el pago y retiro del mismo.
                 </p>
             </div>
-            <SnackbarDefault severity="primary" position={{ vertical: "top", horizontal: "center" }} open={alert} setOpen={setAlert} message={"Su pedido ha sido registrado, dirigase al local para abonar y recibir el producto."}></SnackbarDefault>
+            <SnackbarDefault severity="primary" position={{ vertical: "top", horizontal: "center" }} open={alert} style={{ fontSize: "38px", fontWeight: "500" }} setOpen={setAlert} message={"Su pedido ha sido registrado. Diríjase al local para abonar y recibir el producto."}></SnackbarDefault>
         </div>
     );
 };
