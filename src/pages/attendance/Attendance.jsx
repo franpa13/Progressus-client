@@ -14,7 +14,8 @@ import { useIngresoConClave } from "../../service/users/useIngresoConClave";
 
 export const Attendance = () => {
   const [userAsistencia, setUserAsistencia] = useState("");
-  const [confirmAsist, setConfirmAsist] = useState(false);
+  const [confirmAsist, setConfirmAsist] = useState(false); 
+  let daw ;
   const [alertSuccess, setAlertSuccess] = useState(false);
   const [alertError, setAlertError] = useState(false);
   const [users, setUsers] = useState([]);

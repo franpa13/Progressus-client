@@ -1,15 +1,47 @@
 import React, { useState } from "react";
 import { Scanner } from "@yudiel/react-qr-scanner";
 import { MainLayout } from "../../layout/MainLayout";
+import { SnackbarDefault } from "../../components";
+import { useSpinnerStore } from "../../store";
+import { useSendAsist } from "../../service/users/useSendAsist";
 
 export const CodeScanner = () => {
+  const showSpinner = useSpinnerStore((state) => state.showSpinner);
+  const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
   const [result, setResult] = useState(null);
   const [scanLog, setScanLog] = useState([]);
+  const [confirmAsist, setConfirmAsist] = useState(false);
+  const [alertSuccess, setAlertSuccess] = useState(false);
+  const [alertError, setAlertError] = useState(false);
+  const sendAsistencia = async (idUser) => {
+    showSpinner();
+
+    try {
+      const responseSendAsist = await useSendAsist(
+        idUser
+      );
+      console.log(responseSendAsist , "responseSendSasit");
+      
+      if (responseSendAsist && responseSendAsist.status === 200) {
+        setAlertSuccess(true);
+
+      } else {
+        // Si no tiene turno, mostrar el modal
+        setAlertError(true);
+
+      }
+    } catch (e) {
+      console.log(e, "errorrrrs");
+    } finally {
+      hideSpinner()
+    }
+  };
 
   const handleScan = (data) => {
     console.log("QR Escaneado:", data[0].rawValue
     ); // Log en la consola
-   alert(data[0].rawValue , "code")
+    sendAsistencia(data[0].rawValue)
+
   };
 
   return (
@@ -22,7 +54,7 @@ export const CodeScanner = () => {
             onError={(error) => console.error("Error del scanner:", error)}
           />
         </div>
-        
+
         {/* Resultado del último scan */}
         {result && (
           <div className="mt-4 p-4 bg-white shadow rounded w-full max-w-md">
@@ -30,7 +62,7 @@ export const CodeScanner = () => {
             <p className="text-blue-500 break-all">{result}</p>
           </div>
         )}
-        
+
         {/* Historial de scans (log) */}
         {scanLog.length > 0 && (
           <div className="mt-6 w-full max-w-md">
@@ -46,6 +78,23 @@ export const CodeScanner = () => {
           </div>
         )}
       </div>
+      {/* ALERT ERRORR!! CONFIRMAR ASISTENCIA */}
+      <SnackbarDefault
+        message={
+          "No se encontró ninguna reserva válida para este usuario en el horario actual."
+        }
+        open={alertError}
+        setOpen={setAlertError}
+        severity={"warning"}
+      ></SnackbarDefault>
+
+      {/* ALERT success CONFIRMAR ASISTENCIA */}
+      <SnackbarDefault
+        message={"Asistencia confirmada correctamente !"}
+        open={alertSuccess}
+        setOpen={setAlertSuccess}
+        severity={"success"}
+      ></SnackbarDefault>
     </MainLayout>
   );
 };
