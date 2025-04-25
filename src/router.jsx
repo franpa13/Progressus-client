@@ -310,18 +310,19 @@ export const router = createBrowserRouter([
   },
   // SCANNERS
   {
-    path: "/scanner",
+    path: "/writer",
+
     element: (
       <ProtectedRoute allowedRoles={["SOCIO"]}>
-        <CodeScanner />
+        <CodeWriter />
       </ProtectedRoute>
     )
   },
   {
-    path: "/writer",
+    path: "/scanner",
     element: (
       <ProtectedRoute allowedRoles={["ADMIN"]}>
-        <CodeWriter />
+        <CodeScanner />
       </ProtectedRoute>
     )
   },

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import QRCode from "react-qr-code";
 import { MainLayout } from "../../layout/MainLayout";
+import { useStoreUserData } from "../../store";
 
 export const CodeWriter = () => {
+    const userData = useStoreUserData((state) => state.userData);
   const strings = ["Hello, World!", "React is awesome!", "Keep coding!", "Stay positive!", "Never stop learning!", "Embrace the journey!", "You got this!", "Think big, start small!"];
   const getRandomString = () => strings[Math.floor(Math.random() * strings.length)];
 
-  const [randomString, setRandomString] = useState(getRandomString());
+  const idUser = userData?.identityUserId
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -24,7 +26,7 @@ export const CodeWriter = () => {
           <QRCode
 
             style={{ height: "auto", maxWidth: "100%", width: "100%" }}
-            value={randomString}
+            value={idUser}
             viewBox={`0 0 256 256`}
           />
         </div>

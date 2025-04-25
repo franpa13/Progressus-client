@@ -104,9 +104,9 @@ export const NavBar = () => {
     },
     
     {
-      title: "QR code",
+      title: "Scanner QR",
       icon: <IoQrCodeOutline />,
-      link: "/writer",
+      link: "/scanner",
     },
     {
       title: "Usuarios",
@@ -206,9 +206,9 @@ export const NavBar = () => {
       link: "/nutritionalsocio",
     },
     {
-      title: "Scanner QR",
+      title: "QR code",
       icon: <BsQrCodeScan />,
-      link: "/scanner",
+      link: "/writer",
     },
     {
       title: "Subir Comprobante",
@@ -254,6 +254,7 @@ export const NavBar = () => {
     },
   ]
   const handleLinkClick = (link) => {
+    console.log(link , "linkcli");
     if (link === "/turns" || (link === "/plans" && roleUser !== "ENTRENADOR")) {
       if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
         setOpenErrorTurns(true);
@@ -261,6 +262,7 @@ export const NavBar = () => {
       }
     }
     close();
+
 
     setTimeout(() => {
       navigate(link);
@@ -272,6 +274,7 @@ export const NavBar = () => {
     NUTRICIONISTA: routerNutri,
     DEFAULT: routeNavigation,
   };
+console.log(roleNavigationMap[roleUser] , "rute");
 
   return (
     <div className="">
@@ -307,9 +310,9 @@ export const NavBar = () => {
           </div>
         </div>
         {(roleNavigationMap[roleUser] || roleNavigationMap.DEFAULT).map(
-          (item) => (
+          (item,index) => (
             <div
-              key={item.link}
+              key={index}
               onClick={() => handleLinkClick(item.link)}
               className={clsx(
                 "flex text-xl items-center mt-5 p-1.5 trans-hover rounded-md hover:bg-gray-100 transition-all cursor-pointer",
