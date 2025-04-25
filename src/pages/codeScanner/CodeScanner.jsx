@@ -11,7 +11,7 @@ export const CodeScanner = () => {
         <h1 className="text-2xl font-bold mb-4">QR Code Scanner</h1>
         <div className="w-[800px] h-[800px] border border-gray-300 rounded-lg overflow-hidden">
           <Scanner
-            onScan={(result) => console.log(result)}
+            onScan={(result) => alert(result)}
           />
         </div>
         {result && (
