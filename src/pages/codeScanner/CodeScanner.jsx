@@ -3,13 +3,13 @@ import { Scanner } from "@yudiel/react-qr-scanner";
 import { MainLayout } from "../../layout/MainLayout";
 
 export const CodeScanner = () => {
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState("awdwad");
 
   return (
     <MainLayout>
-      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
+      <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-gray-100">
         <h1 className="text-2xl font-bold mb-4">QR Code Scanner</h1>
-        <div className="w-[800px] h-[800px] border border-gray-300 rounded-lg overflow-hidden">
+        <div className="w-[400px] h-[400px] md:w-[800px] md:h-[800px] border border-gray-300 rounded-lg overflow-hidden">
           <Scanner
             onScan={(result) => alert(result)}
           />
