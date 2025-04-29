@@ -467,7 +467,7 @@ console.log(types , "types");
                         data:typesDataset
                       },
                     ]}
-                    width={800}
+                    width={950}
                     height={220}
                   />
                 </div>
