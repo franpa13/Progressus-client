@@ -65,63 +65,70 @@ export const NavBar = () => {
   const routeAdminNavigation = [
     {
       title: "Inicio",
-      icon: <GoHome />,
+      icon: <GoHome className="text-base md:text-xl" />,
       link: "/home",
     },
     {
       title: "Mi cuenta",
-      icon: <CgProfile />,
+      icon: <CgProfile className="text-base md:text-xl" />,
       link: "/account",
     },
     {
       title: "Membresías",
-      icon: <FaRegAddressCard />,
+      icon: <FaRegAddressCard className="text-base md:text-xl" />,
       link: "/membership",
     },
     {
       title: "Recibos",
-      icon: <BsPiggyBank />,
+      icon: <BsPiggyBank className="text-base md:text-xl" />,
       link: "/contability",
     },
     {
       title: "Inventario",
-      icon: <MdOutlineInventory />,
+      icon: <MdOutlineInventory className="text-base md:text-xl" />,
       link: "/inventary",
     },
     {
       title: "Shop",
-      icon: <FiShoppingCart />,
+      icon: <FiShoppingCart className="text-base md:text-xl" />,
       link: "/shopAdmin",
     }, {
       title: "Pedidos",
-      icon: <MoreOutlinedIcon fontSize="small" />,
+      icon: (
+        <MoreOutlinedIcon
+        sx={{
+          fontSize: { xs: 15, md: 18, lg: 21 }
+        }}
+      />
+      ),
+      
       link: "/orders",
     },
     {
       title: "Ingreso",
-      icon: <TbUserCheck />,
+      icon: <TbUserCheck className="text-base md:text-xl" />,
       link: "/attendance",
     },
-    
+
     {
       title: "Scanner QR",
-      icon: <IoQrCodeOutline />,
+      icon: <IoQrCodeOutline className="text-base md:text-xl" />,
       link: "/scanner",
     },
     {
       title: "Usuarios",
-      icon: <HiOutlineUsers />,
+      icon: <HiOutlineUsers className="text-base md:text-xl" />,
       link: "/users",
     },
 
     {
       title: "Estadísticas",
-      icon: <IoStatsChartOutline />,
+      icon: <IoStatsChartOutline className="text-base md:text-xl" />,
       link: "/stats",
     },
     {
       title: "Notificaciones",
-      icon: <IoMdNotificationsOutline />,
+      icon: <IoMdNotificationsOutline className="text-base md:text-xl" />,
       link: "/notifications",
     }
   ];
@@ -129,95 +136,95 @@ export const NavBar = () => {
   const routeTrainerNavigation = [
     {
       title: "Inicio",
-      icon: <GoHome />,
+      icon: <GoHome className="text-base md:text-xl" />,
       link: "/home",
     },
     {
       title: "Mi cuenta",
-      icon: <CgProfile />,
+      icon: <CgProfile className="text-base md:text-xl" />,
       link: "/account",
     },
 
     {
       title: "Planes",
-      icon: <GrPlan />,
+      icon: <GrPlan className="text-base md:text-xl" />,
       link: "/plans",
     },
     {
       title: "Ejercicios",
-      icon: <CgGym />,
+      icon: <CgGym className="text-base md:text-xl" />,
       link: "/exercices",
     },
     {
       title: "Estadísticas",
-      icon: <IoStatsChartOutline />,
+      icon: <IoStatsChartOutline className="text-base md:text-xl" />,
       link: "/stats",
     },
     {
       title: "Notificaciones",
-      icon: <IoMdNotificationsOutline />,
+      icon: <IoMdNotificationsOutline className="text-base md:text-xl" />,
       link: "/notifications",
     },
   ];
   const routeNavigation = [
     {
       title: "Inicio",
-      icon: <GoHome />,
+      icon: <GoHome className="text-base md:text-xl" />,
       link: "/home",
     },
     {
       title: "Mi cuenta",
-      icon: <CgProfile />,
+      icon: <CgProfile className="text-base md:text-xl" />,
       link: "/account",
     },
     {
       title: "Membresías",
-      icon: <FaRegAddressCard />,
+      icon: <FaRegAddressCard className="text-base md:text-xl" />,
       link: "/membership",
     },
     {
       title: "Planes",
-      icon: <GrPlan />,
+      icon: <GrPlan className="text-base md:text-xl" />,
       link: "/plans",
     },
     {
       title: "Turnos",
-      icon: <BsMenuButtonWide />,
+      icon: <BsMenuButtonWide className="text-base md:text-xl" />,
       link: "/turns",
     },
     {
       title: "Shop",
-      icon: <FiShoppingCart />,
+      icon: <FiShoppingCart className="text-base md:text-xl" />,
       link: "/shopsocio",
     },
     {
       title: "Mediciones",
-      icon: <TbRulerMeasure />,
+      icon: <TbRulerMeasure className="text-base md:text-xl" />,
       link: "/metrics",
     },
     {
       title: "Beneficios",
-      icon: <HiOutlineUsers />,
+      icon: <HiOutlineUsers className="text-base md:text-xl" />,
       link: "/benefits",
     },
     {
       title: "Planes Nutricionales",
-      icon: <IoNutritionOutline />,
+      icon: <IoNutritionOutline className="text-base md:text-xl" />,
       link: "/nutritionalsocio",
     },
     {
       title: "QR code",
-      icon: <BsQrCodeScan />,
+      icon: <BsQrCodeScan className="text-base md:text-xl" />,
       link: "/writer",
     },
     {
       title: "Subir Comprobante",
-      icon: <HiCurrencyDollar />,
+      icon: <HiCurrencyDollar className="text-base md:text-xl" />,
       link: "/comprobantesSocio",
     },
     {
       title: "Notificaciones",
-      icon: <IoMdNotificationsOutline />,
+      icon: <IoMdNotificationsOutline className="text-base md:text-xl" />,
       link: "/notifications",
     },
   ];
@@ -225,36 +232,36 @@ export const NavBar = () => {
   const routerNutri = [
     {
       title: "Inicio",
-      icon: <GoHome />,
+      icon: <GoHome className="text-base md:text-xl" />,
       link: "/home",
     },
     {
       title: "Mi cuenta",
-      icon: <CgProfile />,
+      icon: <CgProfile className="text-base md:text-xl" />,
       link: "/account",
     }, {
       title: "Planes",
-      icon: <GrPlan />,
+      icon: <GrPlan className="text-base md:text-xl" />,
       link: "/plansnutrition",
     },
     {
       title: "Pacientes",
-      icon: <HiOutlineUsers />,
+      icon: <HiOutlineUsers className="text-base md:text-xl" />,
       link: "/patients",
     },
     {
       title: "Alimentos",
-      icon: <IoNutritionOutline />,
+      icon: <IoNutritionOutline className="text-base md:text-xl" />,
       link: "/food",
     },
     {
       title: "Notificaciones",
-      icon: <IoMdNotificationsOutline />,
+      icon: <IoMdNotificationsOutline className="text-base md:text-xl" />,
       link: "/notifications",
     },
   ]
   const handleLinkClick = (link) => {
-    console.log(link , "linkcli");
+    console.log(link, "linkcli");
     if (link === "/turns" || (link === "/plans" && roleUser !== "ENTRENADOR")) {
       if (!membership || membership.estadoSolicitud.nombre !== "Confirmado") {
         setOpenErrorTurns(true);
@@ -274,7 +281,7 @@ export const NavBar = () => {
     NUTRICIONISTA: routerNutri,
     DEFAULT: routeNavigation,
   };
-console.log(roleNavigationMap[roleUser] , "rute");
+  console.log(roleNavigationMap[roleUser], "rute");
 
   return (
     <div className="">
@@ -294,36 +301,37 @@ console.log(roleNavigationMap[roleUser] , "rute");
         )}
       >
         <IoCloseOutline
-          size={30}
+          size={25}
           className="absolute top-3 right-1 cursor-pointer"
           onClick={close}
         />
-        <div className="flex flex-row-reverse justify-end gap-5 mt-3 mb-2 items-center ">
+        <div className="flex flex-row-reverse justify-end gap-5 mt-3 mb-1 md:mb-2 items-center ">
           <div className="cursor-pointer hover:bg-customBlue rounded p-1">
-            <IoSearchOutline size={25} />
+            <IoSearchOutline fontSize={20} />
           </div>
           <div
             onClick={handleLogout}
             className="cursor-pointer hover:bg-customBlue rounded p-1"
           >
-            <BiLogOut size={25} />
+            <BiLogOut fontSize={20} />
           </div>
         </div>
         {(roleNavigationMap[roleUser] || roleNavigationMap.DEFAULT).map(
-          (item,index) => (
+          (item, index) => (
             <div
               key={index}
               onClick={() => handleLinkClick(item.link)}
               className={clsx(
-                "flex  md:text-xl items-center mt-5 p-0.5 md:p-1.5 trans-hover rounded-md hover:bg-gray-100 transition-all cursor-pointer",
+                "flex  md:text-xl items-center mt-3 md:mt-5 p-0.5 md:p-1.5 trans-hover rounded-md hover:bg-gray-100 transition-all cursor-pointer",
                 {
                   "bg-customBlue text-customTextBlue font-semibold":
                     path.startsWith(item.link),
                 }
               )}
             >
+
               {item.icon}
-              <span className="ml-2 md:ml-3  md:text-xl">{item.title}</span>
+              <span className="ml-3  md:text-xl">{item.title}</span>
             </div>
           )
         )}
