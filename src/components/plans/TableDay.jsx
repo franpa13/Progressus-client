@@ -312,15 +312,18 @@ export const TableDay = ({
           labelRowsPerPage="Filas por página"
           labelDisplayedRows={() => ""}
         />
-        <div className="flex justify-end p-3 ">
-          <ButtonSpinner
-            loading={loadSendRutina}
-            onClick={sendRutina}
-            classNameIcon={"text-2xl"}
-            Icon={GiFinishLine}
-            label={`Finalizar rutina del dia ${day}`}
-          ></ButtonSpinner>
-        </div>
+        {roleUser == "SOCIO" && (
+
+          <div className="flex justify-end p-3 ">
+            <ButtonSpinner
+              loading={loadSendRutina}
+              onClick={sendRutina}
+              classNameIcon={"text-2xl"}
+              Icon={GiFinishLine}
+              label={`Finalizar rutina del dia ${day}`}
+            ></ButtonSpinner>
+          </div>
+        )}
       </Paper>
 
       {/* Modal para mostrar el video */}

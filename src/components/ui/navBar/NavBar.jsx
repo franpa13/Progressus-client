@@ -315,7 +315,7 @@ console.log(roleNavigationMap[roleUser] , "rute");
               key={index}
               onClick={() => handleLinkClick(item.link)}
               className={clsx(
-                "flex text-xl items-center mt-5 p-1.5 trans-hover rounded-md hover:bg-gray-100 transition-all cursor-pointer",
+                "flex  md:text-xl items-center mt-5 p-0.5 md:p-1.5 trans-hover rounded-md hover:bg-gray-100 transition-all cursor-pointer",
                 {
                   "bg-customBlue text-customTextBlue font-semibold":
                     path.startsWith(item.link),
@@ -323,7 +323,7 @@ console.log(roleNavigationMap[roleUser] , "rute");
               )}
             >
               {item.icon}
-              <span className="ml-3 text-lg md:text-xl">{item.title}</span>
+              <span className="ml-2 md:ml-3  md:text-xl">{item.title}</span>
             </div>
           )
         )}
