@@ -10,7 +10,7 @@ export default defineConfig({
       "/api": {
         target:
           "https://localhost:7140/" ||
-          "https://progressuscenter.azurewebsites.net/", // URL de tu backend
+          "https://progressus-ceesd0e0c5d9bfhk.brazilsouth-01.azurewebsites.net", // URL de tu backend
         changeOrigin: true,
         secure: false, // Esto ignora los certificados SSL en localhost
         rewrite: (path) => path.replace(/^\/api/, ""), // Elimina el prefijo /api en la solicitud

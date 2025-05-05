@@ -83,7 +83,7 @@ export const ModalEditProd = ({ open, setOpen, editable, setData }) => {
 
         try {
             const response = await api.put(
-                `https://progressuscenter.azurewebsites.net/api/Merch/Editar/${formData.id}`,
+                `https://progressus-ceesd0e0c5d9bfhk.brazilsouth-01.azurewebsites.net/api/Merch/Editar/${formData.id}`,
                 formData
             );
 

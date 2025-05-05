@@ -6,7 +6,7 @@ export const useSendAsist = async (userId) => {
 
   try {
     const response = await axios.post(
-      `https://progressuscenter.azurewebsites.net/api/ReservasTurnos/registrarAsistencia/${userId}`,
+      `https://progressus-ceesd0e0c5d9bfhk.brazilsouth-01.azurewebsites.net/api/ReservasTurnos/registrarAsistencia/${userId}`,
 
       {
         headers: {
