@@ -44,7 +44,7 @@ export const Profile = () => {
           const response = await useGetMembershipSinNutri(
             dataUser.identityUserId
           );
-          console.log(response , "response al traer membresía activa");
+
           
           // const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
           // if (havePlanRes.status === 200) {

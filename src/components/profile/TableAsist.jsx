@@ -27,7 +27,7 @@ export const TableAsist = ({ data, columns }) => {
     page * rowsPerPage,
     page * rowsPerPage + rowsPerPage
   );
-
+  console.log(data, "date");
   return (
     <div className="w-full md:w-1/2 border">
       <Paper>
@@ -59,8 +59,9 @@ export const TableAsist = ({ data, columns }) => {
                         {dayjs(row?.fechaAsistencia).format("DD-MM-YYYY")}
                       </TableCell>
                       <TableCell sx={{ fontSize: "16px" }} align="right">
-                        {dayjs(row?.fechaAsistencia).format("HH:mm")}
+                        {dayjs(row?.fechaAsistencia).subtract(3, "hour").format("HH:mm")}
                       </TableCell>
+
                       <TableCell sx={{ fontSize: "16px" }} align="right">
                         <SpellcheckOutlinedIcon sx={{ color: "#1890FF", fontWeight: "bold" }} />
                       </TableCell>

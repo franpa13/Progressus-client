@@ -19,9 +19,13 @@ export const ProductGrid = ({ products, loadSkeleton }) => {
           <LoadingSkeleton height={310} width={350}></LoadingSkeleton>
         </>
       ) : (
-        products.map((product) => (
-          <ProductItem   key={product.id} product={product}></ProductItem>
-        ))
+        products?.length > 0 ? products.map((product) => (
+          <ProductItem key={product.id} product={product}></ProductItem>
+        )) : (
+          <div className="col-span-4 flex justify-center items-center h-full">
+            <h1 className="text-xl font-bold text-gray-500">No hay productos disponibles</h1>
+          </div>
+        )
       )}
     </div>
   );

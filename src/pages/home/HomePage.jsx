@@ -172,7 +172,7 @@ export const HomePage = () => {
         <div className="bg-white mx-3 mt-4 md:mt-0 md:m-0 md:mx-8 pb-3 md:p-0 rounded shadow-sm">
           <Title
             title={`Hola, ${nameUser}!`}
-            className="p-4 text-center w-full justify-center md:justify-start"
+            className="p-1 md:p-4 text-center w-full justify-center md:justify-start"
           />
           <div className="flex-grow flex justify-center items-center w-full">
             <video
@@ -183,7 +183,7 @@ export const HomePage = () => {
               playsInline
               disablePictureInPicture
               controlsList="nodownload noplaybackrate"
-              className="rounded"
+              className="rounded md:w-10/12"
               alt="Progressus"
             />
           </div>
@@ -228,7 +228,7 @@ export const HomePage = () => {
           <div className="bg-white mx-3 md:m-0 md:mx-8 p-2 rounded shadow-sm gap-1 flex md:flex-col justify-center items-center ">
             <Title
               title={"No tienes turnos reservados"}
-              className="text-base"
+              className="text-sm md:text-base"
             />
             <Button
               onClick={handleLinkClick}

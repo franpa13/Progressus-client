@@ -70,7 +70,7 @@ export const ModalAddMetric = ({ open, setOpen, setAlert, setMetric }) => {
       >
         <div>
           <label className="mb-2 mt-1" htmlFor="altura">
-            Altura
+            Altura (m)
           </label>
           <CustomInput
             name="altura"
