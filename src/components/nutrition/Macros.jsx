@@ -14,7 +14,7 @@ export const Macros = ({ day, macros }) => {
         </thead>
         <tbody>
           <tr>
-            <td className="py-3 px-4 text-center font-medium text-gray-600">Calorias</td>
+            <td className="py-3 px-4 text-center font-medium text-gray-600">Calorías</td>
             <td className="py-3 px-4 text-center">{macros.kcal ? macros.kcal.toFixed(2) : (<>...</>)}</td>
           </tr>
           <tr className="bg-gray-50">
@@ -26,7 +26,7 @@ export const Macros = ({ day, macros }) => {
             <td className="py-3 px-4 text-center">{macros.grasas ? macros.grasas.toFixed(2) : (<>...</>)}</td>
           </tr>
           <tr className="bg-gray-50">
-            <td className="py-3 px-4 text-center font-medium text-gray-600 pl-8">Proteinas</td>
+            <td className="py-3 px-4 text-center font-medium text-gray-600 pl-8">Proteínas</td>
             <td className="py-3 px-4 text-center">{macros.prot? macros.prot.toFixed(2) : (<>...</>)}</td>
           </tr>
         </tbody>

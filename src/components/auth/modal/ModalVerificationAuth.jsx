@@ -96,7 +96,7 @@ export const ModalVerificationAuth = ({ open, email, setOpen }) => {
         openAlertAuth();
         setOpen(false);
       } else {
-      
+
 
         setAlertFailed(true);
         setCode(Array(4).fill(""));
@@ -124,13 +124,13 @@ export const ModalVerificationAuth = ({ open, email, setOpen }) => {
         <Fade in={open}>
           <Box sx={style}>
             <h2 className="text-center w-full">
-              Ingrese el codigo que enviamos al correo {email && email}
+              Ingrese el código que enviamos al correo {email && email}
             </h2>
             <div className="flex flex-col items-center justify-center w-full ">
               <ConfirmCode code={code} setCode={setCode} set></ConfirmCode>
               {alertFailed && (
                 <span className="text-red-500 w-full text-center font-medium flex justify-center items-center text-sm">
-                  Codigo invalido
+                  Código inválido
                   <MdErrorOutline width={15} />
                 </span>
               )}

@@ -124,12 +124,12 @@ export const NotisAdmin = () => {
         <>
             <section className='w-full flex  justify-center'>
                 <div className='w-full pr-4 flex flex-col items-center justify-center '>
-                    <h2 className='text-xl font-semibold'>Enviar Notificación a un usuario específico</h2>
+                    <h2 className='text-xl font-semibold'>Enviar notificación a usuario específico</h2>
                     <section className='w-full flex flex-wrap justify-center gap-4 my-6'>
                         <div className='w-[300px]'>
                             <SelectNotis
                                 fullWidth
-                                label='Seleccione plantilla'
+                                label='Elija una plantilla'
                                 value={plantillaSeleccionada?.id || ''}
                                 onChange={handleChangePlantilla}
                                 options={plantillas.map(plantilla => ({
@@ -142,7 +142,7 @@ export const NotisAdmin = () => {
                         <div className='w-[300px]'>
                             <SelectNotis
                                 fullWidth
-                                label='Seleccione usuario'
+                                label='Seleccione un usuario'
                                 value={usuarioSeleccionado?.identityUserId || ''}
                                 onChange={(e) => {
                                     const selectedId = e.target.value;
@@ -164,7 +164,7 @@ export const NotisAdmin = () => {
                     </section>
                     <ButtonSpinner
                         className='bg-blue-600'
-                        label='Enviar Notificación'
+                        label='Enviar notificación'
                         onClick={handleEnviarNotificacion}
                         loading={loadingEnvio}
                     />

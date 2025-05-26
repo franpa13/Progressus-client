@@ -20,7 +20,7 @@ export const ModalAddMetric = ({ open, setOpen, setAlert, setMetric }) => {
 
   const initialFormState = {
     id: 0,
-    altura: 0.0, // Inicializa como float
+    altura: 0, // Inicializa como float
     peso: 0,
     porcentajeDeGrasa: 0,
     fecha: "",

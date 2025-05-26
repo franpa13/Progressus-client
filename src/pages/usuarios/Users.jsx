@@ -29,8 +29,8 @@ export const Users = () => {
   // ALERTA AL ELIMINAR
   const [alertDeleteUser, setAlertDeleteUser] = useState(false);
   const [errorDeleteUser, seterrorDeleteUser] = useState(false);
-  const showSpinner = useSpinnerStore(state =>state.showSpinner)
-  const hideSpinner = useSpinnerStore(state =>state.hideSpinner)
+  const showSpinner = useSpinnerStore(state => state.showSpinner)
+  const hideSpinner = useSpinnerStore(state => state.hideSpinner)
 
   //  USERS DEL BACK
   const [users, setUsers] = useState([]);
@@ -49,7 +49,7 @@ export const Users = () => {
     const fetchUsers = async () => {
       try {
         const response = await useGetAllUsers();
-            
+
         setUsers(response.data);
       } catch (e) {
         console.log(e, "error");
@@ -232,7 +232,7 @@ export const Users = () => {
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
 
-  
+
     </MainLayout>
   );
 };

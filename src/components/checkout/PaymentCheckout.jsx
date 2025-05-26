@@ -25,7 +25,7 @@ export const PaymentCheckout = ({ cart }) => {
         try {
             setLoad(true)
             const response = await useCreatePayment(dataUser.identityUserId, cartFormatted)
-            console.log(response.data, "data");
+
 
             if (response?.status == "200" || response.status == 200) {
 
@@ -115,7 +115,7 @@ export const PaymentCheckout = ({ cart }) => {
             <div className='flex md:flex-row flex-col gap-3 mt-12'>
                 <button
                     onClick={handlePayCash}
-                    disabled={habilitarCash} 
+                    disabled={habilitarCash}
                     style={{
                         // backgroundColor: "#7CB305",
                         backgroundColor: habilitarCash ? "#BFBFBF" : "#7CB305",
@@ -135,14 +135,14 @@ export const PaymentCheckout = ({ cart }) => {
                         boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
                         transition: "background-color 0.3s ease",
                     }}
-                    onMouseOver={(e) =>{
+                    onMouseOver={(e) => {
                         if (!habilitarCash) {
-                        (e.currentTarget.style.backgroundColor = "#5B8C00")
-                    }
+                            (e.currentTarget.style.backgroundColor = "#5B8C00")
+                        }
                     }}
-                    onMouseOut={(e) =>{
+                    onMouseOut={(e) => {
                         if (!habilitarCash) {
-                        (e.currentTarget.style.backgroundColor = "#7CB305")
+                            (e.currentTarget.style.backgroundColor = "#7CB305")
                         }
                     }}
                 >

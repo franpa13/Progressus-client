@@ -68,7 +68,7 @@ export const PatentTable = ({
         setUserToEdit(user)
         setDeletePatent(true)
     }
-    console.log(arreglo, "arreglo");
+
 
     return (
         <>
@@ -83,10 +83,10 @@ export const PatentTable = ({
                                             key={index}
                                             align={
                                                 column == "Opciones" ||
-                                                    column == "%Grasa" ||
+                                                    column == "Grasa (%)" ||
                                                     column == "Plan" ||
                                                     column == "Acciones" ||
-                                                    column === "Peso(kg)"
+                                                    column === "Peso (kg)"
 
                                                     ? "right" : "left"
 

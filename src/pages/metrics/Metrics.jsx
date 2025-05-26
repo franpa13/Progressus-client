@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 export const Metrics = () => {
   const userData = useStoreUserData((state) => state.userData);
   const [modalMetric, setModalMetric] = useState(false);
-  const arregloColumns = ["Fecha", "Peso (kg)", "Altura", "Grasa (%)"];
+  const arregloColumns = ["Fecha", "Peso (kg)", "Altura ", "Grasa (%)"];
   const [alert, setAlert] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // Estado para el buscador
@@ -82,7 +82,7 @@ export const Metrics = () => {
         </section>
         <TableMetrics
           loading={false}
-          arreglo={filteredMetrics} // Usamos las métricas filtradas
+          arreglo={filteredMetrics}
           arregloColumns={arregloColumns}
         />
       </section>

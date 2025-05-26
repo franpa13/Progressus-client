@@ -47,7 +47,7 @@ export const ViewPlan = () => {
     };
     fetchDataPlan();
   }, []);
-  console.log(diasDelPlan, "plan para ver");
+
 
   return (
     <MainLayout>
@@ -97,7 +97,7 @@ export const ViewPlan = () => {
           ) : (
             diasDelPlan &&
             diasDelPlan.diasDelPlan.map((dia) => {
-              console.log(dia, "diaaaa");
+              
 
               return (
                 <div
@@ -124,7 +124,7 @@ export const ViewPlan = () => {
                     setDiasDelPlan={setDiasDelPlan}
                     day={dia.numeroDeDia}
                     isEditable={isEditable}
-                    textSinEjercicios={"No hay ejercicios en este día..."}
+                    textSinEjercicios={"No hay ejercicios en este día."}
                     arregloColumns={isEditable ? columnsDayEdit : columnsDay}
                     arreglo={dia.ejerciciosDelDia}
                   />

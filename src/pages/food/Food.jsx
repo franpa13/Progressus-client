@@ -5,57 +5,58 @@ import { useGetFood } from '../../service/nutrition/useGetFood'
 import { CiSearch } from 'react-icons/ci'
 import { IoMdAdd } from 'react-icons/io'
 import { ModalAddFood } from '../../components'
-const alimentos = [
-  {
-    alimento: "Manzana",
-    porcion: "1 unidad (150g)",
-    calorias: 95,
-    carbohidratos: "25g",
-    proteinas: "0.5g",
-    grasas: "0.3g",
-  },
-  {
-    alimento: "Pollo",
-    porcion: "100g",
-    calorias: 165,
-    carbohidratos: "0g",
-    proteinas: "31g",
-    grasas: "3.6g",
-  },
-  {
-    alimento: "Leche",
-    porcion: "1 vaso (250ml)",
-    calorias: 150,
-    carbohidratos: "12g",
-    proteinas: "8g",
-    grasas: "8g",
-  },
-  {
-    alimento: "Espinaca",
-    porcion: "1 taza (30g)",
-    calorias: 7,
-    carbohidratos: "1.1g",
-    proteinas: "0.9g",
-    grasas: "0.1g",
-  },
-  {
-    alimento: "Arroz integral",
-    porcion: "1 taza (195g)",
-    calorias: 216,
-    carbohidratos: "45g",
-    proteinas: "5g",
-    grasas: "1.8g",
-  },
-];
+// const alimentos = [
+//   {
+//     alimento: "Manzana",
+//     porcion: "1 unidad (150g)",
+//     calorias: 95,
+//     carbohidratos: "25g",
+//     proteinas: "0.5g",
+//     grasas: "0.3g",
+//   },
+//   {
+//     alimento: "Pollo",
+//     porcion: "100g",
+//     calorias: 165,
+//     carbohidratos: "0g",
+//     proteinas: "31g",
+//     grasas: "3.6g",
+//   },
+//   {
+//     alimento: "Leche",
+//     porcion: "1 vaso (250ml)",
+//     calorias: 150,
+//     carbohidratos: "12g",
+//     proteinas: "8g",
+//     grasas: "8g",
+//   },
+//   {
+//     alimento: "Espinaca",
+//     porcion: "1 taza (30g)",
+//     calorias: 7,
+//     carbohidratos: "1.1g",
+//     proteinas: "0.9g",
+//     grasas: "0.1g",
+//   },
+//   {
+//     alimento: "Arroz integral",
+//     porcion: "1 taza (195g)",
+//     calorias: 216,
+//     carbohidratos: "45g",
+//     proteinas: "5g",
+//     grasas: "1.8g",
+//   },
+// ];
 const columnasAlimentos = [
   "Alimento",
-  "Porción(gr)",
-  "Calorías(kcal)",
-  "Carbohidratos(gr)",
-  "Proteínas(gr)",
-  "Grasas(gr)",
+  "Porción (g)",
+  "Calorías (kcal)",
+  "Carbohidratos (g)",
+  "Proteínas (g)",
+  "Grasas (g)",
   "Opciones",
 ];
+
 
 export const Food = () => {
   const [food, setFood] = useState([])

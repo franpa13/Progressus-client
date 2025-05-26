@@ -6,7 +6,7 @@ import { useGetPatents } from '../../service/nutrition/useGetPatents'
 import { Button } from '../../components'
 import { ModalAddPatent } from '../../components/nutrition/ModalAddPatent'
 import { IoMdAdd } from 'react-icons/io'
-const arregloCol = ["Nombre", "Edad", "Objetivo", "%Grasa", "Peso(kg)", "Acciones"]
+const arregloCol = ["Nombre", "Edad", "Objetivo", "Grasa (%)", "Peso (kg)", "Acciones"]
 const arreglo = [
     { nombre: "Juan Pérez", edad: 30, objetivo: "Perder peso", peso: 70, plan: "No" },
     { nombre: "Ana Gómez", edad: 25, objetivo: "Tonificar", peso: 58, plan: "SI" },
@@ -39,14 +39,14 @@ export const NutritionPlans = () => {
         }
         traerPacientes();
     }, []);
-    console.log(patents, "patents");
+
     return (
         <MainLayout>
             <section className="animate-fade-in-down md:mx-auto bg-white  rounded shadow-xl w-full md:w-11/12 overflow-hidden mb-20">
                 <div className="b p-3">
                     <Location
                         route={`Pacientes`}
-                        subroute={"Mis Pacientes"}
+                        subroute={"Mis pacientes"}
                     ></Location>
 
                     <Title title={"Pacientes"}></Title>

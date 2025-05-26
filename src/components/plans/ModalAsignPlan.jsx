@@ -25,7 +25,7 @@ export const ModalAsignPlan = ({
     const fetchUsers = async () => {
       try {
         const response = await useGetAllUsers();
-        console.log(response.data, "response de usuarios");
+        
   
         // Filtrar usuarios con rol "SOCIO"
         const socios = response.data.filter((user) =>

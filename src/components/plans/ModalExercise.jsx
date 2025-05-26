@@ -11,10 +11,10 @@ import { useAddExercise } from "../../service/plans/useAddExercise";
 import { useGetPlanById } from "../../service/plans/useGetPlanById";
 import { ErrorAuth } from "../ui/errorAuth/ErrorAuth";
 
-export const ModalExercise = ({ open, setOpen, day, setDiasDelPlan ,setAlertAddExercise}) => {
-  const [errorCreateEx , setErrorCreateEx] = useState(false)
+export const ModalExercise = ({ open, setOpen, day, setDiasDelPlan, setAlertAddExercise }) => {
+  const [errorCreateEx, setErrorCreateEx] = useState(false)
   const planParaVer = usePlanParaVer((state) => state.planParaVer);
- 
+
   const [loadButton, setLoadButton] = useState(false);
   const [exercices, setExercices] = useState([]);
   const [ejercicioSelected, setEjercicioSelected] = useState(null); // Valor inicial nulo
@@ -33,9 +33,9 @@ export const ModalExercise = ({ open, setOpen, day, setDiasDelPlan ,setAlertAddE
       ejercicioId: ejercicioSelected?.id || null, // Asignar el ID seleccionado
     }));
   }, [ejercicioSelected]);
-useEffect(()=>{
-setErrorCreateEx(false)
-},[open])
+  useEffect(() => {
+    setErrorCreateEx(false)
+  }, [open])
   // Obtener la lista de ejercicios
   useEffect(() => {
     const traerEjercicios = async () => {
@@ -62,7 +62,7 @@ setErrorCreateEx(false)
 
     setLoadButton(true);
     try {
-      console.log("entra");
+
 
       const responseAddExercise = await useAddExercise(
         form,
@@ -74,7 +74,7 @@ setErrorCreateEx(false)
         setAlertAddExercise(true);
         const responseDataPlan = await useGetPlanById(planParaVer.id);
         setDiasDelPlan(responseDataPlan.data.value.value);
-      }else{
+      } else {
         setErrorCreateEx(true)
       }
     } catch (e) {
@@ -134,13 +134,13 @@ setErrorCreateEx(false)
           <ButtonSpinner loading={loadButton} type="submit" label={"Agregar"} />
         </div>
         {errorCreateEx && (
-        <ErrorAuth
-          messageError={"Ha ocurrido un error inténtelo nuevamente"}
-          className="flex justify-center items-center"
-        ></ErrorAuth>
-      )}
+          <ErrorAuth
+            messageError={"Ha ocurrido un error inténtelo nuevamente"}
+            className="flex justify-center items-center"
+          ></ErrorAuth>
+        )}
       </form>
-      
+
     </ModalLayout>
   );
 };

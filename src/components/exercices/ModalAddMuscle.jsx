@@ -56,7 +56,7 @@ export const ModalAddMuscle = ({
         setMuscles(responseAllMuscles?.data);
         setOpen(false);
         setOpenAlertCreateMuscle(true);
-      }else{
+      } else {
         setErrorAddGroup(true)
       }
       console.log(createMuscle, "create muscleee");
@@ -76,7 +76,7 @@ export const ModalAddMuscle = ({
       <form className="flex flex-col  items-center gap-5" onSubmit={addMuscle}>
         <div className="w-full">
           <label className="font-semibold text-start w-full" htmlFor="name">
-            Nombre del musculo
+            Nombre del músculo
           </label>
           <CustomInput
             required={true}
@@ -91,7 +91,7 @@ export const ModalAddMuscle = ({
             className="font-semibold text-start w-full"
             htmlFor="description"
           >
-            Descripción del musculo
+            Descripción del músculo
           </label>
           <CustomInput
             required={true}
@@ -111,7 +111,7 @@ export const ModalAddMuscle = ({
         </div>
         <div className="w-full">
           <label className="font-semibold text-start w-full" htmlFor="image">
-            Imagen del musculo
+            Imagen del músculo
           </label>
           <CustomInput
             type="text"

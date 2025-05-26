@@ -73,7 +73,7 @@ export const ModalAddProd = ({ setAlertAddProd, open, setOpen, setProd , setFilt
     e.preventDefault();
     try {
       const sendForm = await useCreateProd(formData);
-      console.log(sendForm, "send form");
+      
       if ((sendForm && sendForm.status == 200) || sendForm.status == 201) {
         const traerProd = await useGetAllProducts();
         const allProducts = traerProd?.data.value || [];

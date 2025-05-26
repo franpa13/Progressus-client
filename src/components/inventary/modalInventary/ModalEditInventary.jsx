@@ -92,7 +92,7 @@ export const ModalEditInventary = ({
         className="flex flex-col justify-center items-center text-center gap-2"
       >
         <label className="font-semibold text-start w-full" htmlFor="">
-          Nombre del Item:
+          Nombre del ítem:
         </label>
         <CustomInput
           classNameInput=""

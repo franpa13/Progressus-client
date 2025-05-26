@@ -74,7 +74,6 @@ export const TableDay = ({
     try {
       const resp = await useGetExerciseById(ejercicio.ejercicioId);
       // Transforma los músculos a array de strings si son objetos
-      console.log(resp.data, "respe");
 
 
       setExercise(resp?.data);
@@ -128,7 +127,6 @@ export const TableDay = ({
         setDaySelected(day)
       }
 
-      console.log(sendRutin, "resp");
     } catch (e) {
       console.log(e, "error");
     } finally {
@@ -136,7 +134,7 @@ export const TableDay = ({
     }
   };
   const disabled = isDisabledForDay(day);
-  console.log(exercise?.musculosDeEjercicio, "ex");
+  
 
   return (
     <div>

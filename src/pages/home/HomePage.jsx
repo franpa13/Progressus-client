@@ -10,7 +10,6 @@ import videoProgressus from "/videoProgressus.mp4";
 import {
   Button,
   Title,
-  Footer,
   LoadingSkeleton,
   SnackbarDefault,
 } from "../../components";
@@ -67,7 +66,7 @@ export const HomePage = () => {
           const turnsResponse = await useGetTurns(
             userResponse.data.identityUserId
           );
-          console.log(turnsResponse, "turnResposne");
+
 
           setTurnosReservados(turnsResponse.data.value || []);
         }
@@ -77,7 +76,7 @@ export const HomePage = () => {
           const response = await useGetRequestPaymentSocio(
             dataUser.identityUserId
           );
-          console.log(response, "response membresias");
+
 
           if (response?.data) {
             const allMembership = response.data.historialSolicitudDePagos || [];
@@ -114,7 +113,7 @@ export const HomePage = () => {
         const turnoDateTime = dayjs(fechaHora);
         return turnoDateTime.isAfter(now);
       });
-      console.log(filteredTurns, "closesturns");
+      
       const closestTurn =
         filteredTurns.length > 0
           ? filteredTurns.sort((a, b) => {
@@ -133,7 +132,7 @@ export const HomePage = () => {
       setTurnoMasCercano(closestTurn);
     }
   }, [turnosReservados]);
-  console.log(dataUser?.membresiaActiva, "membresia activa");
+  
 
   // Manejo del click para navegar a los turnos
   const handleLinkClick = () => {
@@ -150,7 +149,7 @@ export const HomePage = () => {
     }
   };
   const [isMobile, setIsMobile] = useState(false);
-  console.log(turnoMasCercano, "turno mas cercano");
+
 
   // Detectamos si estamos en un dispositivo móvil
   useEffect(() => {

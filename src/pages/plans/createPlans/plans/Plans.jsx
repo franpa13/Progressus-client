@@ -17,7 +17,7 @@ export const Plans = () => {
   useEffect(() => {
     if (roleUser !== "ENTRENADOR" && dataUser?.membresiaActiva === false) {
       // if (!membership || membership?.estadoSolicitud.nombre !== "Confirmado") {
-        navigate("/membership");
+      navigate("/membership");
       // }
     }
   }, [membership, navigate]);
@@ -52,20 +52,18 @@ export const Plans = () => {
         <div className="p-3 mb-3 w-full flex justify-center md:justify-center items-center gap-5 md:gap-12  ">
           <span
             onClick={() => setSelectNav("Todos los planes")}
-            className={`transition-all font-bold cursor-pointer p-1  ${
-              selectNav === "Todos los planes" &&
+            className={`transition-all font-bold cursor-pointer p-1  ${selectNav === "Todos los planes" &&
               "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-            }`}
+              }`}
           >
             {roleUser === "SOCIO" ? "Planes disponibles" : "Todos los planes"}
           </span>
 
           <span
             onClick={() => setSelectNav("Mis Planes")}
-            className={`transition-all font-bold cursor-pointer p-1 ${
-              selectNav === "Mis Planes" &&
+            className={`transition-all font-bold cursor-pointer p-1 ${selectNav === "Mis Planes" &&
               "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-            }`}
+              }`}
           >
             {roleUser === "SOCIO" ? "Mi plan" : "Mis planes"}
           </span>
@@ -89,7 +87,7 @@ export const Plans = () => {
         open={errorServer}
         setOpen={setErrorServer}
         severity={"error"}
-        message={"Ocurrio un error inténtelo nuevamente"}
+        message={"Ocurrió un error, inténtelo nuevamente."}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
 
@@ -98,7 +96,7 @@ export const Plans = () => {
         setOpen={setAlertExerciseAdded}
         severity={"success"}
         message={
-          "El ejercicio se agregó a tu plan. Puedes consultarlo en Mis Planes."
+          "El ejercicio se agregó a tu plan. Puedes consultarlo en `Mis Planes`"
         }
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>

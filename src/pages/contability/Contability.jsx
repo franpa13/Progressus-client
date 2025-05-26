@@ -42,7 +42,7 @@ export const Contability = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Efecto ejecutado: contability o selectedDate cambió");
+
     if (contability.length > 0) {
       const filtered = contability.filter((item) => {
         const itemMonthYear = dayjs(item.fechaPago).format("YYYY-MM");
@@ -52,7 +52,7 @@ export const Contability = () => {
     }
   }, [contability, selectedDate]);
 
-  const columns = ["Nombre", "Fecha", "Descripcion", "Monto"];
+  const columns = ["Nombre", "Fecha", "Descripción", "Monto"];
   const factureData = {
     fecha: dayjs().format("YYYY-MM-DD"),
     title: `Registro de ingresos  ${selectedDate}`,
@@ -146,7 +146,7 @@ export const Contability = () => {
         <section className="p-3 mb-4">
           <div className="flex w-full justify-between flex-wrap gap-2 items-center">
             <div className="flex items-center gap-1 md:gap-3">
-              <Title title={"Registro de ingresos del ultimo mes"}></Title>
+              <Title title={"Registro de ingresos del último mes"}></Title>
               <PiPiggyBankDuotone className="text-xl md:text-3xl"></PiPiggyBankDuotone>
             </div>
             <div className="hidden md:block">
@@ -173,7 +173,7 @@ export const Contability = () => {
         <div className="w-full p-3 flex flex-col gap-5">
           <div className="w-1/2 md:w-1/3">
             <DatePickerr
-              label="Seleccionar año y mes"
+              label="Seleccione el año y el mes"
               minDate={minDate}
               maxDate={maxDate}
               selectedDate={selectedDate}

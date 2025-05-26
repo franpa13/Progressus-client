@@ -35,7 +35,7 @@ export const ModalElegirPlan = ({
       } else {
         setErrorToAsign(true);
       }
-      console.log(responseAsignPlan, "response asign plan");
+
     } catch (e) {
       console.log(e, "error al autoasignarse el plan");
     } finally {
@@ -49,7 +49,7 @@ export const ModalElegirPlan = ({
     <ModalLayout Icon={GiClick} open={open} setOpen={setOpen}>
       <div className="flex justify-center items-center gap-1 mb-4">
         <span className="font-semibold text-xl  text-center">
-          Quieres elegir
+          ¿Quieres elegir
           <span className="font-bold text-xl ml-1 text-center text-customTextGreen">
             {plan?.nombre} ?
           </span>

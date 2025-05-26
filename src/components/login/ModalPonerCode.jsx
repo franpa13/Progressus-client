@@ -22,7 +22,7 @@ export const ModalPonerCode = ({setOpenCorreo , open, setOpen, email }) => {
         email,
         codeString
       );
-      console.log(response, "respuesta al verificar cdogio ");
+      
 
       if (response && response.status == 200) {
         
@@ -42,17 +42,17 @@ export const ModalPonerCode = ({setOpenCorreo , open, setOpen, email }) => {
       <div className="flex flex-col justify-center items-center mr-2 md:mr-3">
         <Title
           className={"text-medium md:text-lg"}
-          title={"Ingrese el codigo que enviamos a su email"}
+          title={"Ingrese el código que enviamos a su email."}
         ></Title>
         <ConfirmCode code={code} setCode={setCode}></ConfirmCode>
         <ButtonSpinner
           onClick={sendCode}
           loading={loading}
-          label="Enviar Codigo"
+          label="Enviar código"
         ></ButtonSpinner>
         {sendCodeFailed && (
           <ErrorAuth
-            messageError={"Codigo invalido !"}
+            messageError={"Código inválido !"}
             className="flex justify-center items-center"
           ></ErrorAuth>
         )}

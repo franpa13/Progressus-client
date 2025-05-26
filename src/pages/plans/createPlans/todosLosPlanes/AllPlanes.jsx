@@ -110,7 +110,7 @@ export const AllPlanes = ({ selectNav, setAlertAsignedPlan }) => {
         <TableAllPlans
           setAlertAsignedPlan={setAlertAsignedPlan}
           loading={loading}
-          textSinEjercicios={"No se encontraron planes.."}
+          textSinEjercicios={"No se encontraron planes..."}
           arregloColumns={arregloColumns}
           arreglo={allPlans}
         ></TableAllPlans>
@@ -127,7 +127,7 @@ export const AllPlanes = ({ selectNav, setAlertAsignedPlan }) => {
         open={errorServer}
         setOpen={setErrorServer}
         severity={"error"}
-        message={"Ocurrio un error inténtelo nuevamente !"}
+        message={"Ocurrió un error. Inténtelo nuevamente."}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
     </div>

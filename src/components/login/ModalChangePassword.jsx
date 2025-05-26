@@ -42,7 +42,7 @@ export const ModalChangePassword = ({
         setOpenPonerCode(false);
         setOpenCorreo(false);
       }
-      console.log(responseEditPassword, "respuesta al editar password");
+      
     } catch (e) {
       console.log(e, "errores");
     } finally {

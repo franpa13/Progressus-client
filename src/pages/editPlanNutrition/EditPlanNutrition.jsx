@@ -39,7 +39,7 @@ export const EditPlanNutrition = () => {
           subroute={"Editar Plan"}
         ></Location>
 
-        <Title title={"Editar plan"}></Title>
+        <Title title={"Modificar plan"}></Title>
       </div>
       {/* DIVISION GRAY */}
       <div className="w-full h-2 md:h-4 bg-customGray"></div>

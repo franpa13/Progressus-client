@@ -6,7 +6,7 @@ import { Title } from '../ui/title/Title'
 import CalendarMonthOutlinedIcon from '@mui/icons-material/CalendarMonthOutlined';
 import { DaysSection } from './DaysSection'
 export const SectionPlanSocio = ({ plan }) => {
-    console.log(plan , "plan");
+    
     
     const [selectNav, setSelectNav] = useState("Lunes")
     const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];

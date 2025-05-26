@@ -69,7 +69,7 @@ export const Inventary = () => {
         <div className="b p-3">
           <Location
             route={`Inventario`}
-            subroute={"Consultar Inventario"}
+            subroute={"Consultar inventario"}
           ></Location>
 
           <Title title={"Inventario"}></Title>
@@ -94,7 +94,7 @@ export const Inventary = () => {
                 onClick={() => setModalAddElement(true)}
                 Icon={IoMdAdd}
                 className="md:py-[11px]  md:px-5 cursor-pointer  flex flex-row-reverse items-center gap-1 text-sm "
-                label={"Agregar item"}
+                label={"Agregar ítem"}
                 classNameIcon={"text-xl md:text-lg"}
               ></Button>
             </div>
@@ -109,7 +109,7 @@ export const Inventary = () => {
           arreglo={filteredInventary}
           arregloColumns={columnsTable}
           loading={loading}
-          textSinEjercicios={"No se encontraron elementos en el inventario.."}
+          textSinEjercicios={"No se encontraron elementos en el inventario."}
         ></TableInventary>
       </section>
       {/* MODAL PARA AGREGAR ITEM */}
@@ -124,7 +124,7 @@ export const Inventary = () => {
       <SnackbarDefault
         open={alertAddItem}
         setOpen={setAlertAddItem}
-        message={"El ítem se agrego correctamente! "}
+        message={"¡El ítem se agregó correctamente! "}
         severity={"success"}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
@@ -132,7 +132,7 @@ export const Inventary = () => {
       <SnackbarDefault
         open={errorAlert}
         setOpen={setErrorAlert}
-        message={"Ha ocurrido un error inténtelo nuevamente! "}
+        message={"¡Ha ocurrido un error! Inténtelo nuevamente."}
         severity={"error"}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
@@ -140,7 +140,7 @@ export const Inventary = () => {
       <SnackbarDefault
         open={alertEditItem}
         setOpen={setAlertEditItem}
-        message={"Item editado correctamente! "}
+        message={"¡Ítem editado correctamente! "}
         severity={"success"}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
@@ -148,7 +148,7 @@ export const Inventary = () => {
       <SnackbarDefault
         open={errorAlertEdiItem}
         setOpen={setErrorAlertEditItem}
-        message={"Ha ocurrido un error inténtelo nuevamente! "}
+        message={"¡Ha ocurrido un error! Inténtelo nuevamente. "}
         severity={"error"}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
@@ -157,7 +157,7 @@ export const Inventary = () => {
       <SnackbarDefault
         open={alertDeleteItem}
         setOpen={setAlertDeleteItem}
-        message={"Item borrado correctamente! "}
+        message={"¡Ítem borrado correctamente!"}
         severity={"info"}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>
@@ -166,7 +166,7 @@ export const Inventary = () => {
       <SnackbarDefault
         open={errorDeleteiItem}
         setOpen={seterrorDeleteiItem}
-        message={"Ha ocurrido un error inténtelo nuevamente! "}
+        message={"¡Ha ocurrido un error! Inténtelo nuevamente. "}
         severity={"error"}
         position={{ vertical: "bottom", horizontal: "left" }}
       ></SnackbarDefault>

@@ -60,7 +60,7 @@ export const ModalInventary = ({
       [name]: value,
     }));
   };
-  
+
 
   return (
     <ModalLayout open={modalAddElement} setOpen={setModalAddElement}>
@@ -72,7 +72,7 @@ export const ModalInventary = ({
                 <IoIosTimer size={28}></IoIosTimer>
               </div> */}
         <label className="font-semibold text-start w-full" htmlFor="">
-          Nombre del Item :{" "}
+          Nombre del ítem :{" "}
         </label>
 
         <CustomInput
@@ -83,7 +83,7 @@ export const ModalInventary = ({
           onChange={handleChange}
         ></CustomInput>
         <label className=" font-semibold  text-start w-full" htmlFor="">
-          Descripcion :{" "}
+          Descripción:{" "}
         </label>
         <CustomInput
           required={true}
@@ -93,7 +93,7 @@ export const ModalInventary = ({
           onChange={handleChange}
         ></CustomInput>
         <label className="font-semibold  text-start w-full" htmlFor="">
-          Estado del item :
+          Estado del ítem :
         </label>
         <select
           name="estado"

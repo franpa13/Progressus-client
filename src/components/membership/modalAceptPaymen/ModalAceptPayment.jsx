@@ -21,11 +21,11 @@ export const ModalAceptPayment = ({
       const requestPayment = await useGetRequestPaymentSocio(
         dataUserBuscado.identityUserId
       );
-      console.log(requestPayment, "requestpayment");
+
 
       const registerPayment = await useRegisterPayment(requestPayment?.data.id);
 
-      console.log(registerPayment, "register paymentettt");
+
 
       if (registerPayment && registerPayment.status === 200) {
         setOpen(false);
@@ -44,7 +44,7 @@ export const ModalAceptPayment = ({
         action=""
         className="w-full flex items-center justify-center flex-col gap-1"
       >
-        <h1 className="font-semibold text-lg">Confirmar pago ?</h1>
+        <h1 className="font-semibold text-lg">¿Confirmar pago?</h1>
         <ButtonSpinner
           onClick={handleRegisterPayment}
           Icon={FaCheck}

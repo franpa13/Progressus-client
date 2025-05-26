@@ -29,7 +29,7 @@ export const ModalDeletePlan = ({ open, setOpen, plan, setPlans }) => {
     return (
         <ModalLayout open={open} setOpen={setOpen}>  <div className="flex justify-center items-center gap-1 mb-4">
             <span className="font-semibold text-xl  text-center">
-                Eliminar a
+               ¿ Eliminar a
                 <span className="font-bold text-xl ml-1 mr-1 text-center text-red-600">
                     {plan?.nombre}
                 </span>

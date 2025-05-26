@@ -23,6 +23,7 @@ export const Stats = () => {
   const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
   const [selectNav, setSelectNav] = useState("Asistencia/Turnos");
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedYearMembership, setSelectedYearMembership] = useState(new Date().getFullYear());
   // ASISTENCIAS POR MES
   const [nroAsistenciaPorMes, setNroAsistenciaPorMes] = useState([]);
   // ASISTENCIAS POR DIA
@@ -42,6 +43,8 @@ export const Stats = () => {
         // ASITENCIAS POR MES
         const traerAsistForMes = await useGetAsistForMonth();
         setNroAsistenciaPorMes(traerAsistForMes?.data || []);
+
+
         // ASISTENCIAS POR DIA
         const traerAsistForDay = await useGetAsistForDay();
         setNroAsistForDay(traerAsistForDay?.data || []);
@@ -49,7 +52,7 @@ export const Stats = () => {
         // TRAER MEMBRESIAS CONFIRMADAS POR MES
         const traerConfirm = await useGetMemberConfirm();
         setMembershipConfirm(traerConfirm?.data || []);
-        console.log(traerConfirm, "traer confrim");
+        console.log(traerConfirm, "traer membresias confirmadas");
 
         // INGRESOS
         const traerIngresos = await useGetIngresosMensuales();
@@ -84,7 +87,9 @@ export const Stats = () => {
   const selectYear = (e) => {
     setSelectedYear(Number(e.target.value));
   };
-
+  const selectYearMembership = (e) => {
+    setSelectedYearMembership(Number(e.target.value));
+  };
   const filteredData = nroAsistenciaPorMes.filter(
     (asistencia) => asistencia.anio === selectedYear
   );
@@ -101,6 +106,9 @@ export const Stats = () => {
   const availableYears = Array.from(
     new Set(nroAsistenciaPorMes.map((asistencia) => asistencia.anio))
   );
+
+
+
   ///////////////////////////////////////////////////////////////
   // ASISTENCIA POR DIA
 
@@ -165,13 +173,40 @@ export const Stats = () => {
   ];
 
   // Crear un dataset que asegure que todos los meses estén presentes
-  const membershipDataset = mesesDelAno.map((mes, index) => {
-    const mesData = membershipConfirm.find((item) => item.mes === index + 1);
+  console.log(selectedYearMembership, "MEMBERSHIP CONFIRM");
+  // const membershipDataset = mesesDelAno.map((mes, index) => {
+  //   const mesData = membershipConfirm.find((item) => item.mes === index + 1);
+  //   return {
+  //     mes, // Nombre del mes
+  //     numeroDeMembresias: mesData ? mesData.solicitudes.length : 0, // Valor real o 0 si no hay datos
+  //   };
+  // });
+
+  // MEMBRESIAS POR AÑO
+  const membershipByYear = membershipConfirm.map((item) => {
     return {
-      mes, // Nombre del mes
-      numeroDeMembresias: mesData ? mesData.solicitudes.length : 0, // Valor real o 0 si no hay datos
+      ...item,
+      solicitudes: item.solicitudes.filter((s) => {
+        const anio = new Date(s.fechaPago).getFullYear();
+        return anio === selectedYearMembership;
+      }),
     };
-  });
+  }).filter(item => item.solicitudes.length > 0);
+
+  const membershipDataset = membershipByYear.map((item) => ({
+    mes: new Date(selectedYearMembership, item.mes - 1).toLocaleString("es-ES", {
+      month: "long",
+    }),
+    cantidadSolicitudes: item.solicitudes.length,
+  }));
+
+  const availableYearsMembership = Array.from(
+    new Set(
+      membershipConfirm.flatMap((item) =>
+        item.solicitudes.map((s) => new Date(s.fechaPago).getFullYear())
+      )
+    )
+  ).sort((a, b) => a - b);
 
   ///////////////////////////////////////////////////////////////
   //  BALANCE INGRESOS
@@ -184,12 +219,12 @@ export const Stats = () => {
 
 
   ///////////////////////////////////////////////////////////////
-  const typesDataset = types?.map((tipo,index) => ({
+  const typesDataset = types?.map((tipo, index) => ({
     id: index,
     value: tipo.cantidad,
     label: tipo.nombreMembresia,
   }));
-console.log(types , "types");
+
 
   return (
     <MainLayout>
@@ -235,7 +270,7 @@ console.log(types , "types");
                 <div className="flex justify-end w-full items-center">
                   <SelectDef
                     value={selectedYear}
-                    label="Seleccionar Año:"
+                    label="Año"
                     options={availableYears}
                     onChange={selectYear}
                     variant={"filled"}
@@ -350,12 +385,24 @@ console.log(types , "types");
               <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
                 <div className="flex items-center gap-3">
                   <Title
-                    className={"text-customTextGreen "}
-                    title={"Solicitudes de pago confirmados por mes"}
+                    className=" text-customTextGreen"
+                    title={"Membresías confirmadas por mes"}
                   ></Title>
+
+
+
                   <FaRegCalendarCheck className="text-xl md:text-2xl font-bold"></FaRegCalendarCheck>
                 </div>
 
+                <div className="flex justify-end w-full items-center">
+                  <SelectDef
+                    label="Año"
+                    value={selectedYearMembership}
+                    onChange={selectYearMembership}
+                    options={availableYearsMembership}
+                    variant={"filled"}
+                  />
+                </div>
                 {/* <div className="flex justify-end w-full items-center">
                   <SelectDef
                     value={selectedYear}
@@ -372,8 +419,9 @@ console.log(types , "types");
                     xAxis={[
                       {
                         scaleType: "band", // Escala categórica
-                        dataKey: "mes", // Clave de los datos para el eje X
-                        label: "Mes",
+                        dataKey: "mes",
+                        label: "Meses"
+
                       },
                     ]}
                     yAxis={[
@@ -383,8 +431,8 @@ console.log(types , "types");
                     ]}
                     series={[
                       {
-                        dataKey: "numeroDeMembresias", // Clave de los datos para las barras
-                        label: "Membresías Confirmadas",
+                        dataKey: "cantidadSolicitudes", // Clave de los datos para las barras
+                        label: "mes",
                       },
                     ]}
                   />
@@ -397,7 +445,7 @@ console.log(types , "types");
                 <div className="flex items-center gap-3">
                   <Title
                     className={"text-customTextGreen "}
-                    title={"Balance de ingreso mensuales por mes"}
+                    title={"Balance de ingresos mensuales"}
                   ></Title>
                   <RiMoneyDollarBoxLine className="text-xl md:text-3xl font-bold"></RiMoneyDollarBoxLine>
                 </div>
@@ -444,7 +492,7 @@ console.log(types , "types");
               <div className="mt-5 md:mt-12 mb-3 w-full   flex flex-col justify-center md:justify-between items-center md:items-start gap-6 md:gap-5">
                 <div className="flex items-center gap-3">
                   <Title
-                    className={"text-customTextGreen "}
+                    className={" text-customTextGreen"}
                     title={"Membresias por tipo"}
                   ></Title>
                   <FaMedal className="text-xl md:text-3xl font-bold"></FaMedal >
@@ -464,7 +512,7 @@ console.log(types , "types");
                   <PieChart
                     series={[
                       {
-                        data:typesDataset
+                        data: typesDataset
                       },
                     ]}
                     width={950}

@@ -83,10 +83,10 @@ export const Login = () => {
     // VALIDACION EN EL FRONT
     let formErrors = {};
     if (!formLogin.email) {
-      formErrors.email = "El campo email es obligatorio.";
+      formErrors.email = "Por favor, ingresa tu correo electrónico.";
     }
     if (!formLogin.password) {
-      formErrors.password = "El campo contraseña es obligatorio.";
+      formErrors.password = "Por favor, ingresa tu contraseña.";
     }
 
     if (Object.keys(formErrors).length > 0) {
@@ -129,7 +129,7 @@ export const Login = () => {
         className="my-1"
         iconColor={"text-customTextGreen"}
         onChange={handleChange}
-        placeholder="Usuario"
+        placeholder="Correo electrónico"
         Icon={FiUser}
         name="email"
         type="email"
@@ -150,12 +150,12 @@ export const Login = () => {
       {/* Checkbox */}
       <div className="w-full flex justify-start gap-2 items-center mt-2">
         <Checkbox check={check} onChange={handleCheck} />
-        <span>Recordarme</span>
+        <span>Recuérdame</span>
       </div>
 
       {errorLogin && (
         <span className="text-red-500 w-full text-center font-medium flex justify-center my-2 items-center text-sm md:text-base md:gap-2">
-          Credenciales inválidas
+          Credenciales no válidas
           <MdErrorOutline width={15} />
         </span>
       )}

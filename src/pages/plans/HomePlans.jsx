@@ -53,8 +53,7 @@ export const HomePlans = () => {
                   Planes de entrenamiento
                 </span>
                 <span className="text-base p-1 md:p-0 md:text-lg text-center font-light mt-2 ">
-                  Aqui podras gestionar planes de entrenamiento y asignarlos a
-                  los clientes
+                  Aquí podrás gestionar planes de entrenamiento y asignarlos a los clientes.
                 </span>
               </div>
             </div>

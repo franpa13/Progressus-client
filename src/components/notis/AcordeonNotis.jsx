@@ -50,6 +50,7 @@ export const AcordeonNotis = () => {
   const formatFecha = (fecha) => {
     if (!fecha) return 'Fecha no disponible';
     const date = new Date(fecha);
+    date.setHours(date.getHours() - 3); // Resta 3 horas
     return new Intl.DateTimeFormat('es-ES', {
       day: '2-digit',
       month: '2-digit',
@@ -58,6 +59,8 @@ export const AcordeonNotis = () => {
       minute: '2-digit',
     }).format(date);
   };
+
+
   useEffect(() => {
     if (loading) {
       showSpinner();
@@ -129,7 +132,7 @@ export const AcordeonNotis = () => {
         </>
       ) : (
         <Typography variant="body1" sx={{ textAlign: 'center', padding: '20px' }}>
-          No hay notificaciones disponibles.
+          No tienes notificaciones nuevas.
         </Typography>
       )}
     </div>

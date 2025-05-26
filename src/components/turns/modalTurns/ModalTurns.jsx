@@ -107,7 +107,7 @@ export const ModalTurns = ({
     .minute(parseInt(horaInicio.split(":")[1], 10));
 
   const turnoDisponible = horaActual.isBefore(horaInicioTurno.add(30, 'minute'));
-  console.log(turnoDisponible, "turno disponible");
+ 
 
   const fechaArgentina = dayjs()
     .tz("America/Argentina/Buenos_Aires")
@@ -138,7 +138,7 @@ export const ModalTurns = ({
   const handleClose = () => {
     setOpen(false);
   };
-console.log(turnosReservados , "turnos reservadoss");
+
 
   const handleTurn = async (e) => {
     e.preventDefault();

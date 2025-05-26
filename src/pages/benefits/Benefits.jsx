@@ -8,7 +8,7 @@ export const Benefits = () => {
   const benefits = [
     {
       image: '/beneficio-budines.jpg',
-      title: 'Budines tortas y mas...',
+      title: 'Budines, tortas y mas...',
       description: '¡Rico y saludable! Por consultas y encargues...',
       phone: '3385-441806'
     },
@@ -16,11 +16,11 @@ export const Benefits = () => {
       image: '/beneficio-osteopatia.jpg',
       title: '10% de descuento',
       description: 'Osteopatía - medicina alternativa',
-      practicante: 'Lic. Juan Cruz bosticco'
+      practicante: 'Lic. Juan Cruz Bosticco'
     },
     {
       image: '/beneficio-nutricionista.jpg',
-      title: 'Nuestra nutricionista!',
+      title: '¡Nuestra nutricionista!',
       description: 'Lic. Valentina Goñi. UCC MP: 4569',
       services: [
         'Nutrición y Medicina Ortomolecular',

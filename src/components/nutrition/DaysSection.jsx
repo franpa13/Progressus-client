@@ -15,7 +15,7 @@ import { ModalAddFoodToPlan } from './ModalAddFoodToPlan';
 import { useFoodById } from '../../service/nutrition/useFoodById';
 import { useSpinnerStore } from '../../store';
 
-export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day }) => {
+export const DaysSection = ({ selectNav, editable , setAlert, dataPlan, data, day }) => {
     const showSpinner = useSpinnerStore((state) => state.showSpinner);
     const hideSpinner = useSpinnerStore((state) => state.hideSpinner);
     const alimentos = useCrearPlan((state) => state.alimentos);
@@ -42,7 +42,7 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
             if (response.status == 200 || response.status == "209") {
                 setAlert(true);
             }
-            console.log(response, "Respuesta del servidor");
+            
         } catch (error) {
             console.error("Error al crear el plan:", error);
         } finally {
@@ -82,7 +82,7 @@ export const DaysSection = ({ selectNav, editable, setAlert, dataPlan, data, day
                     // Obtener los datos del alimento desde la API
                     const response = await useFoodById(alimento.alimentoId);
 
-                    console.log(response.data, "response de data");
+                    
 
                     const foodData = response.data;
 

@@ -39,7 +39,7 @@ export const Attendance = () => {
         );
 
         setUsers(socios);
-        console.log(socios, "sociossssss");
+
 
       } catch (e) {
         console.log(e, "error");
@@ -56,7 +56,7 @@ export const Attendance = () => {
     setTimeout(() => {
       setUserAsistencia(""); // Cancelar la asistencia
       setCacnelAsist(false); // Ocultar el spinner
-    }, 1000); // 2 segundos
+    }, 1000); // 1 segundo
   };
 
   // ACEPTAR ASISTENCIA
@@ -173,7 +173,7 @@ export const Attendance = () => {
 
       {/* ALERT success CONFIRMAR ASISTENCIA */}
       <SnackbarDefault
-        message={"Asistencia confirmada correctamente!"}
+        message={"¡Asistencia confirmada correctamente!"}
         open={alertSuccess}
         setOpen={setAlertSuccess}
         severity={"success"}

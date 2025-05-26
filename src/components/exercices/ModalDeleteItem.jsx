@@ -34,7 +34,7 @@ export const ModalDeleteItem = ({
         }
       } else if (selectNav === "Musculo") {
         const deleteMuscle = await useDeleteMuscle(elementEditable.id);
-        console.log(deleteMuscle, "delete muscle");
+        
         if (
           (deleteMuscle && deleteMuscle.status == 200) ||
           deleteMuscle.status == 201

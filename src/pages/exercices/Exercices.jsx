@@ -45,7 +45,7 @@ export const Exercices = () => {
         setGruposMusculares(responseGruposMusculares?.data);
         // TRAER MUSCULOS
         const responseAllMuscles = await useGetAllMuscles();
-        console.log(responseAllMuscles, "resp all muscles");
+
 
         setMuscles(responseAllMuscles?.data);
         // TRAER EJERCICIOS
@@ -79,7 +79,7 @@ export const Exercices = () => {
     "Imagen",
     "Acciones",
   ];
-  console.log(gruposMusculares, "grupos musc", muscles, "muscles");
+
   const addElement = () => {
     if (selectNav === "Grupo muscular") {
       setOpenModalAgregarGrupo(true);
@@ -107,10 +107,9 @@ export const Exercices = () => {
                 setSelectNav("Grupo muscular");
                 setTextButton("Grupo muscular");
               }}
-              className={`transition-all font-bold cursor-pointer p-1  ${
-                selectNav === "Grupo muscular" &&
+              className={`transition-all font-bold cursor-pointer p-1  ${selectNav === "Grupo muscular" &&
                 "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-              }`}
+                }`}
             >
               Grupo muscular
             </span>
@@ -120,10 +119,9 @@ export const Exercices = () => {
                 setSelectNav("Musculo");
                 setTextButton("Musculo");
               }}
-              className={`transition-all font-bold cursor-pointer p-1 ${
-                selectNav === "Musculo" &&
+              className={`transition-all font-bold cursor-pointer p-1 ${selectNav === "Musculo" &&
                 "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-              }`}
+                }`}
             >
               Músculo
             </span>
@@ -132,10 +130,9 @@ export const Exercices = () => {
                 setSelectNav("Ejercicio");
                 setTextButton("Ejercicio");
               }}
-              className={`transition-all font-bold cursor-pointer p-1 ${
-                selectNav === "Ejercicio" &&
+              className={`transition-all font-bold cursor-pointer p-1 ${selectNav === "Ejercicio" &&
                 "border-b-2 border-customTextBlue text-customTextBlue md:text-lg"
-              }`}
+                }`}
             >
               Ejercicio
             </span>
@@ -230,7 +227,7 @@ export const Exercices = () => {
         open={openAlertCreateMuscle}
         severity={"success"}
         setOpen={setOpenAlertCreateMuscle}
-        message={"Musculo creado correctamente"}
+        message={"Músculo creado correctamente"}
       ></SnackbarDefault>
 
       {/* ALERT AL EDITAR MUSCULO */}
@@ -238,7 +235,7 @@ export const Exercices = () => {
         open={openAlertEditMuscle}
         severity={"info"}
         setOpen={setOpenAlertEditMuscle}
-        message={"Musculo editado correctamente"}
+        message={"Músculo editado correctamente"}
       ></SnackbarDefault>
       {/* MODAL PARA AGREGAR EJERCICIO */}
       <ModalAddExercise
@@ -256,7 +253,7 @@ export const Exercices = () => {
         message={"Ejercicio creado correctamente"}
       ></SnackbarDefault>
       {/* ALERT AL EDITAR EJERCICIO */}
-      
+
       <SnackbarDefault
         open={alertExerciseEdit}
         severity={"info"}

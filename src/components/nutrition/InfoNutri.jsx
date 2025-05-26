@@ -15,7 +15,7 @@ export const InfoNutri = ({ comidas }) => {
   // Caché para almacenar los datos de los alimentos
   const [cache, setCache] = useState({});
 
-  console.log(comidas, "comidas en el info");
+  
 
   useEffect(() => {
     showSpinner();

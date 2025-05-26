@@ -64,14 +64,14 @@ export const ModalAddFoodToPlan = ({ editable, nombreDia, tipoComida, open, setO
     // Manejar el envío del formulario
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(nombreDia, tipoComida, form, "data a agregar");
+        
 
 
         agregarAlimentoEnPlanEditado(nombreDia, tipoComida, form)
 
         agregarAlimentos(nombreDia, tipoComida, form)
         setOpen(false);
-        console.log("Formulario enviado:", form);
+        
         // Aquí puedes agregar la lógica para manejar el formulario
     };
 

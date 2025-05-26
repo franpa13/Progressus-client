@@ -66,7 +66,7 @@ export const ModalAddMembership = ({ setPlanElegido, open, setOpen }) => {
                 </div>
                 <div>
                     <label className="font-semibold text-start w-full" htmlFor="mesesDuracion">
-                        Meses de Duración:
+                        Meses de duración:
                     </label>
                     <CustomInput
                         type="number"

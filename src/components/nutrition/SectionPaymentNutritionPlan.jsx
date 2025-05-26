@@ -42,7 +42,7 @@ export const SectionPaymentNutritionPlan = () => {
   const handleCreateSolicitud = async () => {
     setIsLoading(true)
     const createPlan = await useCreateRequestPayment(15, 4, userData.identityUserId)
-    console.log(createPlan, "create plan");
+   
     let idSolicitudMercadoPago;
     if (createPlan?.status == 200) {
       idSolicitudMercadoPago = createPlan.data.id;

@@ -66,7 +66,7 @@ export const ModalEditMuscle = ({
           form,
           grupoMuscularElegido
         );
-        console.log(editMuscle, "response al editar muscle");
+        
 
         if (
           (editMuscle && editMuscle.status == 201) ||
@@ -98,7 +98,7 @@ export const ModalEditMuscle = ({
     <ModalLayout open={open} setOpen={setOpen}>
       <form className="flex flex-col  items-center gap-5" onSubmit={editMuscle}>
         <div className="flex flex-col justify-center items-center gap-0 mb-0">
-          <span className="font-semibold text-xl">Editar Músculo</span>
+          <span className="font-semibold text-xl">Editar músculo</span>
           <span className="font-bold text-xl text-center text-customTextGreen">
             {itemEditable?.nombre}
           </span>

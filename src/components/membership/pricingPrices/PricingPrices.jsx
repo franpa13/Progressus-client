@@ -272,7 +272,7 @@ export const PricingPrices = ({
       }
     }
   };
-  console.log(planElegido, "plan elegido");
+  
 
   return (
     <div
@@ -482,7 +482,7 @@ export const PricingPrices = ({
           {dataUserBuscado && roleUser === "ADMIN" ? (
             <>
               <section className="flex items-center md:flex-row mt-4 md:mt-0 md:gap-2 justify-center flex-col">
-                <span className="md:text-xl font-semibold">{`Ultimos pagos de `}</span>
+                <span className="md:text-xl font-semibold">{`Últimos pagos de `}</span>
                 <span className="md:text-xl font-bold text-customTextGreen ">{` ${dataUserBuscado &&
                   dataUserBuscado.nombre + " " + dataUserBuscado.apellido
                   }`}</span>

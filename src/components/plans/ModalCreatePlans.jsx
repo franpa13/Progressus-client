@@ -48,7 +48,7 @@ export const ModalCreatePlans = ({ open, setOpen, setErrorServer }) => {
     };
     traerObjetivos();
   }, []);
-  console.log(form, "form");
+  
   const onSubmitSendPlan = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -71,7 +71,7 @@ export const ModalCreatePlans = ({ open, setOpen, setErrorServer }) => {
         const responseCrearPlantilla = await useCreatePlantilla(
           responseSendPlan.data.id
         );
-        console.log(responseCrearPlantilla, "response al crear plantilla");
+        
       }
     } catch (error) {
       console.error("Error al crear el plan o agregar ejercicios:", error);
@@ -128,7 +128,7 @@ export const ModalCreatePlans = ({ open, setOpen, setErrorServer }) => {
           required={true}
           name={"nombre"}
           value={form.nombre}
-          placeholder={"Nombre del Plan"}
+          placeholder={"Nombre del plan"}
           onChange={handleChange}
         ></CustomInput>
         <label htmlFor="" className="text-start font-medium w-full">

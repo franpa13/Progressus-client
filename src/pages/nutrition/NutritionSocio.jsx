@@ -28,12 +28,12 @@ export const NutritionSocio = () => {
         try {
           const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
   
-          console.log(havePlanRes, "haveplanres");
+         
   
           const dataPlanRes = await useGetPlanByIdUser(dataUser.identityUserId);
   
           if (havePlanRes != undefined && havePlanRes?.status === 200) {
-            console.log(havePlanRes, "haveplan");
+
             setHavePlan(havePlanRes.data.historialSolicitudDePagos[1]?.estadoSolicitud?.nombre || null);
           }
   

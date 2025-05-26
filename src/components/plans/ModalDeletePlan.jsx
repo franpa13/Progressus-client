@@ -15,7 +15,7 @@ export const ModalDeletePlan = ({ open, setOpen, plan, setPlanes }) => {
     setLoading(true);
     try {
       const responseDelete = await useDeletePlan(plan.id);
-      console.log(responseDelete, "response delete");
+
 
       if (responseDelete && responseDelete.status == 200) {
         // llamamos de nuevo al endpoint para poder setearlo de nuevo
@@ -46,7 +46,7 @@ export const ModalDeletePlan = ({ open, setOpen, plan, setPlanes }) => {
     <ModalLayout Icon={MdDeleteOutline} open={open} setOpen={setOpen}>
       <div className="flex justify-center items-center gap-1 mb-4">
         <span className="font-semibold text-xl  text-center">
-          Eliminar
+          ¿Eliminar
           <span className="font-bold text-xl ml-1 text-center text-red-600">
             {plan?.nombre} ?
           </span>

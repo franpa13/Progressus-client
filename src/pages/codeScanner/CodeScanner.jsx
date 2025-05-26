@@ -20,7 +20,7 @@ export const CodeScanner = () => {
       const responseSendAsist = await useSendAsist(
         idUser
       );
-      console.log(responseSendAsist , "responseSendSasit");
+      
       
       if (responseSendAsist && responseSendAsist.status === 200) {
         setAlertSuccess(true);
@@ -90,7 +90,7 @@ export const CodeScanner = () => {
 
       {/* ALERT success CONFIRMAR ASISTENCIA */}
       <SnackbarDefault
-        message={"Asistencia confirmada correctamente !"}
+        message={"¡Asistencia confirmada correctamente!"}
         open={alertSuccess}
         setOpen={setAlertSuccess}
         severity={"success"}

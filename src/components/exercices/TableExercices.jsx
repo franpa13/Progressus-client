@@ -370,8 +370,7 @@ export const TableExercices = ({
             </div>
           ) : (
             <div className="flex items-center justify-center h-72 md:h-[400px] bg-gray-200 text-red-600 font-bold">
-              No se pudo cargar el video. Por favor, verifica el enlace o
-              intenta más tarde.
+              No se pudo cargar el video. Por favor, verifica el enlace o intenta más tarde.
             </div>
           )}
 

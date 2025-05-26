@@ -31,9 +31,6 @@ export const Profile = () => {
 
   const arregloColumns = ["Fecha", "Hora", ""];
   useEffect(() => {
-
-
-
     const traerMembresiaActiva = async () => {
       setLoadingSkeleton(true);
       try {
@@ -45,7 +42,6 @@ export const Profile = () => {
             dataUser.identityUserId
           );
 
-          
           // const havePlanRes = await useGetMembershipUser(dataUser.identityUserId);
           // if (havePlanRes.status === 200) {
           //   setHavePlan(havePlanRes.data || null);
@@ -112,7 +108,7 @@ export const Profile = () => {
       closeSpinner();
     }, 2000);
   };
-  
+
 
   return (
     <MainLayout>
@@ -120,7 +116,7 @@ export const Profile = () => {
         <div className="h-[190px] bg-gradient-to-r">
           <img
             src="https://wallpapercave.com/wp/wp8077707.jpg"
-            alt=""
+            alt="image-gym"
             className="w-full h-full object-cover"
           />
         </div>
@@ -134,7 +130,7 @@ export const Profile = () => {
             <img
               src={fotoProfile}
               className="w-full h-full rounded-full object-center object-cover"
-              alt="Avatar"
+              alt="Avatar-image"
             />
             {isHovered && (
               <div className="absolute inset-0 cursor-pointer bg-black bg-opacity-75 flex items-center justify-center transition-opacity duration-300 ease-in-out">

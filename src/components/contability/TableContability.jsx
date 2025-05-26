@@ -76,7 +76,7 @@ export const TableContability = ({ data, columns, loading, setTotal }) => {
                     align="center"
                     colSpan={4}
                   >
-                    No se encontraron pagos en este mes...
+                    No se encontraron pagos este mes.
                   </TableCell>
                 </TableRow>
               ) : (

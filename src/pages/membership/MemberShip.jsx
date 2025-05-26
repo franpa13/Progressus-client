@@ -26,7 +26,7 @@ export const MemberShip = () => {
           ></Location>
 
           <Title
-            title={roleUser === "ADMIN" ? "Gestion de membresías" : `Membresía`}
+            title={roleUser === "ADMIN" ? "Gestión de membresías" : `Membresía`}
           ></Title>
           {/* ///////////////////////////// */}
         </div>
@@ -58,7 +58,7 @@ export const MemberShip = () => {
         open={alertConfirmRequest}
         setOpen={setAlertConfirmRequest}
         severity="success"
-        message="Pago confirmado! "
+        message="¡Pago confirmado!"
         position={{ vertical: "center", horizontal: "center" }}
       ></SnackbarDefault>
 
@@ -66,14 +66,14 @@ export const MemberShip = () => {
         position={{ vertical: "center", horizontal: "center" }}
         open={alertCancelPayment}
         setOpen={setAlertCancelPayment}
-        message="Pago cancelado!"
+        message="¡Pago cancelado!"
         severity="info"
       ></SnackbarDefault>
 
       <SnackbarDefault
         open={alertError}
         setOpen={setAlertError}
-        message={"Ha ocurrido un error, inténtelo de nuevo más tarde "}
+        message={"Ha ocurrido un error, inténtelo de nuevo más tarde"}
         severity={"warning"}
         position={{ vertical: "bottom", horizontal: "center" }}
       ></SnackbarDefault>

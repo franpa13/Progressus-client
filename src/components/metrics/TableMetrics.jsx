@@ -12,7 +12,7 @@ import { LoadingSkeleton } from "../ui/skeleton/LoadingSkeleton";
 import dayjs from "dayjs";
 
 export const TableMetrics = ({ loading, arreglo, arregloColumns }) => {
-  console.log(arreglo);
+
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -79,7 +79,7 @@ export const TableMetrics = ({ loading, arreglo, arregloColumns }) => {
                     <TableCell align="left" sx={{ fontSize: "16px" }}>
                       {row.peso}
                     </TableCell>
-                    <TableCell align="center" sx={{ fontSize: "16px" }}>
+                    <TableCell align="left" sx={{ fontSize: "16px" }}>
                       {row.altura}
                     </TableCell>
                     <TableCell align="center" sx={{ fontSize: "16px" }}>

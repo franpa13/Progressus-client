@@ -4,7 +4,7 @@ import { MainLayout } from "../../layout/MainLayout";
 import { useStoreUserData } from "../../store";
 
 export const CodeWriter = () => {
-    const userData = useStoreUserData((state) => state.userData);
+  const userData = useStoreUserData((state) => state.userData);
   const strings = ["Hello, World!", "React is awesome!", "Keep coding!", "Stay positive!", "Never stop learning!", "Embrace the journey!", "You got this!", "Think big, start small!"];
   const getRandomString = () => strings[Math.floor(Math.random() * strings.length)];
 
